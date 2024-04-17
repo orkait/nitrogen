@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ButtonHTMLAttributes } from "react";
 import { LucideIcon } from "lucide-react";
 
@@ -11,11 +11,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     rounded: boolean;
     shadow: boolean;
     loading: boolean;
-    icon: LucideIcon | 'none';
+    icon?: LucideIcon | 'none';
     iconPosition: 'left' | 'right';
     responsive: 'wide' | 'block' | 'circle' | 'square' | 'none';
     className: string;
-    style: React.CSSProperties;
+    style?: React.CSSProperties;
     text: string;
     testingName: string;
     onClick?: () => void;
@@ -35,9 +35,9 @@ function Button({
     responsive = 'none',
     className = '',
     style = {},
-    text = 'Button',
     testingName = '',
     onClick,
+    children,
 }: ButtonProps) {
 
     const getClassNames = () => [
@@ -75,7 +75,7 @@ function Button({
                         loading
                     </>
                 ) : (
-                    text
+                    children
                 )
             }
             {

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import Button from '../../components/Button/Button';
+import type { Meta } from '@storybook/react';
+import Button, { ButtonProps } from '../../components/Button/Button';
+import { JSX } from 'react/jsx-runtime';
 
 const meta = {
     title: '@components/Button',
@@ -11,10 +12,8 @@ const meta = {
 } satisfies Meta<typeof Button>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-
-export const Default: Story = {
+export const Default = {
     argTypes: {
         theme: {
             options: ['primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
@@ -48,11 +47,14 @@ export const Default: Story = {
         },
 
     },
-    render: (args) => (
+    render: (args: JSX.IntrinsicAttributes & ButtonProps) => (
         <Button
             {...args}
+            className='bg-cyan-500 border-solid border-3 border-bottom-dashed rounded-5'
             onClick={() => alert("Default Button Clicked")}
-        />
+        >
+            Hello World
+        </Button>
     )
 };
 

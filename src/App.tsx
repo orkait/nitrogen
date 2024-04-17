@@ -1,24 +1,28 @@
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/Accordion/Accordion"
-import "./main.css";
-
+import { Button } from "./components"
+import "./theme-generator/theme.css";
 
 function App() {
     return (
-        <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-                <AccordionTrigger>
-                    Hello World
-                </AccordionTrigger>
-                <AccordionContent>
-                    123
-                </AccordionContent>
-            </AccordionItem>
-        </Accordion>
+        <div>
+            <Button
+                onClick={() => console.log('clicked')}
+                className="bg-cyan-500 border-solid border-3 border-bottom-dashed rounded-5"
+                theme={"primary"}
+                size={"xs"}
+                block={false}
+                disabled={false}
+                outline={false}
+                rounded={false}
+                shadow={false}
+                loading={false}
+                iconPosition={"left"}
+                responsive={"block"}
+                text={""}
+                testingName={""}
+            >
+                Hello world
+            </Button>
+        </div>
     )
 }
 
