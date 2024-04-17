@@ -35,7 +35,13 @@ const theme = {
     zIndex: zIndexGenerator(),
 }
 
-const css = Object.values(theme).join('\n');
+let css = Object.values(theme).join('\n');
+
+// remove all spaces from css string and replace with empty string
+// remove all new lines from css string and replace with empty string
+// remove all tabs from css string and replace with empty string
+
+css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
 
 // write css to file
 fs.writeFileSync('theme.css', css);
