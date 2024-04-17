@@ -57,31 +57,34 @@ const direction = ['top', 'right', 'bottom', 'left'];
 const generateBorderRadii = () => {
     let groupedCSS = '';
     for (const [key, value] of toEntries(BORDER_RADII)) {
+        const newValue = typeof value === 'number' ? `${value}px` : value;
         groupedCSS += `
         .rounded-${key} {
-            border-radius: ${value}px;
+            border-radius: ${newValue};
         }
         `;
     }
 
     // generate individual border radius
     for (const [key, value] of toEntries(BORDER_RADII)) {
+        const newValue = typeof value === 'number' ? `${value}px` : value;
+
         groupedCSS += `
         .rounded-t-${key} {
-            border-top-left-radius: ${value}px;
-            border-top-right-radius: ${value}px;
+            border-top-left-radius: ${newValue};
+            border-top-right-radius: ${newValue};
         }
         .rounded-r-${key} {
-            border-top-right-radius: ${value}px;
-            border-bottom-right-radius: ${value}px;
+            border-top-right-radius: ${newValue};
+            border-bottom-right-radius: ${newValue};
         }
         .rounded-b-${key} {
-            border-bottom-right-radius: ${value}px;
-            border-bottom-left-radius: ${value}px;
+            border-bottom-right-radius: ${newValue};
+            border-bottom-left-radius: ${newValue};
         }
         .rounded-l-${key} {
-            border-top-left-radius: ${value}px;
-            border-bottom-left-radius: ${value}px;
+            border-top-left-radius: ${newValue};
+            border-bottom-left-radius: ${newValue};
         }
         `;
     }
