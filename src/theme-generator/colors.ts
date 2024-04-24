@@ -299,7 +299,7 @@ const generate = () => {
         if (typeof value === 'object') {
             for (const [shade, hex] of Object.entries(value)) {
                 groupedCSS += `
-                .${key}-${shade} {
+                .color-${key}-${shade} {
                     color: ${hex};
                 }
                 .bg-${key}-${shade} {
@@ -314,7 +314,7 @@ const generate = () => {
             }
         } else {
             groupedCSS += `
-            .${key} {
+            .color-${key} {
                 color: ${value};
             }
             .bg-${key} {

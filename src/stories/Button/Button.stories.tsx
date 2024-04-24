@@ -51,7 +51,6 @@ export const Default = {
         <Button
             {...args}
             className='bg-cyan-500 border-solid border-3 border-bottom-dashed rounded-5'
-            onClick={() => alert("Default Button Clicked")}
         >
             Hello World
         </Button>

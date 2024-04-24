@@ -2,6 +2,7 @@ import React from "react";
 import { ButtonHTMLAttributes } from "react";
 import { LucideIcon } from "lucide-react";
 
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     theme: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
     size: 'xs' | 'sm' | 'md' | 'lg';
@@ -22,42 +23,20 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
-    theme = 'primary',
-    size = 'md',
-    block = false,
     disabled = false,
-    outline = false,
-    rounded = false,
-    shadow = false,
     loading = false,
     icon = 'none',
     iconPosition = 'left',
-    responsive = 'none',
-    className = '',
     style = {},
     testingName = '',
     onClick,
     children,
 }: ButtonProps) {
 
-    const getClassNames = () => [
-        'btn',
-        `btn-${theme}`,
-        `btn-${size}`,
-        block && 'btn-block',
-        responsive !== 'none' && `btn-${responsive}`,
-        icon !== 'none' && `icon-${iconPosition}`,
-        disabled && 'disabled',
-        outline && `btn-outline`,
-        rounded && `rounded-${size}`,
-        shadow && 'shadow',
-        loading && 'loading',
-        className,
-    ].filter(Boolean).join(' ');
 
     return (
         <button
-            className={getClassNames()}
+            className="px-5 pb-5 bg-red-500 pb-11 mb-5 "
             onClick={onClick}
             disabled={disabled || loading}
             style={style}
@@ -71,7 +50,7 @@ function Button({
             {
                 loading ? (
                     <>
-                        <span className="loading loading-spinner"></span>
+                        <span className="loading loading-spinner "></span>
                         loading
                     </>
                 ) : (

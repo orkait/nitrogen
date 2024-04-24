@@ -14,6 +14,8 @@ import positionGenerator from "./positions";
 import textGenerator from "./text";
 import visibilityGenerator from "./visibility";
 import zIndexGenerator from "./z-index";
+import interactivityGenerator from "./interactivity";
+import transformGenerator from "./transform";
 import fs from 'fs';
 
 const theme = {
@@ -33,6 +35,8 @@ const theme = {
     text: textGenerator(),
     visibility: visibilityGenerator(),
     zIndex: zIndexGenerator(),
+    transform: transformGenerator(),
+    interactivity: interactivityGenerator()
 }
 
 let css = Object.values(theme).join('\n');
@@ -41,7 +45,7 @@ let css = Object.values(theme).join('\n');
 // remove all new lines from css string and replace with empty string
 // remove all tabs from css string and replace with empty string
 
-css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
+// css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
 
 // write css to file
 fs.writeFileSync('theme.css', css);
