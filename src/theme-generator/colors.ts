@@ -306,10 +306,9 @@ const generate = () => {
                     background-color: ${hex};
                 }
 
-                .border-color-${key}-${shade} {
+                .border-${key}-${shade} {
                     border-color: ${hex};
                 }
-
                 `;
             }
         } else {
@@ -320,7 +319,7 @@ const generate = () => {
             .bg-${key} {
                 background-color: ${value};
             }
-            .border-color-${key} {
+            .border-${key} {
                 border-color: ${value};
             }
             `;
@@ -329,5 +328,11 @@ const generate = () => {
 
     return groupedCSS;
 }
+
+export const regexList = [
+    /(color|bg|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|100|50)/g,
+    /(color|bg|border)-(black|white|inherit|current|transparent)/g
+]
+
 
 export default generate;

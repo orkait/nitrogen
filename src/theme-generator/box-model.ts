@@ -2,13 +2,13 @@
 import { fixValue } from './types';
 import { SPACES } from "./constants";
 
-const directions: any = {
-    x: 'x',
-    y: 'y',
+const directions_extended: any = {
     t: 'top',
     r: 'right',
     b: 'bottom',
     l: 'left',
+    x: 'x',
+    y: 'y',
 }
 
 const generate = () => {
@@ -21,15 +21,15 @@ const generate = () => {
                     if (direction === 'x') {
                         groupedCSS += `
                         .${type}${direction}-${fixValue(key)} {
-                            ${type === 'p' ? 'padding-left' : 'margin-left'}: ${value};
-                            ${type === 'p' ? 'padding-right' : 'margin-right'}: ${value};
+                            ${type === 'p' ? 'padding-left' : 'margin-left'}: ${value + 'px'};
+                            ${type === 'p' ? 'padding-right' : 'margin-right'}: ${value + 'px'};
                         }
                         `;
                     } else {
                         groupedCSS += `
                         .${type}${direction}-${fixValue(key)} {
-                            ${type === 'p' ? 'padding-top' : 'margin-top'}: ${value};
-                            ${type === 'p' ? 'padding-bottom' : 'margin-bottom'}: ${value};
+                            ${type === 'p' ? 'padding-top' : 'margin-top'}: ${value + 'px'};
+                            ${type === 'p' ? 'padding-bottom' : 'margin-bottom'}: ${value + 'px'}
                         }
                         `;
                     }
@@ -37,8 +37,8 @@ const generate = () => {
                 }
 
                 groupedCSS += `
-                .${type}${directions[direction]}-${fixValue(key)} {
-                    ${type === 'p' ? 'padding-' : 'margin-'}${directions[direction]}: ${value};
+                .${type}${direction}-${fixValue(key)} {
+                    ${type === 'p' ? 'padding-' : 'margin-'}${directions_extended[direction]}: ${value + 'px'};
                 }
                 `;
 
@@ -47,5 +47,9 @@ const generate = () => {
     })
     return groupedCSS;
 }
+
+export const regexList = [
+    /p(t|r|b|l|x|y)-(15|14|13|12|11|10|9|8|7|6|5|4|3|2|1|0|half|1.5|0.5)/g,
+]
 
 export default generate;

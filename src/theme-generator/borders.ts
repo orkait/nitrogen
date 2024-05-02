@@ -106,7 +106,7 @@ const generateBorderWidths = () => {
     for (const [key, value] of toEntries(BORDER_WIDTHS)) {
         direction.forEach((dir) => {
             groupedCSS += `
-            .border-${dir}-${key} {
+            .border-${dir[0]}-${key} {
                 border-${dir}-width: ${value}px;
             }
             `;
@@ -130,7 +130,7 @@ const generateBorderStyles = () => {
     for (const [key, value] of toEntries(BORDER_STYLES)) {
         direction.forEach((dir) => {
             groupedCSS += `
-            .border-${dir}-${key} {
+            .border-${dir[0]}-${key} {
                 border-${dir}-style: ${value};
             }
             `;
@@ -148,5 +148,16 @@ const generateBorderProperties = () => {
         borderStyles: generateBorderStyles(),
     }).join('\n');
 }
+
+export const regexList = [
+    /rounded-?(t|r|b|l)?-(14|12|10|9|8|7|6|5|4|3|2|1|0|half|full)/g,
+    /border-?(t|r|b|l)?-(solid|dashed|dotted|double|none)/g,
+    /border-?(t|r|b|l)?-(4|3|2|1|0)/g,
+]
+
+console.log(
+    generateBorderProperties()
+);
+
 
 export default generateBorderProperties;

@@ -45,7 +45,9 @@ export const Default = {
         loading: {
             control: { type: 'boolean' },
         },
-
+        hasRawStyling: {
+            control: { type: 'boolean' },
+        }
     },
     render: (args: JSX.IntrinsicAttributes & ButtonProps) => (
         <Button

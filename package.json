@@ -6,16 +6,19 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
+		"build:theme": "bun ./src/theme-generator/theme.ts",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
+		"test:theme": "bun test 'src/theme-generator/'",
 		"test": "vitest --watch=false",
 		"test:watch": "vitest --watch"
 	},
 	"dependencies": {
 		"jest": "^29.7.0",
 		"lucide-react": "^0.292.0",
+		"normalize.css": "^8.0.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},
@@ -47,6 +50,7 @@
 		"eslint-plugin-storybook": "^0.6.15",
 		"jsdom": "^24.0.0",
 		"postcss": "^8.4.38",
+		"sass": "^1.75.0",
 		"scss": "^0.2.4",
 		"storybook": "7.5.2",
 		"ts-jest": "^29.1.2",

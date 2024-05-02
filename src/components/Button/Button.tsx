@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonHTMLAttributes } from "react";
 import { LucideIcon } from "lucide-react";
-
+import styles from "./button.module.scss";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     theme: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
@@ -27,16 +27,28 @@ function Button({
     loading = false,
     icon = 'none',
     iconPosition = 'left',
+    theme = 'primary',
     style = {},
     testingName = '',
     onClick,
     children,
 }: ButtonProps) {
 
+    const buttonThemeCss = {
+        primary: 'bg-blue-500 color-white',
+        secondary: 'bg-gray-500 color-white',
+        accent: 'bg-yellow-500 color-white',
+        info: 'bg-blue-500 color-white',
+        success: 'bg-green-500 color-white',
+        warning: 'bg-yellow-500 color-white',
+        error: 'bg-red-500 color-white',
+        ghost: 'bg-transparent color-gray-500',
+        link: 'bg-transparent color-blue-500',
+    }
 
     return (
         <button
-            className="px-5 pb-5 bg-red-500 pb-11 mb-5 "
+            className={`${styles.button} user-select-none  rounded-6 px-5 py-2 ${buttonThemeCss[theme]} border-2 border-solid cursor-pointer`}
             onClick={onClick}
             disabled={disabled || loading}
             style={style}

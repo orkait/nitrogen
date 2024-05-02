@@ -1,0 +1,23 @@
+.input-field {
+    position: relative;
+}
+.input-field input {
+    border-radius: 6px;
+    outline: none;
+}
+.input-field label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    top: 0;
+    left: 15px;
+    padding: 0 2px;
+    border-radius: 10px;
+}

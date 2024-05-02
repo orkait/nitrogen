@@ -9,6 +9,7 @@ const INTERACTIVITY = {
     'tap-highlight-color-transparent': '-webkit-tap-highlight-color: rgba(0,0,0,0)',
 }
 
+
 const generate = () => {
     let groupedCSS = '';
     for (const [key, value] of Object.entries(INTERACTIVITY)) {

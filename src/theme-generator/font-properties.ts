@@ -36,7 +36,7 @@ const generate = () => {
     for (const [key, value] of toEntries(FONT_SIZE)) {
         groupedCSS += `
         .font-size-${fixValue(key)} {
-            font-size: ${value};
+            font-size: ${value}px;
         }
         `;
     }

@@ -1,4 +1,4 @@
-import borderGenerator from "./borders";
+import borderGenerator, { regexList as borderRegexList } from "./borders";
 import boxModelGenerator from "./box-model";
 import boxShadowGenerator from "./box-shadow";
 import colorGenerator from "./colors";
@@ -16,9 +16,10 @@ import visibilityGenerator from "./visibility";
 import zIndexGenerator from "./z-index";
 import interactivityGenerator from "./interactivity";
 import transformGenerator from "./transform";
-import fs from 'fs';
+import normalizeGenerator from "./normalize";
 
 const theme = {
+    normalize: normalizeGenerator(),
     border: borderGenerator(),
     boxModel: boxModelGenerator(),
     boxShadow: boxShadowGenerator(),
@@ -39,16 +40,21 @@ const theme = {
     interactivity: interactivityGenerator()
 }
 
-let css = Object.values(theme).join('\n');
+console.log(borderRegexList);
 
-// remove all spaces from css string and replace with empty string
-// remove all new lines from css string and replace with empty string
-// remove all tabs from css string and replace with empty string
+// if (module.parent === null) {
+//     let css = Object.values(theme).join('\n');
 
-// css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
+//     // remove all spaces from css string and replace with empty string
+//     // remove all new lines from css string and replace with empty string
+//     // remove all tabs from css string and replace with empty string
 
-// write css to file
-fs.writeFileSync('theme.css', css);
-console.log(css);
+//     // css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
+
+//     // write css to file
+//     // fs.writeFileSync('theme.css', css);
+//     // console.log(css);
+// }
+
 
 export default theme;

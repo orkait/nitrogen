@@ -1,16 +1,16 @@
 import { fixValue } from './types';
 
 const BOX_SHADOW_XOFFSETS = {
-    'x-4': '-4px',
-    'x-2': '-2px',
+    'nx4': '-4px',
+    'nx2': '-2px',
     'x0': '0px',
     'x2': '2px',
     'x4': '4px',
 };
 
 const BOX_SHADOW_YOFFSETS = {
-    'y-4': '-4px',
-    'y-2': '-2px',
+    'ny4': '-4px',
+    'ny2': '-2px',
     'y0': '0px',
     'y2': '2px',
     'y4': '4px',
@@ -51,5 +51,8 @@ const generateBoxShadow = () => {
     return groupedCSS;
 }
 
+export const regexList = [
+    /shadow-(nx4|nx2|x0|x2|x4)-(ny4|ny2|y0|y2|y4)-(0|2|4|6|8)-(100|200|300|400)/g
+]
 
 export default generateBoxShadow;
