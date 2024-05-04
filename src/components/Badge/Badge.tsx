@@ -1,15 +1,30 @@
+import css from "@/theme-generator/magic";
+import { themeType } from "@/types/type";
 import React from "react";
 import { HTMLAttributes } from "react";
-import { LucideIcon } from "lucide-react";
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-    theme: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
+    theme: themeType;
     size: 'xs' | 'sm' | 'md' | 'lg';
     style?: React.CSSProperties;
     primaryText: string;
     secondaryText?: string;
     testingName: string;
+    rounded?: boolean;
 }
+
+const themeClassNames: Record<themeType, string> = {
+    primary: 'bg-blue-500 color-white',
+    secondary: 'bg-gray-500 color-white',
+    accent: 'bg-yellow-500 color-white',
+    info: 'bg-blue-500 color-white',
+    success: 'bg-green-500 color-white',
+    warning: 'bg-yellow-500 color-white',
+    error: 'bg-red-500 color-white',
+    ghost: 'bg-transparent color-gray-500',
+    link: 'bg-transparent color-blue-500',
+}
+
 
 function Badge({
     theme = 'primary',
@@ -17,25 +32,39 @@ function Badge({
     testingName = '',
     primaryText = '',
     secondaryText = '',
+    rounded = false,
+    className = '',
 }: BadgeProps) {
 
-    const buttonThemeCss = {
-        primary: 'bg-blue-500 color-white',
-        secondary: 'bg-gray-500 color-white',
-        accent: 'bg-yellow-500 color-white',
-        info: 'bg-blue-500 color-white',
-        success: 'bg-green-500 color-white',
-        warning: 'bg-yellow-500 color-white',
-        error: 'bg-red-500 color-white',
-        ghost: 'bg-transparent color-gray-500',
-        link: 'bg-transparent color-blue-500',
-    }
+    const primaryBadgeClasses = `
+        display-flex
+        align-items-center
+        justify-content-center
+        user-select-none
+        font-size-5
+        display-flex
+        px-2
+        py-1
+    `
+
+    const secondaryBadgeClasses = `
+        user-select-none
+        display-flex
+        font-size-5
+        px-2
+        py-1
+    `
 
     return (
-        <div className="display-flex gap-0 m-0">
-
+        <div className={css(`
+            display-flex
+            border-2
+            border-solid
+            ${rounded ? 'rounded-6' : ''}
+        `)}
+        >
             <div
-                className={`user-select-none font-size-5 display-flex  rounded-6 px-2 py-1 ${buttonThemeCss[theme]} border-2 border-solid cursor-pointer`}
+                className={css(`${primaryBadgeClasses} ${themeClassNames[theme]} ${className}`)}
                 style={style}
                 data-testing-id={testingName}
             >
@@ -43,7 +72,7 @@ function Badge({
             </div>
             {
                 secondaryText && (
-                    <div className={`user-select-none display-flex font-size-5  rounded-6 px-2 py-1 ${buttonThemeCss[theme]} border-2 border-solid cursor-pointer`}>
+                    <div className={secondaryBadgeClasses}>
                         {secondaryText}
                     </div>
                 )

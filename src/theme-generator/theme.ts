@@ -1,21 +1,21 @@
 import borderGenerator, { regexList as borderRegexList } from "./borders";
-import boxModelGenerator from "./box-model";
-import boxShadowGenerator from "./box-shadow";
-import colorGenerator from "./colors";
-import coordinatesGenerator from "./coordinates";
-import dimensionsGenerator from "./dimensions";
-import displayGenerator from "./displays";
-import flexGenerator from "./flex";
-import fontPropertiesGenerator from "./font-properties";
-import listStyleGenerator from "./list-style";
-import opacityGenerator from "./opacity";
-import overflowGenerator from "./overflows";
-import positionGenerator from "./positions";
-import textGenerator from "./text";
-import visibilityGenerator from "./visibility";
-import zIndexGenerator from "./z-index";
-import interactivityGenerator from "./interactivity";
-import transformGenerator from "./transform";
+import boxModelGenerator, { regexList as boxModelRegexList } from "./box-model";
+import boxShadowGenerator, { regexList as boxShadowRegexList } from "./box-shadow";
+import colorGenerator, { regexList as colorRegexList } from "./colors";
+import coordinatesGenerator, { regexList as coordinatesRegexList } from "./coordinates";
+import dimensionsGenerator, { regexList as dimensionsRegexList } from "./dimensions";
+import displayGenerator, { regexList as displayRegexList } from "./displays";
+import flexGenerator, { regexList as flexRegexList } from "./flex";
+import fontPropertiesGenerator, { regexList as fontPropertiesRegexList } from "./font-properties";
+import listStyleGenerator, { regexList as listStyleRegexList } from "./list-style";
+import opacityGenerator, { regexList as opacityRegexList } from "./opacity";
+import overflowGenerator, { regexList as overflowRegexList } from "./overflows";
+import positionGenerator, { regexList as positionRegexList } from "./positions";
+import textGenerator, { regexList as textRegexList } from "./text";
+import visibilityGenerator, { regexList as visibilityRegexList } from "./visibility";
+import zIndexGenerator, { regexList as zIndexRegexList } from "./z-index";
+import interactivityGenerator, { regexList as interactivityRegexList } from "./interactivity";
+import transformGenerator, { regexList as transformRegexList } from "./transform";
 import normalizeGenerator from "./normalize";
 
 const theme = {
@@ -23,7 +23,7 @@ const theme = {
     border: borderGenerator(),
     boxModel: boxModelGenerator(),
     boxShadow: boxShadowGenerator(),
-    color: colorGenerator(),
+    color: colorGenerator(false).css,
     coordinates: coordinatesGenerator(),
     dimensions: dimensionsGenerator(),
     display: displayGenerator(),
@@ -40,21 +40,25 @@ const theme = {
     interactivity: interactivityGenerator()
 }
 
-console.log(borderRegexList);
-
-// if (module.parent === null) {
-//     let css = Object.values(theme).join('\n');
-
-//     // remove all spaces from css string and replace with empty string
-//     // remove all new lines from css string and replace with empty string
-//     // remove all tabs from css string and replace with empty string
-
-//     // css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
-
-//     // write css to file
-//     // fs.writeFileSync('theme.css', css);
-//     // console.log(css);
-// }
-
+export const mainRegexList = [
+    ...borderRegexList,
+    ...boxModelRegexList,
+    ...boxShadowRegexList,
+    ...colorRegexList,
+    ...coordinatesRegexList,
+    ...dimensionsRegexList,
+    ...displayRegexList,
+    ...flexRegexList,
+    ...fontPropertiesRegexList,
+    ...listStyleRegexList,
+    ...opacityRegexList,
+    ...overflowRegexList,
+    ...positionRegexList,
+    ...textRegexList,
+    ...visibilityRegexList,
+    ...zIndexRegexList,
+    ...transformRegexList,
+    ...interactivityRegexList
+]
 
 export default theme;

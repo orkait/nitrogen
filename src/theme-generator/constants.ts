@@ -1,3 +1,5 @@
+import { constructKeys } from "./types";
+
 export const SPACES = {
     0: 0,
     0.5: 2,
@@ -37,9 +39,8 @@ export const DIMENSIONS = {
 } as const;
 
 
-
-
-
+export const SPACES_REGEX_KEYS = constructKeys(Object.keys(SPACES));
+export const DIMENSIONS_REGEX_KEYS = constructKeys(Object.keys(DIMENSIONS));
 
 
 

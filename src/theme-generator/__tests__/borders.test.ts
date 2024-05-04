@@ -4,6 +4,14 @@ describe('App', () => {
     it('check if regex mathes for borders', () => {
         const borderList = [
             {
+                test: 'rounded-r-10',
+                outcome: true
+            },
+            {
+                test: 'rounded-15',
+                outcome: false
+            },
+            {
                 test: 'border-solid',
                 outcome: true
             },

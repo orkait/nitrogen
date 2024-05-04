@@ -1,4 +1,4 @@
-import { toEntries } from "./types";
+import { constructKeys, toEntries } from "./types";
 
 export const OVERFLOWS = {
     auto: 'auto',
@@ -6,6 +6,8 @@ export const OVERFLOWS = {
     visible: 'visible',
     scroll: 'scroll',
 } as const;
+
+const REGEX_OVERFLOW_KEYS = constructKeys(Object.keys(OVERFLOWS));
 
 const generate = () => {
     let groupedCSS = '';
@@ -19,5 +21,11 @@ const generate = () => {
 
     return groupedCSS;
 }
+
+const regexStrings = [
+    `overflow-(${REGEX_OVERFLOW_KEYS})$\\b`
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
 export default generate;

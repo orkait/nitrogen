@@ -1,4 +1,4 @@
-import { toEntries } from './types';
+import { constructKeys, toEntries } from './types';
 
 export const Z_INDEXES = {
     0: 0,
@@ -14,6 +14,8 @@ export const Z_INDEXES = {
     10: 10,
 } as const;
 
+const REGEX_Z_INDEXES = constructKeys(Object.keys(Z_INDEXES));
+
 const generate = () => {
     let groupedCSS = '';
     for (const [key, value] of toEntries(Z_INDEXES)) {
@@ -25,5 +27,11 @@ const generate = () => {
     }
     return groupedCSS;
 }
+
+const regexStrings = [
+    `z-index-(${REGEX_Z_INDEXES})$\\b`
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
 export default generate;

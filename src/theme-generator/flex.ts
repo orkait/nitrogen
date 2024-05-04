@@ -1,17 +1,17 @@
-import { toEntries, fixValue } from './types';
+import { toEntries, fixValue, constructKeys } from './types';
 import { SPACES } from './constants';
 
 export const FLEX_DIRECTIONS = {
     row: 'row',
     column: 'column',
-    rowReverse: 'row-reverse',
-    columnReverse: 'column-reverse',
+    'row-reverse': 'row-reverse',
+    'column-reverse': 'column-reverse',
 } as const;
 
 export const FLEX_WRAPS = {
     wrap: 'wrap',
     nowrap: 'nowrap',
-    wrapReverse: 'wrap-reverse',
+    'wrap-reverse': 'wrap-reverse',
 } as const;
 
 export const JUSTIFY_CONTENTS = {
@@ -181,5 +181,36 @@ const generate = () => {
     `
     return groupedCSS;
 }
+
+const REGEX_FLEX_DIRECTION_KEYS = constructKeys(Object.keys(FLEX_DIRECTIONS));
+const REGEX_FLEX_WRAP_KEYS = constructKeys(Object.keys(FLEX_WRAPS));
+const REGEX_JUSTIFY_CONTENT_KEYS = constructKeys(Object.keys(JUSTIFY_CONTENTS));
+const REGEX_ALIGN_ITEMS_KEYS = constructKeys(Object.keys(ALIGN_ITEMS));
+const REGEX_ALIGN_SELF_KEYS = constructKeys(Object.keys(ALIGN_SELF));
+const REGEX_JUSTIFY_SELF_KEYS = constructKeys(Object.keys(JUSTIFY_SELF));
+const REGEX_VERTICAL_ALIGN_KEYS = constructKeys(Object.keys(VERTICAL_ALIGNS));
+const REGEX_FLEX_GROW_KEYS = constructKeys(Object.keys(FLEX_GROWS));
+const REGEX_FLEX_SHRINK_KEYS = constructKeys(Object.keys(FLEX_SHRINKS));
+const REGEX_FLEX_BASIS_KEYS = constructKeys(Object.keys(FLEX_BASIS));
+const REGEX_GAP_KEYS = constructKeys(Object.keys(SPACES));
+
+
+const regexStrings = [
+    `flex-direction-(${REGEX_FLEX_DIRECTION_KEYS})$(?![.\\d])\\b`,
+    `flex-wrap-(${REGEX_FLEX_WRAP_KEYS})$(?![.\\d])\\b`,
+    `justify-content-(${REGEX_JUSTIFY_CONTENT_KEYS})$(?![.\\d])\\b`,
+    `align-items-(${REGEX_ALIGN_ITEMS_KEYS})$(?![.\\d])\\b`,
+    `align-self-(${REGEX_ALIGN_SELF_KEYS})$(?![.\\d])\\b`,
+    `justify-self-(${REGEX_JUSTIFY_SELF_KEYS})$(?![.\\d])\\b`,
+    `vertical-align-(${REGEX_VERTICAL_ALIGN_KEYS})$(?![.\\d])\\b`,
+    `flex-grow-(${REGEX_FLEX_GROW_KEYS})$(?![.\\d])\\b`,
+    `flex-shrink-(${REGEX_FLEX_SHRINK_KEYS})$(?![.\\d])\\b`,
+    `flex-basis-(${REGEX_FLEX_BASIS_KEYS})$(?![.\\d])\\b`,
+    `gap-(${REGEX_GAP_KEYS})$(?![.\\d])\\b`,
+]
+
+export const regexList = regexStrings.map((regex) => {
+    return new RegExp(regex, 'g');
+});
 
 export default generate;

@@ -1,7 +1,8 @@
-import { toEntries, fixValue } from "./types";
+import { toEntries, fixValue, constructKeys } from "./types";
 
 export const FONT_SIZE = {
     0: 0,
+    4: 8,
     4.5: 9,
     5: 10,
     5.5: 11,
@@ -30,12 +31,15 @@ export const FONT_WEIGHT = {
 } as const;
 
 
+const REGEX_FONT_KEYS = constructKeys(Object.keys(FONT_SIZE));
+const REGEX_FONT_WEIGHT_KEYS = constructKeys(Object.keys(FONT_WEIGHT));
+
 
 const generate = () => {
     let groupedCSS = '';
     for (const [key, value] of toEntries(FONT_SIZE)) {
         groupedCSS += `
-        .font-size-${fixValue(key)} {
+        .font-${fixValue(key)} {
             font-size: ${value}px;
         }
         `;
@@ -43,7 +47,7 @@ const generate = () => {
 
     for (const [key, value] of toEntries(FONT_WEIGHT)) {
         groupedCSS += `
-        .font-weight-${key} {
+        .font-${key} {
             font-weight: ${value};
         }
         `;
@@ -51,5 +55,13 @@ const generate = () => {
 
     return groupedCSS;
 }
+
+const regexStrings = [
+    `font-(${REGEX_FONT_KEYS})$\\b`,
+    `font-(${REGEX_FONT_WEIGHT_KEYS})$\\b`,
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
+
 
 export default generate;

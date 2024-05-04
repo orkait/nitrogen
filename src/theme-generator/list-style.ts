@@ -1,4 +1,4 @@
-import { toEntries } from './types';
+import { constructKeys, toEntries } from './types';
 
 export const LIST_STYLE = {
     none: 'none',
@@ -6,9 +6,11 @@ export const LIST_STYLE = {
     circle: 'circle',
     square: 'square',
     decimal: 'decimal',
-    decimalLeadingZero: 'decimal-leading-zero',
-    lowerRoman: 'lower-roman',
+    'decimal-leading-zero': 'decimal-leading-zero',
+    'lower-roman': 'lower-roman',
 } as const;
+
+const REGEX_LIST_STYLE_KEYS = constructKeys(Object.keys(LIST_STYLE));
 
 const generate = () => {
     let groupedCSS = '';
@@ -22,4 +24,9 @@ const generate = () => {
     return groupedCSS;
 }
 
+const regexStrings = [
+    `list-style-(${REGEX_LIST_STYLE_KEYS})$\b`,
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 export default generate;

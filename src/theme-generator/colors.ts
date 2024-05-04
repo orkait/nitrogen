@@ -1,9 +1,6 @@
-export const colors = {
-    inherit: 'inherit',
-    current: 'currentColor',
-    transparent: 'transparent',
-    black: '#000',
-    white: '#fff',
+import { constructKeys } from "./types";
+
+const color_base = {
     slate: {
         50: '#f8fafc',
         100: '#f1f5f9',
@@ -292,47 +289,113 @@ export const colors = {
     },
 }
 
-const generate = () => {
+const color_others = {
+    inherit: 'inherit',
+    current: 'currentColor',
+    transparent: 'transparent',
+    black: '#000',
+    white: '#fff',
+}
+
+export const colors = {
+    ...color_base,
+    ...color_others,
+}
+
+const strengths = {
+    50: 50,
+    100: 100,
+    200: 200,
+    300: 300,
+    400: 400,
+    500: 500,
+    600: 600,
+    700: 700,
+    800: 800,
+    900: 900,
+    950: 950,
+}
+
+
+const REGEX_COLOR_BASE = constructKeys(Object.keys(color_base));
+const REGEX_COLOR_OTHERS = constructKeys(Object.keys(color_others));
+const REGEX_STRENGTHS = constructKeys(Object.keys(strengths));
+
+
+const generate = (hasKeysOnly = false) => {
     let groupedCSS = '';
+    const colorMapping: {
+        [key: string]: string
+    } = {};
+
+    const bgMapping: {
+        [key: string]: string
+    } = {};
+
+    const borderMapping: {
+        [key: string]: string
+    } = {}
 
     for (const [key, value] of Object.entries(colors)) {
         if (typeof value === 'object') {
             for (const [shade, hex] of Object.entries(value)) {
-                groupedCSS += `
-                .color-${key}-${shade} {
-                    color: ${hex};
+                if (hasKeysOnly) {
+                    colorMapping[`color-${key}-${shade}`] = hex;
+                    bgMapping[`bg-${key}-${shade}`] = hex;
+                    borderMapping[`borde-${key}-${shade}`] = hex;
+                } else {
+                    groupedCSS += `
+                    .color-${key}-${shade} {
+                        color: ${hex};
+                    }
+                    .bg-${key}-${shade} {
+                        background-color: ${hex};
+                    }
+    
+                    .border-${key}-${shade} {
+                        border-color: ${hex};
+                    }
+                    `;
                 }
-                .bg-${key}-${shade} {
-                    background-color: ${hex};
-                }
-
-                .border-${key}-${shade} {
-                    border-color: ${hex};
-                }
-                `;
             }
         } else {
-            groupedCSS += `
-            .color-${key} {
-                color: ${value};
-            }
-            .bg-${key} {
-                background-color: ${value};
-            }
-            .border-${key} {
-                border-color: ${value};
-            }
+            if (hasKeysOnly) {
+                if (key === 'black' || key === 'white') {
+                    colorMapping[`color-${key}`] = value;
+                    bgMapping[`bg-${key}`] = value;
+                    borderMapping[`border-${key}`] = value;
+                }
+            } else {
+                groupedCSS += `
+                .color-${key} {
+                    color: ${value};
+                }
+                .bg-${key} {
+                    background-color: ${value};
+                }
+                .border-${key} {
+                    border-color: ${value};
+                }
             `;
+            }
+
         }
     }
 
-    return groupedCSS;
+    return {
+        css: groupedCSS,
+        colorMapping,
+        bgMapping,
+        borderMapping,
+    }
 }
 
-export const regexList = [
-    /(color|bg|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|100|50)/g,
-    /(color|bg|border)-(black|white|inherit|current|transparent)/g
+const regexStrings = [
+    `color-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
+    `bg-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
+    `border-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
 ]
 
+export const regexList = regexStrings.map((str) => new RegExp(str, 'g'));
 
 export default generate;

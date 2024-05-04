@@ -1,4 +1,4 @@
-import { fixValue } from "./types";
+import { constructKeys, fixValue } from "./types";
 
 export const TEXT_ALIGNS = {
     left: 'left',
@@ -109,5 +109,26 @@ const generate = () => {
 
     return groupedCSS;
 }
+
+const REGEX_LETTER_SPACING = constructKeys(Object.keys(LETTER_SPACING));
+const REGEX_LINE_HEIGHT = constructKeys(Object.keys(LINE_HEIGHT));
+const REGEX_TEXT_ALIGNS = constructKeys(Object.keys(TEXT_ALIGNS));
+const REGEX_TEXT_TRANSFORM = constructKeys(Object.keys(TEXT_TRANSFORM));
+const REGEX_TEXT_DECORATION = constructKeys(Object.keys(TEXT_DECORATION));
+const REGEX_TEXT_OVERFLOW = constructKeys(Object.keys(TEXT_OVERFLOW));
+const REGEX_WHITE_SPACE = constructKeys(Object.keys(WHITE_SPACE));
+
+
+const regexStrings = [
+    `letter-spacing-(${REGEX_LETTER_SPACING})$\\b`,
+    `line-height-(${REGEX_LINE_HEIGHT})$\\b`,
+    `text-align-(${REGEX_TEXT_ALIGNS})$\\b`,
+    `text-transform-(${REGEX_TEXT_TRANSFORM})$\\b`,
+    `text-decoration-(${REGEX_TEXT_DECORATION})$\\b`,
+    `text-overflow-(${REGEX_TEXT_OVERFLOW})$\\b`,
+    `white-space-(${REGEX_WHITE_SPACE})$\\b`,
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
 export default generate;

@@ -16,7 +16,7 @@ export default meta;
 export const Default = {
     argTypes: {
         theme: {
-            options: ['primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
+            options: ['primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error', 'ghost', 'link', 'none'],
             control: { type: 'select' },
         },
         text: {
@@ -52,7 +52,6 @@ export const Default = {
     render: (args: JSX.IntrinsicAttributes & ButtonProps) => (
         <Button
             {...args}
-            className='bg-cyan-500 border-solid border-3 border-bottom-dashed rounded-5'
         >
             Hello World
         </Button>

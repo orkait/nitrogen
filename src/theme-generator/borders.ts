@@ -1,6 +1,6 @@
-import { toEntries } from "./types";
+import { constructKeys, toEntries } from "./types";
 
-export const BORDER_RADII = {
+const BORDER_RADII = {
     0: 0,
     1: 1,
     2: 2,
@@ -34,23 +34,10 @@ export const BORDER_STYLES = {
     none: 'none',
 } as const;
 
-// border-width
-// border-top-width
-// border-right-width
-// border-bottom-width
-// border-left-width
-// border-width (aggregated)
-// border-style
-// border-top-style
-// border-right-style
-// border-bottom-style
-// border-left-style
-// border-color
-// border-radius
-// border-top-left-radius
-// border-top-right-radius
-// border-bottom-left-radius
-// border-bottom-right-radius
+const BORDER_RADII_REGEX_KEYS = constructKeys(Object.keys(BORDER_RADII));
+const BORDER_WIDTHS_REGEX_KEYS = constructKeys(Object.keys(BORDER_WIDTHS));
+const BORDER_STYLES_REGEX_KEYS = constructKeys(Object.keys(BORDER_STYLES));
+
 
 const direction = ['top', 'right', 'bottom', 'left'];
 
@@ -149,15 +136,26 @@ const generateBorderProperties = () => {
     }).join('\n');
 }
 
-export const regexList = [
-    /rounded-?(t|r|b|l)?-(14|12|10|9|8|7|6|5|4|3|2|1|0|half|full)/g,
-    /border-?(t|r|b|l)?-(solid|dashed|dotted|double|none)/g,
-    /border-?(t|r|b|l)?-(4|3|2|1|0)/g,
+const regexStrings = [
+    `rounded-t-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+    `rounded-r-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+    `rounded-b-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+    `rounded-l-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+    `rounded-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+
+    `border-t-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-r-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-b-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-l-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+
+    `border-t-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-r-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-b-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-l-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
+    `border-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
 ]
 
-console.log(
-    generateBorderProperties()
-);
-
+export const regexList = regexStrings.map((str) => (new RegExp(str, 'g')));
 
 export default generateBorderProperties;

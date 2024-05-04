@@ -1,3 +1,4 @@
+import { constructKeys } from "./types";
 
 const OPACITIES = {
     0: 0,
@@ -11,7 +12,9 @@ const OPACITIES = {
     80: 0.8,
     90: 0.9,
     100: 1,
-}
+} as const;
+
+const REGEX_OPACITIES = constructKeys(Object.keys(OPACITIES));
 
 const generateOpacity = () => {
     let groupedCSS = '';
@@ -25,5 +28,10 @@ const generateOpacity = () => {
     return groupedCSS;
 }
 
+const regexStrings = [
+    `opacity-(${REGEX_OPACITIES})$\\b`
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
 export default generateOpacity;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { fixValue } from './types';
-import { SPACES } from "./constants";
+import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 
 const directions_extended: any = {
     t: 'top',
@@ -9,15 +9,22 @@ const directions_extended: any = {
     l: 'left',
     x: 'x',
     y: 'y',
+    '': ''
 }
 
 const generate = () => {
     let groupedCSS = '';
     ['p', 'm'].forEach((type) => {
-        ['t', 'r', 'b', 'l', 'x', 'y'].forEach((direction) => {
+        Object.keys(directions_extended).forEach((direction) => {
             for (const [key, value] of Object.entries(SPACES)) {
-
-                if (direction === 'x' || direction === 'y') {
+                if (direction === '') {
+                    groupedCSS += `.${type}-${fixValue(key)} {
+                        ${type === 'p' ? 'padding' : 'margin'}: ${value + 'px'};
+                    }
+                    `;
+                    continue;
+                }
+                else if (direction === 'x' || direction === 'y') {
                     if (direction === 'x') {
                         groupedCSS += `
                         .${type}${direction}-${fixValue(key)} {
@@ -48,8 +55,23 @@ const generate = () => {
     return groupedCSS;
 }
 
-export const regexList = [
-    /p(t|r|b|l|x|y)-(15|14|13|12|11|10|9|8|7|6|5|4|3|2|1|0|half|1.5|0.5)/g,
+const regexStrings = [
+    `pt-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `pr-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `pb-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `pl-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `px-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `py-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+
+    `mt-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `mr-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `mb-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `ml-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `mx-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `my-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
 ]
+
+export const regexList = regexStrings.map((str) => (new RegExp(str, 'g')));
+
 
 export default generate;

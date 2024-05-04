@@ -7,3 +7,11 @@ export const toEntries = <T extends Partial<Record<string, unknown>>>(obj: T) =>
 export const fixValue = (value: string | number) => {
     return value.toString().replace('.', '\\.');
 }
+
+export const constructKeys = (keys: string[]) => {
+    let concatString = "";
+    for (const key of keys) {
+        concatString += key.replace(".", "\\.") + '|';
+    }
+    return concatString.slice(0, -1);
+}

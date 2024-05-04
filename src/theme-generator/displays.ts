@@ -1,4 +1,4 @@
-import { toEntries } from "./types";
+import { toEntries, constructKeys } from "./types";
 
 export const DISPLAYS = {
     flex: 'flex',
@@ -7,6 +7,8 @@ export const DISPLAYS = {
     grid: 'grid',
     none: 'none',
 } as const;
+
+const REGEX_DISPLAY_KEYS = constructKeys(Object.keys(DISPLAYS));
 
 const generate = () => {
     let groupedCSS = '';
@@ -19,5 +21,11 @@ const generate = () => {
     }
     return groupedCSS;
 }
+
+const regexStrings = [
+    `display-(${REGEX_DISPLAY_KEYS})$\\b`,
+]
+
+export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
 export default generate;

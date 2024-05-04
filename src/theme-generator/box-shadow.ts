@@ -1,16 +1,16 @@
-import { fixValue } from './types';
+import { constructKeys, fixValue } from './types';
 
 const BOX_SHADOW_XOFFSETS = {
-    'nx4': '-4px',
-    'nx2': '-2px',
+    'neg-x4': '-4px',
+    'neg-x2': '-2px',
     'x0': '0px',
     'x2': '2px',
     'x4': '4px',
 };
 
 const BOX_SHADOW_YOFFSETS = {
-    'ny4': '-4px',
-    'ny2': '-2px',
+    'neg-y4': '-4px',
+    'neg-y2': '-2px',
     'y0': '0px',
     'y2': '2px',
     'y4': '4px',
@@ -51,8 +51,15 @@ const generateBoxShadow = () => {
     return groupedCSS;
 }
 
-export const regexList = [
-    /shadow-(nx4|nx2|x0|x2|x4)-(ny4|ny2|y0|y2|y4)-(0|2|4|6|8)-(100|200|300|400)/g
+const REGEX_BOX_SHADOW_XOFFSETS = constructKeys(Object.keys(BOX_SHADOW_XOFFSETS));
+const REGEX_BOX_SHADOW_YOFFSETS = constructKeys(Object.keys(BOX_SHADOW_YOFFSETS));
+const REGEX_BOX_SHADOW_COLORS = constructKeys(Object.keys(BOX_SHADOW_COLORS));
+const REGEX_BLUR_RADII = constructKeys(Object.keys(BLUR_RADII));
+
+const regexStrings = [
+    `shadow-(${REGEX_BOX_SHADOW_XOFFSETS})-(${REGEX_BOX_SHADOW_YOFFSETS})-(${REGEX_BLUR_RADII})-(${REGEX_BOX_SHADOW_COLORS})`,
 ]
+
+export const regexList = regexStrings.map((regexString) => new RegExp(regexString, 'g'));
 
 export default generateBoxShadow;
