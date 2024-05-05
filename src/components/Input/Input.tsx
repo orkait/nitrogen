@@ -12,6 +12,18 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     hasLegend?: boolean;
 }
 
+const inputThemeMapping = {
+    primary: 'border-blue-500 ',
+    secondary: 'border-gray-500 ',
+    accent: 'border-yellow-500 ',
+    info: 'border-blue-500 ',
+    success: 'border-green-500 ',
+    warning: 'border-yellow-500 ',
+    error: 'border-red-500 ',
+    ghost: 'border-transparent color-gray-500',
+    link: 'border-transparent color-blue-500',
+}
+
 function Input({
     onChange,
     theme = 'primary',
@@ -22,18 +34,6 @@ function Input({
     labelClassName = 'font-size-6 bg-white color-black',
 }: InputProps) {
 
-    const inputTHemeCss = {
-        primary: 'border-blue-500 ',
-        secondary: 'border-gray-500 ',
-        accent: 'border-yellow-500 ',
-        info: 'border-blue-500 ',
-        success: 'border-green-500 ',
-        warning: 'border-yellow-500 ',
-        error: 'border-red-500 ',
-        ghost: 'border-transparent color-gray-500',
-        link: 'border-transparent color-blue-500',
-    }
-
     return (
         <>
             {
@@ -41,11 +41,10 @@ function Input({
                     {icon}
                 </>
             }
-
             {hasLegend ? (
                 <div className={styles['input-field']}>
                     <input
-                        className={`border-2 border-solid ${inputTHemeCss[theme]} rounded-6 px-5 py-2 cursor-pointer`}
+                        className={`border-2 border-solid ${inputThemeMapping[theme]} rounded-6 px-5 py-2 cursor-pointer`}
                         onChange={onChange}
                     >
                     </input>
@@ -57,7 +56,7 @@ function Input({
                 </div>
             ) : (
                 <input
-                    className={`border-2 border-solid ${inputTHemeCss[theme]} rounded-6 px-5 py-2 cursor-pointer`}
+                    className={`border-2 border-solid ${inputThemeMapping[theme]} rounded-6 px-5 py-2 cursor-pointer`}
                     onChange={onChange}
                 >
                 </input>

@@ -108,6 +108,14 @@ summary {
 	display: list-item;
 }
 
+.test{
+    border: 1px solid red;
+}
+
+.test2{
+    border: 1px solid cyan;
+}
+
 `
 
 

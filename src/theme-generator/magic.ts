@@ -68,8 +68,7 @@ const css = (classNames: string) => {
         }
     }
 
-    nonMatchNames = [...new Set([...nonMatchNames])];
-    return Object.values(matchNames).join(' ').trim() + ' ' + [...nonMatchNames].join(' ').trim();
+    return Object.values(matchNames).join(' ').trim() + ' ' + nonMatchNames.join(' ').trim();
 }
 
 console.log(

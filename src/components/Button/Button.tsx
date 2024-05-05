@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonHTMLAttributes } from "react";
-import { LucideIcon } from "lucide-react";
-import styles from "./button.module.scss";
+import { Loader2Icon, LucideIcon } from "lucide-react";
+import styles from "./Button.module.scss";
 import css from "../../theme-generator/magic";
 
 type themeType = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link' | 'none';
@@ -58,6 +58,12 @@ const sizeMapping = {
     lg: 'font-9 px-5 py-3',
 }
 
+const loaderClasses = `
+    ${styles.spin}
+    ml-1
+    display-inline-flex
+    w-full
+`
 
 function Button({
     theme = 'primary',
@@ -90,6 +96,9 @@ function Button({
         font-bold
         user-select-none
         ${className}
+        display-inline-flex
+        align-items-center
+        justify-content-center
     `)
 
     return (
@@ -105,14 +114,13 @@ function Button({
                     {icon}
                 </>
             }
+            {children}
             {
-                loading ? (
-                    <>
-                        <span className="loading loading-spinner "></span>
-                        loading
-                    </>
-                ) : (
-                    children
+                loading && (
+                    <Loader2Icon
+                        size="1rem"
+                        className={loaderClasses}
+                    />
                 )
             }
             {

@@ -108,6 +108,14 @@ summary {
 	display: list-item;
 }
 
+.test{
+    border: 1px solid red;
+}
+
+.test2{
+    border: 1px solid cyan;
+}
+
 
 
         .rounded-0 {
@@ -6149,8 +6157,12 @@ summary {
             display: block;
         }
         
-        .display-inline {
-            display: inline;
+        .display-inline-flex {
+            display: inline-flex;
+        }
+        
+        .display-inline-block {
+            display: inline-block;
         }
         
         .display-grid {

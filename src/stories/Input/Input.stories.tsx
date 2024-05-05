@@ -15,19 +15,7 @@ export default meta;
 
 export const Default = {
     argTypes: {
-        theme: {
-            options: ['primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
-            control: { type: 'select' },
-        },
-        labelClassName: {
-            control: { type: 'text' },
-        },
-        hasLegend: {
-            control: { type: 'boolean' },
-        },
-        label: {
-            control: { type: 'text' },
-        },
+
     },
     render: (args: JSX.IntrinsicAttributes & InputProps) => (
         <Input

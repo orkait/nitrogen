@@ -3,7 +3,8 @@ import { toEntries, constructKeys } from "./types";
 export const DISPLAYS = {
     flex: 'flex',
     block: 'block',
-    inline: 'inline',
+    'inline-flex': 'inline-flex',
+    'inline-block': 'inline-block',
     grid: 'grid',
     none: 'none',
 } as const;
