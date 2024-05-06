@@ -1,4 +1,5 @@
 import { Button } from "./components"
+import { buttonSizeType } from "./components/Button/Button";
 import magicClasses from "./theme-generator/magic";
 import "./theme-generator/theme.css";
 
@@ -13,16 +14,15 @@ function App() {
                                 onClick={() => console.log('clicked')}
                                 className={magicClasses('m-4 border-solid border-3 border-bottom-dashed rounded-5')}
                                 theme={"primary"}
-                                size={size}
                                 disabled={false}
                                 outline={false}
                                 rounded={false}
                                 shadow={false}
                                 loading={false}
-                                iconPosition={"left"}
-                                responsive={"block"}
                                 text={""}
                                 testingName={""}
+                                size={size as buttonSizeType}
+                                block={false}
                             >
                                 Hello world
                             </Button>
@@ -45,14 +45,12 @@ function App() {
                     rounded={false}
                     shadow={false}
                     loading={false}
-                    iconPosition={"left"}
-                    responsive={"block"}
                     text={""}
                     testingName={""}
                 >
                     Hello world
                 </Button>
-             
+
             </div>
 
         </div>

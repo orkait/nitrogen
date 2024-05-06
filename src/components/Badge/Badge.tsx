@@ -1,11 +1,14 @@
 import css from "@/theme-generator/magic";
-import { themeType } from "@/types/type";
 import React from "react";
 import { HTMLAttributes } from "react";
 
+type sizeType = 'xs' | 'sm' | 'md' | 'lg';
+type themeType = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+
+
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
     theme: themeType;
-    size: 'xs' | 'sm' | 'md' | 'lg';
+    size: sizeType;
     style?: React.CSSProperties;
     primaryText: string;
     secondaryText?: string;
@@ -21,21 +24,17 @@ const primaryTextClassNames: Record<themeType, string> = {
     success: 'bg-green-500 color-white',
     warning: 'bg-yellow-500 color-white',
     error: 'bg-red-500 color-white',
-    ghost: 'bg-transparent color-gray-500',
-    link: 'bg-transparent color-blue-500',
 }
 
 // secondary are slightly darker than primary
 const secondaryTextClassNames: Record<themeType, string> = {
-    primary: 'bg-blue-600 color-white',
-    secondary: 'bg-gray-600 color-white',
-    accent: 'bg-yellow-600 color-white',
-    info: 'bg-blue-600 color-white',
-    success: 'bg-green-600 color-white',
-    warning: 'bg-yellow-600 color-white',
-    error: 'bg-red-600 color-white',
-    ghost: 'bg-transparent color-gray-400',
-    link: 'bg-transparent color-blue-400',
+    primary: 'bg-blue-700 color-white',
+    secondary: 'bg-gray-700 color-white',
+    accent: 'bg-yellow-700 color-white',
+    info: 'bg-blue-700 color-white',
+    success: 'bg-green-700 color-white',
+    warning: 'bg-yellow-700 color-white',
+    error: 'bg-red-700 color-white',
 }
 
 const primaryBadgeClasses = `
@@ -55,14 +54,20 @@ const secondaryBadgeClasses = `
     justify-content-center
     user-select-none
     font-size-5
-    px-2
-    py-1
 `
+
+const sizeMapping = {
+    xs: 'font-6.5 px-2 py-1',
+    sm: 'font-7 px-3 py-1.5',
+    md: 'font-8 px-4 py-2',
+    lg: 'font-9 px-5 py-3',
+}
+
 const getBadgeWrapperClasses = (isRounded: boolean) => css(`
     display-flex
-    border-2
+    border-1
     border-solid
-    ${isRounded ? 'rounded-6' : ''}
+    ${isRounded ? 'rounded-4' : ''}
 `)
 
 function Badge({
@@ -71,14 +76,14 @@ function Badge({
     testingName = '',
     primaryText = 'Primary',
     secondaryText = 'Secondary',
-    rounded = false,
+    rounded = true,
     className = '',
+    size = 'xs',
 }: BadgeProps) {
-
     return (
         <div className={getBadgeWrapperClasses(rounded)}>
             <div
-                className={css(`${primaryBadgeClasses} ${primaryTextClassNames[theme]} ${className}`)}
+                className={css(`${primaryBadgeClasses} ${sizeMapping[size]} ${primaryTextClassNames[theme]} ${className}`)}
                 style={style}
                 data-testing-id={testingName}
             >
@@ -87,7 +92,7 @@ function Badge({
             {
                 secondaryText && (
                     <div
-                        className={css(`${secondaryBadgeClasses} ${secondaryTextClassNames[theme]} ${className}`)}
+                        className={css(`${secondaryBadgeClasses} ${sizeMapping[size]} ${secondaryTextClassNames[theme]} ${className}`)}
                         style={style}
                         data-testing-id={testingName}
                     >

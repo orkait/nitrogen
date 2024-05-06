@@ -15,17 +15,7 @@ export default meta;
 
 export const Default = {
     argTypes: {
-        primaryText: {
-            control: { type: 'text' },
-            defaultValue: 'Default Badge',
-        },
-        secondaryText: {
-            control: { type: 'text' },
-        },
-        size: {
-            options: ['xs', 'sm', 'md', 'lg'],
-            control: { type: 'select' },
-        },
+
 
     },
     render: (args: JSX.IntrinsicAttributes & BadgeProps) => (

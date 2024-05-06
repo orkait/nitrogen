@@ -1,7 +1,5 @@
 import { InputHTMLAttributes } from "react";
 import { LucideIcon } from "lucide-react";
-import styles from "./input.module.scss";
-
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     theme: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
@@ -10,6 +8,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     labelClassName?: string;
     hasLegend?: boolean;
+    placeholder?: string;
+    onFocus?: () => void;
+    onBlur?: () => void;
+    hasAutocomplete?: boolean;
 }
 
 const inputThemeMapping = {
@@ -29,9 +31,10 @@ function Input({
     theme = 'primary',
     icon = 'none',
     iconPosition = 'left',
-    hasLegend = false,
-    label = '',
-    labelClassName = 'font-size-6 bg-white color-black',
+    placeholder = 'Name',
+    onFocus,
+    onBlur,
+    hasAutocomplete = false,
 }: InputProps) {
 
     return (
@@ -41,26 +44,16 @@ function Input({
                     {icon}
                 </>
             }
-            {hasLegend ? (
-                <div className={styles['input-field']}>
-                    <input
-                        className={`border-2 border-solid ${inputThemeMapping[theme]} rounded-6 px-5 py-2 cursor-pointer`}
-                        onChange={onChange}
-                    >
-                    </input>
-                    <label
-                        className={labelClassName}
-                    >
-                        {label}
-                    </label>
-                </div>
-            ) : (
-                <input
-                    className={`border-2 border-solid ${inputThemeMapping[theme]} rounded-6 px-5 py-2 cursor-pointer`}
-                    onChange={onChange}
-                >
-                </input>
-            )}
+
+            <input
+                className={`border-2 border-solid ${inputThemeMapping[theme]} rounded-6 px-5 py-2 cursor-pointer`}
+                onChange={onChange}
+                placeholder={placeholder}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                autoComplete={hasAutocomplete ? 'on' : 'off'}
+            >
+            </input>
 
 
             {

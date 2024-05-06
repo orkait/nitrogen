@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import Button, { ButtonProps } from '../../components/Button/Button';
+import Button, { ButtonProps } from '@/components/Button/Button';
 import { JSX } from 'react/jsx-runtime';
 
 const meta = {
@@ -15,7 +15,7 @@ export default meta;
 
 export const Default = {
     argTypes: {
-       
+
     },
     render: (args: JSX.IntrinsicAttributes & ButtonProps) => (
         <Button

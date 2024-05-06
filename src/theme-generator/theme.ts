@@ -16,6 +16,7 @@ import visibilityGenerator, { regexList as visibilityRegexList } from "./visibil
 import zIndexGenerator, { regexList as zIndexRegexList } from "./z-index";
 import interactivityGenerator, { regexList as interactivityRegexList } from "./interactivity";
 import transformGenerator, { regexList as transformRegexList } from "./transform";
+import imageGenerator, { regexList as imageRegexList } from "./image";
 import normalizeGenerator from "./normalize";
 
 const theme = {
@@ -37,7 +38,8 @@ const theme = {
     visibility: visibilityGenerator(),
     zIndex: zIndexGenerator(),
     transform: transformGenerator(),
-    interactivity: interactivityGenerator()
+    image: imageGenerator(),
+    interactivity: interactivityGenerator(),
 }
 
 export const mainRegexList = [
@@ -58,7 +60,18 @@ export const mainRegexList = [
     ...visibilityRegexList,
     ...zIndexRegexList,
     ...transformRegexList,
+    ...imageRegexList,
     ...interactivityRegexList
 ]
+
+// console.log(mainRegexList)
+
+export const getTheme = (hasKeysOnly: boolean) => {
+    return {
+        ...theme,
+        color: colorGenerator(hasKeysOnly).css,
+        normalize: ''
+    }
+}
 
 export default theme;

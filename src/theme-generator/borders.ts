@@ -43,6 +43,7 @@ const direction = ['top', 'right', 'bottom', 'left'];
 
 const generateBorderRadii = () => {
     let groupedCSS = '';
+
     for (const [key, value] of toEntries(BORDER_RADII)) {
         const newValue = typeof value === 'number' ? `${value}px` : value;
         groupedCSS += `
