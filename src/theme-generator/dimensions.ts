@@ -31,12 +31,12 @@ const generate = () => {
         maxHeightMapping[`max-h-${fixValue(key)}`] = `max-height: ${value};`
     }
     return {
-        widthMapping,
-        maxWidthMapping,
-        minWidthMapping,
-        heightMapping,
-        minHeightMapping,
-        maxHeightMapping
+        ...widthMapping,
+        ...maxWidthMapping,
+        ...minWidthMapping,
+        ...heightMapping,
+        ...minHeightMapping,
+        ...maxHeightMapping
     }
 }
 

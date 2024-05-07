@@ -9,16 +9,13 @@ const imageFit = {
 };
 
 const generateImageFit = () => {
-    let groupedCSS = '';
+    const objectFitMapping: Record<string, string> = {};
+
     for (const [key, value] of toEntries(imageFit)) {
-        groupedCSS += `
-        .object-${key} {
-            object-fit: ${value};
-        }
-        `;
+        objectFitMapping[`object-${key}`] = `object-fit: ${value};`;
     }
 
-    return groupedCSS;
+    return objectFitMapping;
 }
 
 const regexStrings = Object.keys(imageFit).map((imageFit) => {

@@ -1,16 +1,18 @@
 import theme from "./theme";
-import fs from 'fs';
+import fs from "fs";
 
-let css = Object.values(theme).join('\n');
+type themeKeysType = keyof typeof theme;
 
-console.log(css);
+type themeType = {
+    [key in themeKeysType]: Record<string, string>;
+}
 
-// remove all spaces from css string and replace with empty string
-// remove all new lines from css string and replace with empty string
-// remove all tabs from css string and replace with empty string
+let css = '';
+for (const key in (theme as themeType)) {
+    // iterate over each key value pair in the object
+    for (const key2 in theme[key]) {
+        css += `.${key2}{${theme[key][key2]}}\n`;
+    }
+}
 
-// css = css.replace(/\s/g, '').replace(/\n/g, '').replace(/\t/g, '');
-
-// write css to file
 fs.writeFileSync('./src/theme-generator/theme.css', css);
-

@@ -8,15 +8,13 @@ export const VISIBILITIES = {
 const REGEX_VISIBILITY_KEYS = constructKeys(Object.keys(VISIBILITIES));
 
 const generate = () => {
-    let groupedCSS = '';
+    const visibilityMapping: Record<string, string> = {};
+
     for (const [key, value] of toEntries(VISIBILITIES)) {
-        groupedCSS += `
-        .visibility-${key} {
-            visibility: ${value};
-        }
-        `;
+        visibilityMapping[`visibility-${key}`] = `visibility: ${value};`;
     }
-    return groupedCSS;
+    
+    return visibilityMapping;
 }
 
 const regexStrings = [

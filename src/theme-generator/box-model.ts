@@ -22,21 +22,21 @@ const generate = () => {
 
     for (const [key, value] of Object.entries(SPACES)) {
         paddingMap[`p-${fixValue(key)}`] = `padding: ${value + 'px'};`;
-        paddingXMap[`px-${fixValue(key)}`] = ` padding-left: ${value + 'px'};padding-right: ${value + 'px'};`;
-        paddingYMap[`py-${fixValue(key)}`] = ` padding-top: ${value + 'px'};padding-bottom: ${value + 'px'};`;
-        paddingLMap[`pl-${fixValue(key)}`] = ` padding-left: ${value + 'px'};`;
-        paddingRMap[`pr-${fixValue(key)}`] = ` padding-right: ${value + 'px'};`;
-        paddingBMap[`pb-${fixValue(key)}`] = ` padding-bottom: ${value + 'px'};`;
-        paddingTMap[`pt-${fixValue(key)}`] = ` padding-top: ${value + 'px'};`;
+        paddingXMap[`px-${fixValue(key)}`] = `padding-left: ${value + 'px'};padding-right: ${value + 'px'};`;
+        paddingYMap[`py-${fixValue(key)}`] = `padding-top: ${value + 'px'};padding-bottom: ${value + 'px'};`;
+        paddingLMap[`pl-${fixValue(key)}`] = `padding-left: ${value + 'px'};`;
+        paddingRMap[`pr-${fixValue(key)}`] = `padding-right: ${value + 'px'};`;
+        paddingBMap[`pb-${fixValue(key)}`] = `padding-bottom: ${value + 'px'};`;
+        paddingTMap[`pt-${fixValue(key)}`] = `padding-top: ${value + 'px'};`;
 
 
         marginMap[`m-${fixValue(key)}`] = `margin: ${value + 'px'};`;
-        marginXMap[`mx-${fixValue(key)}`] = ` margin-left: ${value + 'px'};margin-right: ${value + 'px'};`;
-        marginYMap[`my-${fixValue(key)}`] = ` margin-top: ${value + 'px'};margin-bottom: ${value + 'px'};`;
-        marginLMap[`ml-${fixValue(key)}`] = ` margin-left: ${value + 'px'};`;
-        marginRMap[`mr-${fixValue(key)}`] = ` margin-right: ${value + 'px'};`;
-        marginBMap[`mb-${fixValue(key)}`] = ` margin-bottom: ${value + 'px'};`;
-        marginTMap[`mt-${fixValue(key)}`] = ` margin-top: ${value + 'px'};`;
+        marginXMap[`mx-${fixValue(key)}`] = `margin-left: ${value + 'px'};margin-right: ${value + 'px'};`;
+        marginYMap[`my-${fixValue(key)}`] = `margin-top: ${value + 'px'};margin-bottom: ${value + 'px'};`;
+        marginLMap[`ml-${fixValue(key)}`] = `margin-left: ${value + 'px'};`;
+        marginRMap[`mr-${fixValue(key)}`] = `margin-right: ${value + 'px'};`;
+        marginBMap[`mb-${fixValue(key)}`] = `margin-bottom: ${value + 'px'};`;
+        marginTMap[`mt-${fixValue(key)}`] = `margin-top: ${value + 'px'};`;
     }
 
     return {
@@ -57,8 +57,6 @@ const generate = () => {
         ...marginTMap,
     };
 }
-
-console.log(generate())
 
 const regexStrings = [
     `pt-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,

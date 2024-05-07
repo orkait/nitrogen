@@ -49,65 +49,52 @@ export const WHITE_SPACE = {
 
 
 const generate = () => {
-    let groupedCSS = '';
+    const letterSpacingMapping: Record<string, string> = {};
+    const lineHeightMapping: Record<string, string> = {};
+    const textAlignMapping: Record<string, string> = {};
+    const textTransformMapping: Record<string, string> = {};
+    const textDecorationMapping: Record<string, string> = {};
+    const textOverflowMapping: Record<string, string> = {};
+    const whiteSpaceMapping: Record<string, string> = {};
+
+
     for (const [key, value] of Object.entries(LETTER_SPACING)) {
-        groupedCSS += `
-        .letter-spacing-${key} {
-            letter-spacing: ${value};
-        }
-        `;
+        letterSpacingMapping[`letter-spacing-${key}`] = `letter-spacing: ${value};`;
     }
 
     for (const [key, value] of Object.entries(LINE_HEIGHT)) {
-        groupedCSS += `
-        .line-height-${fixValue(key)} {
-            line-height: ${value};
-        }
-        `;
+        lineHeightMapping[`line-height-${fixValue(key)}`] = `line-height: ${value};`;
     }
 
     for (const [key, value] of Object.entries(TEXT_ALIGNS)) {
-        groupedCSS += `
-        .text-align-${key} {
-            text-align: ${value};
-        }
-        `;
+        textAlignMapping[`text-align-${key}`] = `text-align: ${value};`;
     }
 
     for (const [key, value] of Object.entries(TEXT_TRANSFORM)) {
-        groupedCSS += `
-        .text-transform-${key} {
-            text-transform: ${value};
-        }
-        `;
+        textTransformMapping[`text-transform-${key}`] = `text-transform: ${value};`;
     }
 
     for (const [key, value] of Object.entries(TEXT_DECORATION)) {
-        groupedCSS += `
-        .text-decoration-${key} {
-            text-decoration: ${value};
-        }
-        `;
+        textDecorationMapping[`text-decoration-${key}`] = `text-decoration: ${value};`;
     }
 
     for (const [key, value] of Object.entries(TEXT_OVERFLOW)) {
-        groupedCSS += `
-        .text-overflow-${key} {
-            text-overflow: ${value};
-        }
-        `;
+        textOverflowMapping[`text-overflow-${key}`] = `text-overflow: ${value};`;
     }
 
     for (const [key, value] of Object.entries(WHITE_SPACE)) {
-        groupedCSS += `
-        .white-space-${key} {
-            white-space: ${value};
-        }
-        `;
+        whiteSpaceMapping[`white-space-${key}`] = `white-space: ${value};`;
     }
 
-
-    return groupedCSS;
+    return {
+        ...letterSpacingMapping,
+        ...lineHeightMapping,
+        ...textAlignMapping,
+        ...textTransformMapping,
+        ...textDecorationMapping,
+        ...textOverflowMapping,
+        ...whiteSpaceMapping,
+    };
 }
 
 const REGEX_LETTER_SPACING = constructKeys(Object.keys(LETTER_SPACING));

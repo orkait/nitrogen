@@ -80,26 +80,26 @@ const generateBorderWidths = () => {
     const borderWidthLMap: Record<string, string> = {};
 
     for (const [key, value] of toEntries(BORDER_WIDTHS)) {
-        borderWidthMap[`border-${key}`] = `border-width: ${value}px;`;
+        borderWidthMap[`border-${key}`] = `border-width: ${value}px`;
     }
 
     // generate individual border width
     for (const [key, value] of toEntries(BORDER_WIDTHS)) {
         direction.forEach((dir) => {
             if (dir === 'top') {
-                borderWidthTMap[`border-t-${key}`] = `border-top-width: ${value}px;`;
+                borderWidthTMap[`border-t-${key}`] = `border-top-width: ${value}px`;
             }
 
             if (dir === 'right') {
-                borderWidthRMap[`border-r-${key}`] = `border-right-width: ${value}px;`;
+                borderWidthRMap[`border-r-${key}`] = `border-right-width: ${value}px`;
             }
 
             if (dir === 'bottom') {
-                borderWidthBMap[`border-b-${key}`] = `border-bottom-width: ${value}px;`;
+                borderWidthBMap[`border-b-${key}`] = `border-bottom-width: ${value}px`;
             }
 
             if (dir === 'left') {
-                borderWidthLMap[`border-l-${key}`] = `border-left-width: ${value}px;`;
+                borderWidthLMap[`border-l-${key}`] = `border-left-width: ${value}px`;
             }
 
         })
@@ -164,8 +164,6 @@ const generateBorderProperties = () => {
         ...generateBorderStyles(),
     }
 }
-
-console.log(generateBorderProperties())
 
 const regexStrings = [
     `rounded-t-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,

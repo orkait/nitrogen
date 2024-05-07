@@ -10,15 +10,13 @@ const INTERACTIVITY = {
 }
 
 const generate = () => {
-    let groupedCSS = '';
+    const interactivityMapping: Record<string, string> = {};
+
     for (const [key, value] of Object.entries(INTERACTIVITY)) {
-        groupedCSS += `
-        .${key} {
-            ${value};
-        }
-        `;
+        interactivityMapping[key] = value;
     }
-    return groupedCSS;
+
+    return interactivityMapping;
 }
 
 

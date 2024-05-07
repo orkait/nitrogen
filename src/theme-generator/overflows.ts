@@ -10,16 +10,11 @@ export const OVERFLOWS = {
 const REGEX_OVERFLOW_KEYS = constructKeys(Object.keys(OVERFLOWS));
 
 const generate = () => {
-    let groupedCSS = '';
+    const overflowMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(OVERFLOWS)) {
-        groupedCSS += `
-        .overflow-${key} {
-            overflow: ${value};
-        }
-        `;
+        overflowMapping[`overflow-${key}`] = `overflow: ${value};`;
     }
-
-    return groupedCSS;
+    return overflowMapping;
 }
 
 const regexStrings = [

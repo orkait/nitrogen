@@ -17,15 +17,12 @@ const OPACITIES = {
 const REGEX_OPACITIES = constructKeys(Object.keys(OPACITIES));
 
 const generateOpacity = () => {
-    let groupedCSS = '';
+    const opacityMapping: Record<string, string> = {};
+
     for (const [key, value] of Object.entries(OPACITIES)) {
-        groupedCSS += `
-            .opacity-${key} {
-                opacity: ${value};
-            }
-        `;
+        opacityMapping[`opacity-${key}`] = `opacity: ${value};`;
     }
-    return groupedCSS;
+    return opacityMapping;
 }
 
 const regexStrings = [

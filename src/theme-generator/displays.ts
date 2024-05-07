@@ -14,7 +14,7 @@ const REGEX_DISPLAY_KEYS = constructKeys(Object.keys(DISPLAYS));
 const generate = () => {
     const groupMapping: { [key: string]: string } = {};
     for (const [key, value] of toEntries(DISPLAYS)) {
-        groupMapping[`display-${key}`] = `.display-${key}{display: ${value}}`;
+        groupMapping[`display-${key}`] = `display: ${value}`;
     }
     return groupMapping
 }

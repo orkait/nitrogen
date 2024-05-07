@@ -343,13 +343,16 @@ const generate = () => {
     }
 
     return {
-        ...colorMapping,
-        ...bgMapping,
-        ...borderMapping,
+        colorMapping,
+        bgMapping,
+        borderMapping,
+        css: {
+            colorMapping,
+            bgMapping,
+            borderMapping,
+        }
     }
 }
-
-console.log(generate())
 
 const regexStrings = [
     `color-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,

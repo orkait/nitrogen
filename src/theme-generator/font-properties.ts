@@ -36,24 +36,21 @@ const REGEX_FONT_WEIGHT_KEYS = constructKeys(Object.keys(FONT_WEIGHT));
 
 
 const generate = () => {
-    let groupedCSS = '';
+    const fontSizeMapping: Record<string, string> = {};
+    const fontWeightMapping: Record<string, string> = {};
+
     for (const [key, value] of toEntries(FONT_SIZE)) {
-        groupedCSS += `
-        .font-${fixValue(key)} {
-            font-size: ${value}px;
-        }
-        `;
+        fontSizeMapping[`font-${fixValue(key)}`] = `font-size: ${value}px;`;
     }
 
     for (const [key, value] of toEntries(FONT_WEIGHT)) {
-        groupedCSS += `
-        .font-${key} {
-            font-weight: ${value};
-        }
-        `;
+        fontWeightMapping[`font-${key}`] = `font-weight: ${value};`;
     }
 
-    return groupedCSS;
+    return {
+        ...fontSizeMapping,
+        ...fontWeightMapping,
+    };
 }
 
 const regexStrings = [

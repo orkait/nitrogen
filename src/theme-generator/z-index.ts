@@ -17,15 +17,11 @@ export const Z_INDEXES = {
 const REGEX_Z_INDEXES = constructKeys(Object.keys(Z_INDEXES));
 
 const generate = () => {
-    let groupedCSS = '';
+    const zIndexMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(Z_INDEXES)) {
-        groupedCSS += `
-        .z-index-${key} {
-            z-index: ${value};
-        }
-        `;
+        zIndexMapping[`z-index-${key}`] = `z-index: ${value};`;
     }
-    return groupedCSS;
+    return zIndexMapping;
 }
 
 const regexStrings = [

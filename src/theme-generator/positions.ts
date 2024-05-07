@@ -10,15 +10,11 @@ export const POSITION = {
 const REGEX_POSITION_KEYS = constructKeys(Object.keys(POSITION));
 
 const generate = () => {
-    let groupedCSS = '';
+    const positionMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(POSITION)) {
-        groupedCSS += `
-        .position-${key} {
-            position: ${value};
-        }
-        `;
+        positionMapping[`position-${key}`] = `position: ${value};`;
     }
-    return groupedCSS;
+    return positionMapping;
 }
 
 const regexStrings = [

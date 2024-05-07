@@ -32,32 +32,27 @@ const TRANFORM_TRANSLATE = {
 const REGEX_TRANSFORM_TRANSLATE_KEYS = constructKeys(Object.keys(TRANFORM_TRANSLATE));
 
 const generate = () => {
-    let groupedCSS = '';
+    const transformRotateMapping: Record<string, string> = {};
+    const transformScaleMapping: Record<string, string> = {};
+    const transformTranslateMapping: Record<string, string> = {};
+
     for (const [key, value] of toEntries(TRANFORM_ROTATE)) {
-        groupedCSS += `
-        .transform-${fixValue(key)} {
-            transform: ${value};
-        }
-        `;
+        transformRotateMapping[`transform-${fixValue(key)}`] = `transform: ${value};`;
     }
 
     for (const [key, value] of toEntries(TRANFORM_SCALE)) {
-        groupedCSS += `
-        .transform-${fixValue(key)} {
-            transform: ${value};
-        }
-        `;
+        transformScaleMapping[`transform-${fixValue(key)}`] = `transform: ${value};`;
     }
 
     for (const [key, value] of toEntries(TRANFORM_TRANSLATE)) {
-        groupedCSS += `
-        .transform-${fixValue(key)} {
-            transform: ${value};
-        }
-        `;
+        transformTranslateMapping[`transform-${fixValue(key)}`] = `transform: ${value};`;
     }
 
-    return groupedCSS;
+    return {
+        ...transformRotateMapping,
+        ...transformScaleMapping,
+        ...transformTranslateMapping,
+    };
 }
 
 const regexStrings = [

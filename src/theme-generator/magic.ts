@@ -14,8 +14,7 @@ const djb2Hash = (str: string) => {
 const {
     bgMapping,
     colorMapping,
-    borderMapping
-} = generate(true)
+} = generate()
 
 const css = (classNames: string) => {
     const splitNames = classNames.split(' ').map((name) => name.trim());

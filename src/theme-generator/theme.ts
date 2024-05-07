@@ -17,14 +17,12 @@ import zIndexGenerator, { regexList as zIndexRegexList } from "./z-index";
 import interactivityGenerator, { regexList as interactivityRegexList } from "./interactivity";
 import transformGenerator, { regexList as transformRegexList } from "./transform";
 import imageGenerator, { regexList as imageRegexList } from "./image";
-import normalizeGenerator from "./normalize";
 
 const theme = {
-    normalize: normalizeGenerator(),
     border: borderGenerator(),
     boxModel: boxModelGenerator(),
     boxShadow: boxShadowGenerator(),
-    color: colorGenerator(false).css,
+    color: colorGenerator().css,
     coordinates: coordinatesGenerator(),
     dimensions: dimensionsGenerator(),
     display: displayGenerator(),
@@ -64,12 +62,9 @@ export const mainRegexList = [
     ...interactivityRegexList
 ]
 
-// console.log(mainRegexList)
-
-export const getTheme = (hasKeysOnly: boolean) => {
+export const getTheme = () => {
     return {
         ...theme,
-        color: colorGenerator(hasKeysOnly).css,
         normalize: ''
     }
 }
