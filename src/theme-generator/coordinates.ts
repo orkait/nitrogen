@@ -2,18 +2,23 @@ import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 import { fixValue, toEntries } from "./types";
 
 const generate = () => {
-    let groupedCSS = '';
-    ['top', 'left', 'bottom', 'right'].forEach((direction) => {
-        for (const [key, value] of toEntries(SPACES)) {
+    const topMapping: Record<string, string> = {};
+    const leftMapping: Record<string, string> = {};
+    const bottomMapping: Record<string, string> = {};
+    const rightMapping: Record<string, string> = {};
 
-            groupedCSS += `
-            .${direction}-${fixValue(key)} {
-                ${direction}: ${value}px;
-            }
-            `;
-        }
-    })
-    return groupedCSS;
+    for (const [key, value] of toEntries(SPACES)) {
+        topMapping[`top-${fixValue(key)}`] = `top: ${value}px;`;
+        leftMapping[`left-${fixValue(key)}`] = `left: ${value}px;`;
+        bottomMapping[`bottom-${fixValue(key)}`] = `bottom: ${value}px;`;
+        rightMapping[`right-${fixValue(key)}`] = `right: ${value}px;`;
+    }
+    return {
+        ...topMapping,
+        ...leftMapping,
+        ...bottomMapping,
+        ...rightMapping,
+    }
 }
 
 const regexStrings = [

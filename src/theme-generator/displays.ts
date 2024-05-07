@@ -12,15 +12,11 @@ export const DISPLAYS = {
 const REGEX_DISPLAY_KEYS = constructKeys(Object.keys(DISPLAYS));
 
 const generate = () => {
-    let groupedCSS = '';
+    const groupMapping: { [key: string]: string } = {};
     for (const [key, value] of toEntries(DISPLAYS)) {
-        groupedCSS += `
-        .display-${key} {
-            display: ${value};
-        }
-        `;
+        groupMapping[`display-${key}`] = `.display-${key}{display: ${value}}`;
     }
-    return groupedCSS;
+    return groupMapping
 }
 
 const regexStrings = [
@@ -28,5 +24,4 @@ const regexStrings = [
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
-
 export default generate;

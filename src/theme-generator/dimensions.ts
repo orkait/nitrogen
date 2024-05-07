@@ -22,6 +22,7 @@ const generate = () => {
                 ${mapping[direction]}: ${value};
             }
             `;
+
         }
     })
 

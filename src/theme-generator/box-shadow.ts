@@ -14,16 +14,11 @@ const regexStrings = shadowList.map((shadow) => {
 })
 
 const generateBoxShadow = () => {
-    let groupedCSS = '';
+    const shadowMapping: Record<string, string> = {};
     for (const [key, value] of Object.entries(shadowMapping)) {
-        groupedCSS += `
-        .shadow-${key} {
-            box-shadow: ${value};
-        }
-        `;
+        shadowMapping[`shadow-${key}`] = `box-shadow: ${value};`;
     }
-
-    return groupedCSS;
+    return shadowMapping;
 }
 
 export const regexList = regexStrings.map((regexString) => new RegExp(regexString, 'g'));

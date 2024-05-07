@@ -322,73 +322,34 @@ const REGEX_COLOR_OTHERS = constructKeys(Object.keys(color_others));
 const REGEX_STRENGTHS = constructKeys(Object.keys(strengths));
 
 
-const generate = (hasKeysOnly = false) => {
-    let groupedCSS = '';
-    const colorMapping: {
-        [key: string]: string
-    } = {};
+const generate = () => {
+    const colorMapping: Record<string, string> = {};
+    const bgMapping: Record<string, string> = {};
+    const borderMapping: Record<string, string> = {}
 
-    const bgMapping: {
-        [key: string]: string
-    } = {};
-
-    const borderMapping: {
-        [key: string]: string
-    } = {}
 
     for (const [key, value] of Object.entries(colors)) {
         if (typeof value === 'object') {
             for (const [shade, hex] of Object.entries(value)) {
-                if (hasKeysOnly) {
-                    colorMapping[`color-${key}-${shade}`] = hex;
-                    bgMapping[`bg-${key}-${shade}`] = hex;
-                    borderMapping[`borde-${key}-${shade}`] = hex;
-                } else {
-                    groupedCSS += `
-                    .color-${key}-${shade} {
-                        color: ${hex};
-                    }
-                    .bg-${key}-${shade} {
-                        background-color: ${hex};
-                    }
-    
-                    .border-${key}-${shade} {
-                        border-color: ${hex};
-                    }
-                    `;
-                }
+                colorMapping[`color-${key}-${shade}`] = `color: ${hex};`
+                bgMapping[`bg-${key}-${shade}`] = `background-color: ${hex};`
+                borderMapping[`border-${key}-${shade}`] = `border-color: ${hex};`
             }
         } else {
-            if (hasKeysOnly) {
-                if (key === 'black' || key === 'white') {
-                    colorMapping[`color-${key}`] = value;
-                    bgMapping[`bg-${key}`] = value;
-                    borderMapping[`border-${key}`] = value;
-                }
-            } else {
-                groupedCSS += `
-                .color-${key} {
-                    color: ${value};
-                }
-                .bg-${key} {
-                    background-color: ${value};
-                }
-                .border-${key} {
-                    border-color: ${value};
-                }
-            `;
-            }
-
+            colorMapping[`color-${key}`] = `color: ${value};`
+            bgMapping[`bg-${key}`] = `background-color: ${value};`
+            borderMapping[`border-${key}`] = `border-color: ${value};`
         }
     }
 
     return {
-        css: groupedCSS,
-        colorMapping,
-        bgMapping,
-        borderMapping,
+        ...colorMapping,
+        ...bgMapping,
+        ...borderMapping,
     }
 }
+
+console.log(generate())
 
 const regexStrings = [
     `color-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
