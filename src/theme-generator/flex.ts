@@ -71,115 +71,77 @@ export const VERTICAL_ALIGNS = {
 } as const;
 
 const generate = () => {
-    let groupedCSS = '';
+    const flexDirectionMapping: Record<string, string> = {};
+    const flexWrapMapping: Record<string, string> = {};
+    const alignItemsMapping: Record<string, string> = {};
+    const justifyContentMapping: Record<string, string> = {};
+    const flexGrowMapping: Record<string, string> = {};
+    const alignSelfMapping: Record<string, string> = {};
+    const justifySelfMapping: Record<string, string> = {};
+    const verticalAlignMapping: Record<string, string> = {};
+    const flexShrinkMapping: Record<string, string> = {};
+    const flexBasisMapping: Record<string, string> = {};
+    const gapMapping: Record<string, string> = {};
 
     for (const [key, value] of toEntries(FLEX_DIRECTIONS)) {
-        groupedCSS += `
-        .flex-direction-${key} {
-            flex-direction: ${value};
-        }
-        `;
+        flexDirectionMapping[`flex-direction-${key}`] = `flex-direction: ${value}`;
     }
 
     for (const [key, value] of toEntries(FLEX_WRAPS)) {
-        groupedCSS += `
-        .flex-wrap-${key} {
-            flex-wrap: ${value};
-        }
-        `;
+        flexWrapMapping[`flex-wrap-${key}`] = `flex-wrap: ${value}`;
     }
 
     for (const [key, value] of toEntries(JUSTIFY_CONTENTS)) {
-        groupedCSS += `
-        .justify-content-${key} {
-            justify-content: ${value};
-        }
-        `;
+        justifyContentMapping[`justify-content-${key}`] = `justify-content: ${value}`;
     }
 
     for (const [key, value] of toEntries(ALIGN_ITEMS)) {
-        groupedCSS += `
-        .align-items-${key} {
-            align-items: ${value};
-        }
-        `;
+        alignItemsMapping[`align-items-${key}`] = `align-items: ${value}`;
     }
 
     for (const [key, value] of toEntries(ALIGN_SELF)) {
-        groupedCSS += `
-        .align-self-${key} {
-            align-self: ${value};
-        }
-        `;
+        alignSelfMapping[`align-self-${key}`] = `align-self: ${value}`;
     }
 
     for (const [key, value] of toEntries(JUSTIFY_SELF)) {
-        groupedCSS += `
-        .justify-self-${key} {
-            justify-self: ${value};
-        }
-        `;
+        justifySelfMapping[`justify-self-${key}`] = `justify-self: ${value}`;
     }
 
     for (const [key, value] of toEntries(VERTICAL_ALIGNS)) {
-        groupedCSS += `
-        .vertical-align-${key} {
-            vertical-align: ${value};
-        }
-        `;
+        verticalAlignMapping[`vertical-align-${key}`] = `vertical-align: ${value}`;
     }
 
     for (const [key, value] of toEntries(FLEX_GROWS)) {
-        groupedCSS += `
-        .flex-grow-${key} {
-            flex-grow: ${value};
-        }
-        `;
+        flexGrowMapping[`flex-grow-${key}`] = `flex-grow: ${value}`;
     }
 
     for (const [key, value] of toEntries(FLEX_SHRINKS)) {
-        groupedCSS += `
-        .flex-shrink-${key} {
-            flex-shrink: ${value};
-        }
-        `;
+        flexShrinkMapping[`flex-shrink-${key}`] = `flex-shrink: ${value}`;
     }
 
     for (const [key, value] of toEntries(FLEX_BASIS)) {
-        groupedCSS += `
-        .flex-basis-${key} {
-            flex-basis: ${value};
-        }
-        `;
+        flexBasisMapping[`flex-basis-${key}`] = `flex-basis: ${value}`;
     }
 
     // gap -> SPACES
     for (const [key, value] of toEntries(SPACES)) {
-        groupedCSS += `
-        .gap-${fixValue(key)} {
-            gap: ${value};
-        }
-        `;
+        gapMapping[`gap-${fixValue(key)}`] = `gap: ${value}`;
     }
 
-
-    groupedCSS += `
-        .center{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .center-x{
-            display: flex;
-            justify-content: center;
-        }
-        .center-y{
-            display: flex;
-            align-items: center;
-        }
     
-    `
-    return groupedCSS;
+    return {
+        ...flexDirectionMapping,
+        ...flexWrapMapping,
+        ...justifyContentMapping,
+        ...alignItemsMapping,
+        ...alignSelfMapping,
+        ...justifySelfMapping,
+        ...verticalAlignMapping,
+        ...flexGrowMapping,
+        ...flexShrinkMapping,
+        ...flexBasisMapping,
+        ...gapMapping,
+    };
 }
 
 const REGEX_FLEX_DIRECTION_KEYS = constructKeys(Object.keys(FLEX_DIRECTIONS));

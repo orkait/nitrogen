@@ -3,39 +3,41 @@ import { toEntries, fixValue } from "./types";
 
 
 const generate = () => {
-    let groupedCSS = '';
-    const mapping: {
-        [key: string]: string
-    } = {
-        'w': 'width',
-        'h': 'height',
-        'min-w': 'min-width',
-        'max-w': 'max-width',
-        'min-h': 'min-height',
-        'max-h': 'max-height'
+    const widthMapping: Record<string, string> = {};
+    const heightMapping: Record<string, string> = {};
+    const minHeightMapping: Record<string, string> = {};
+    const minWidthMapping: Record<string, string> = {};
+    const maxWidthMapping: Record<string, string> = {};
+    const maxHeightMapping: Record<string, string> = {};
+
+
+    for (const [key, value] of toEntries(SPACES)) {
+        widthMapping[`w-${fixValue(key)}`] = `width: ${value};`
+        minWidthMapping[`min-w-${fixValue(key)}`] = `min-width: ${value}px;`
+        maxWidthMapping[`max-w-${fixValue(key)}`] = `max-width: ${value}px;`
+
+        heightMapping[`h-${fixValue(key)}`] = `height: ${value}px;`;
+        minHeightMapping[`min-h-${fixValue(key)}`] = `min-height: ${value}px;`
+        maxHeightMapping[`max-h-${fixValue(key)}`] = `max-height: ${value}px;`
     }
 
-    Object.keys(mapping).forEach((direction) => {
-        for (const [key, value] of toEntries(DIMENSIONS)) {
-            groupedCSS += `
-            .${direction}-${fixValue(key)} {
-                ${mapping[direction]}: ${value};
-            }
-            `;
+    for (const [key, value] of toEntries(DIMENSIONS)) {
+        widthMapping[`w-${fixValue(key)}`] = `width: ${value};`
+        minWidthMapping[`min-w-${fixValue(key)}`] = `min-width: ${value};`
+        maxWidthMapping[`max-w-${fixValue(key)}`] = `max-width: ${value};`
 
-        }
-    })
-
-    Object.keys(mapping).forEach((direction) => {
-        for (const [key, value] of toEntries(SPACES)) {
-            groupedCSS += `
-            .${direction}-${fixValue(key)} {
-                ${mapping[direction]}: ${value}px;
-            }
-            `;
-        }
-    })
-    return groupedCSS;
+        heightMapping[`h-${fixValue(key)}`] = `height: ${value};`;
+        minHeightMapping[`min-h-${fixValue(key)}`] = `min-height: ${value};`
+        maxHeightMapping[`max-h-${fixValue(key)}`] = `max-height: ${value};`
+    }
+    return {
+        widthMapping,
+        maxWidthMapping,
+        minWidthMapping,
+        heightMapping,
+        minHeightMapping,
+        maxHeightMapping
+    }
 }
 
 
@@ -47,6 +49,7 @@ const regexStrings = [
     `min-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
     `max-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
 ]
+
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));
 
