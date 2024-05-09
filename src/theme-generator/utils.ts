@@ -44,4 +44,13 @@ function checkContrast(foregroundHex: string, backgroundHex: string): number {
     return Number(foregroundColor.contrastRatio(foregroundColor, backgroundColor).toFixed(2));
 }
 
+
+export const djb2Hash = (str: string) => {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+        hash = (hash * 33) ^ str.charCodeAt(i);
+    }
+    return `o-${(hash >>> 0)}`;
+}
+
 export default checkContrast;

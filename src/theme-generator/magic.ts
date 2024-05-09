@@ -1,12 +1,5 @@
 import { mainRegexList } from "./theme";
-
-const djb2Hash = (str: string) => {
-    let hash = 5381;
-    for (let i = 0; i < str.length; i++) {
-        hash = (hash * 33) ^ str.charCodeAt(i);
-    }
-    return hash >>> 0;
-}
+import { djb2Hash } from "./utils"
 
 
 const css = (classNames: string) => {

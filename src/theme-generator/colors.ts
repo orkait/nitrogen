@@ -347,9 +347,9 @@ const generate = () => {
         bgMapping,
         borderMapping,
         css: {
-            colorMapping,
-            bgMapping,
-            borderMapping,
+            ...colorMapping,
+            ...bgMapping,
+            ...borderMapping,
         }
     }
 }
