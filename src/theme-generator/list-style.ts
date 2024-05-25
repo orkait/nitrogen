@@ -12,17 +12,21 @@ export const LIST_STYLE = {
 
 const REGEX_LIST_STYLE_KEYS = constructKeys(Object.keys(LIST_STYLE));
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const listStyleMapping: Record<string, string> = {};
 
     for (const [key, value] of toEntries(LIST_STYLE)) {
         listStyleMapping[`list-style-${key}`] = `list-style: ${value};`;
     }
-    return listStyleMapping;
+    return {
+        base: listStyleMapping,
+        responsive: {},
+        hash
+    };
 }
 
 const regexStrings = [
-    `list-style-(${REGEX_LIST_STYLE_KEYS})$\b`,
+    `^list-style-(${REGEX_LIST_STYLE_KEYS})$`,
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

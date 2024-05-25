@@ -15,3 +15,5 @@ export const constructKeys = (keys: string[]) => {
     }
     return concatString.slice(0, -1);
 }
+
+export type breakpointType = 'sm' | 'md' | 'lg' | 'xl';

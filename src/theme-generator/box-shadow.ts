@@ -10,17 +10,23 @@ const boxShadowMapping = {
 const shadowList = Object.keys(boxShadowMapping);
 
 const regexStrings = shadowList.map((shadow) => {
-    return `shadow-${shadow}`;
+    return `^shadow-${shadow}$`;
 })
 
-const generateBoxShadow = () => {
+const generateBoxShadow = (hash: string = "") => {
     const shadowMapping: Record<string, string> = {};
-    
+
     for (const [key, value] of Object.entries(boxShadowMapping)) {
         shadowMapping[`shadow-${key}`] = `box-shadow: ${value};`;
     }
 
-    return shadowMapping;
+    return {
+        base: {
+            ...shadowMapping,
+        },
+        responsive: {},
+        hash,
+    };
 }
 
 export const regexList = regexStrings.map((regexString) => new RegExp(regexString, 'g'));

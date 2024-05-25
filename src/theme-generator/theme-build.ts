@@ -18,5 +18,7 @@ for (const key in (theme as themeType)) {
     }
 }
 
+
+
 fs.writeFileSync('./src/theme-generator/theme.css', css);
 fs.writeFileSync('./src/theme-generator/theme-hash.css', hashcss);

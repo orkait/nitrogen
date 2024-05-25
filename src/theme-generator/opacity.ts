@@ -16,17 +16,21 @@ const OPACITIES = {
 
 const REGEX_OPACITIES = constructKeys(Object.keys(OPACITIES));
 
-const generateOpacity = () => {
+const generateOpacity = (hash: string = "") => {
     const opacityMapping: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(OPACITIES)) {
         opacityMapping[`opacity-${key}`] = `opacity: ${value};`;
     }
-    return opacityMapping;
+    return {
+        base: opacityMapping,
+        responsive: {},
+        hash
+    };
 }
 
 const regexStrings = [
-    `opacity-(${REGEX_OPACITIES})$\\b`
+    `^opacity-(${REGEX_OPACITIES})$`
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

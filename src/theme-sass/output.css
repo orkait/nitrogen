@@ -1,0 +1,11 @@
+body {
+  font-family: Arial, sans-serif;
+}
+body::after {
+  content: "Next Base62: b0";
+  display: block;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+/*# sourceMappingURL=output.css.map */

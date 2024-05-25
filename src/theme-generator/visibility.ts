@@ -7,18 +7,22 @@ export const VISIBILITIES = {
 
 const REGEX_VISIBILITY_KEYS = constructKeys(Object.keys(VISIBILITIES));
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const visibilityMapping: Record<string, string> = {};
 
     for (const [key, value] of toEntries(VISIBILITIES)) {
         visibilityMapping[`visibility-${key}`] = `visibility: ${value};`;
     }
-    
-    return visibilityMapping;
+
+    return {
+        base: visibilityMapping,
+        responsive: {},
+        hash
+    }
 }
 
 const regexStrings = [
-    `visibility-(${REGEX_VISIBILITY_KEYS})$\\b`
+    `^visibility-(${REGEX_VISIBILITY_KEYS})$`
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

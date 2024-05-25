@@ -157,32 +157,36 @@ const generateBorderStyles = () => {
 
 }
 
-const generateBorderProperties = () => {
+const generateBorderProperties = (hash: string = "") => {
     return {
-        ...generateBorderRadii(),
-        ...generateBorderWidths(),
-        ...generateBorderStyles(),
-    }
+        base: {
+            ...generateBorderRadii(),
+            ...generateBorderWidths(),
+            ...generateBorderStyles(),
+        },
+        responsive: {},
+        hash,
+    };
 }
 
 const regexStrings = [
-    `rounded-t-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
-    `rounded-r-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
-    `rounded-b-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
-    `rounded-l-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
-    `rounded-(${BORDER_RADII_REGEX_KEYS})$(?![.\\d])\\b`,
+    `^rounded-t-(${BORDER_RADII_REGEX_KEYS})(?![.\\d])$`,
+    `^rounded-r-(${BORDER_RADII_REGEX_KEYS})(?![.\\d])$`,
+    `^rounded-b-(${BORDER_RADII_REGEX_KEYS})(?![.\\d])$`,
+    `^rounded-l-(${BORDER_RADII_REGEX_KEYS})(?![.\\d])$`,
+    `^rounded-(${BORDER_RADII_REGEX_KEYS})(?![.\\d])$`,
 
-    `border-t-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-r-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-b-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-l-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-(${BORDER_STYLES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `^border-t-(${BORDER_STYLES_REGEX_KEYS})(?![.\\d])$`,
+    `^border-r-(${BORDER_STYLES_REGEX_KEYS})(?![.\\d])$`,
+    `^border-b-(${BORDER_STYLES_REGEX_KEYS})(?![.\\d])$`,
+    `^border-l-(${BORDER_STYLES_REGEX_KEYS})(?![.\\d])$`,
+    `^border-(${BORDER_STYLES_REGEX_KEYS})(?![.\\d])$`,
 
-    `border-t-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-r-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-b-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-l-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
-    `border-(${BORDER_WIDTHS_REGEX_KEYS})$(?![.\\d])\\b`,
+    `^border-t-(${BORDER_WIDTHS_REGEX_KEYS})(?![.\\d])$`,
+    `^border-r-(${BORDER_WIDTHS_REGEX_KEYS})(?![.\\d])$`,
+    `^border-b-(${BORDER_WIDTHS_REGEX_KEYS})(?![.\\d])$`,
+    `^border-l-(${BORDER_WIDTHS_REGEX_KEYS})(?![.\\d])$`,
+    `^border-(${BORDER_WIDTHS_REGEX_KEYS})(?![.\\d])$`,
 ]
 
 export const regexList = regexStrings.map((str) => (new RegExp(str, 'g')));

@@ -70,7 +70,7 @@ export const VERTICAL_ALIGNS = {
     stretch: 'stretch',
 } as const;
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const flexDirectionMapping: Record<string, string> = {};
     const flexWrapMapping: Record<string, string> = {};
     const alignItemsMapping: Record<string, string> = {};
@@ -128,19 +128,23 @@ const generate = () => {
         gapMapping[`gap-${fixValue(key)}`] = `gap: ${value}`;
     }
 
-    
+
     return {
-        ...flexDirectionMapping,
-        ...flexWrapMapping,
-        ...justifyContentMapping,
-        ...alignItemsMapping,
-        ...alignSelfMapping,
-        ...justifySelfMapping,
-        ...verticalAlignMapping,
-        ...flexGrowMapping,
-        ...flexShrinkMapping,
-        ...flexBasisMapping,
-        ...gapMapping,
+        base: {
+            ...flexDirectionMapping,
+            ...flexWrapMapping,
+            ...justifyContentMapping,
+            ...alignItemsMapping,
+            ...alignSelfMapping,
+            ...justifySelfMapping,
+            ...verticalAlignMapping,
+            ...flexGrowMapping,
+            ...flexShrinkMapping,
+            ...flexBasisMapping,
+            ...gapMapping,
+        },
+        responsive: {},
+        hash,
     };
 }
 
@@ -158,17 +162,17 @@ const REGEX_GAP_KEYS = constructKeys(Object.keys(SPACES));
 
 
 const regexStrings = [
-    `flex-direction-(${REGEX_FLEX_DIRECTION_KEYS})$(?![.\\d])\\b`,
-    `flex-wrap-(${REGEX_FLEX_WRAP_KEYS})$(?![.\\d])\\b`,
-    `justify-content-(${REGEX_JUSTIFY_CONTENT_KEYS})$(?![.\\d])\\b`,
-    `align-items-(${REGEX_ALIGN_ITEMS_KEYS})$(?![.\\d])\\b`,
-    `align-self-(${REGEX_ALIGN_SELF_KEYS})$(?![.\\d])\\b`,
-    `justify-self-(${REGEX_JUSTIFY_SELF_KEYS})$(?![.\\d])\\b`,
-    `vertical-align-(${REGEX_VERTICAL_ALIGN_KEYS})$(?![.\\d])\\b`,
-    `flex-grow-(${REGEX_FLEX_GROW_KEYS})$(?![.\\d])\\b`,
-    `flex-shrink-(${REGEX_FLEX_SHRINK_KEYS})$(?![.\\d])\\b`,
-    `flex-basis-(${REGEX_FLEX_BASIS_KEYS})$(?![.\\d])\\b`,
-    `gap-(${REGEX_GAP_KEYS})$(?![.\\d])\\b`,
+    `^flex-direction-(${REGEX_FLEX_DIRECTION_KEYS})(?![.\\d])$`,
+    `^flex-wrap-(${REGEX_FLEX_WRAP_KEYS})(?![.\\d])$`,
+    `^justify-content-(${REGEX_JUSTIFY_CONTENT_KEYS})(?![.\\d])$`,
+    `^align-items-(${REGEX_ALIGN_ITEMS_KEYS})(?![.\\d])$`,
+    `^align-self-(${REGEX_ALIGN_SELF_KEYS})(?![.\\d])$`,
+    `^justify-self-(${REGEX_JUSTIFY_SELF_KEYS})(?![.\\d])$`,
+    `^vertical-align-(${REGEX_VERTICAL_ALIGN_KEYS})(?![.\\d])$`,
+    `^flex-grow-(${REGEX_FLEX_GROW_KEYS})(?![.\\d])$`,
+    `^flex-shrink-(${REGEX_FLEX_SHRINK_KEYS})(?![.\\d])$`,
+    `^flex-basis-(${REGEX_FLEX_BASIS_KEYS})(?![.\\d])$`,
+    `^gap-(${REGEX_GAP_KEYS})(?![.\\d])$`,
 ]
 
 export const regexList = regexStrings.map((regex) => {

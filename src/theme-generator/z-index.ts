@@ -16,16 +16,20 @@ export const Z_INDEXES = {
 
 const REGEX_Z_INDEXES = constructKeys(Object.keys(Z_INDEXES));
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const zIndexMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(Z_INDEXES)) {
         zIndexMapping[`z-index-${key}`] = `z-index: ${value};`;
     }
-    return zIndexMapping;
+    return {
+        base: zIndexMapping,
+        responsive: {},
+        hash
+    };
 }
 
 const regexStrings = [
-    `z-index-(${REGEX_Z_INDEXES})$\\b`
+    `^z-index-(${REGEX_Z_INDEXES})$`
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

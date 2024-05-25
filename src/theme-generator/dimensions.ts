@@ -2,7 +2,7 @@ import { DIMENSIONS, SPACES, DIMENSIONS_REGEX_KEYS, SPACES_REGEX_KEYS } from "./
 import { toEntries, fixValue } from "./types";
 
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const widthMapping: Record<string, string> = {};
     const heightMapping: Record<string, string> = {};
     const minHeightMapping: Record<string, string> = {};
@@ -31,23 +31,27 @@ const generate = () => {
         maxHeightMapping[`max-h-${fixValue(key)}`] = `max-height: ${value};`
     }
     return {
-        ...widthMapping,
-        ...maxWidthMapping,
-        ...minWidthMapping,
-        ...heightMapping,
-        ...minHeightMapping,
-        ...maxHeightMapping
+        base: {
+            ...widthMapping,
+            ...heightMapping,
+            ...minHeightMapping,
+            ...minWidthMapping,
+            ...maxWidthMapping,
+            ...maxHeightMapping,
+        },
+        responsive: {},
+        hash
     }
 }
 
 
 const regexStrings = [
-    `w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
-    `h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
-    `min-w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
-    `max-w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
-    `min-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
-    `max-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))$(?![.\\d])\\b`,
+    `^w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
+    `^h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
+    `^min-w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
+    `^max-w-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
+    `^min-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
+    `^max-h-((${SPACES_REGEX_KEYS})|(${DIMENSIONS_REGEX_KEYS}))(?![.\\d])$`,
 ]
 
 

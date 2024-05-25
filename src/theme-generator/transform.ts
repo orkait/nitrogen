@@ -31,7 +31,7 @@ const TRANFORM_TRANSLATE = {
 
 const REGEX_TRANSFORM_TRANSLATE_KEYS = constructKeys(Object.keys(TRANFORM_TRANSLATE));
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const transformRotateMapping: Record<string, string> = {};
     const transformScaleMapping: Record<string, string> = {};
     const transformTranslateMapping: Record<string, string> = {};
@@ -49,16 +49,20 @@ const generate = () => {
     }
 
     return {
-        ...transformRotateMapping,
-        ...transformScaleMapping,
-        ...transformTranslateMapping,
+        base: {
+            ...transformRotateMapping,
+            ...transformScaleMapping,
+            ...transformTranslateMapping,
+        },
+        responsive: {},
+        hash,
     };
 }
 
 const regexStrings = [
-    `transform-(${REGEX_TRANSFORM_ROTATE_KEYS})$\\b`,
-    `transform-(${REGEX_TRANSFORM_SCALE_KEYS})$\\b`,
-    `transform-(${REGEX_TRANSFORM_TRANSLATE_KEYS})$\\b`,
+    `^transform-(${REGEX_TRANSFORM_ROTATE_KEYS})$`,
+    `^transform-(${REGEX_TRANSFORM_SCALE_KEYS})$`,
+    `^transform-(${REGEX_TRANSFORM_TRANSLATE_KEYS})$`,
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

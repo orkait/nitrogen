@@ -322,7 +322,7 @@ const REGEX_COLOR_OTHERS = constructKeys(Object.keys(color_others));
 const REGEX_STRENGTHS = constructKeys(Object.keys(strengths));
 
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const colorMapping: Record<string, string> = {};
     const bgMapping: Record<string, string> = {};
     const borderMapping: Record<string, string> = {}
@@ -343,21 +343,25 @@ const generate = () => {
     }
 
     return {
-        colorMapping,
-        bgMapping,
-        borderMapping,
-        css: {
+        base: {
             ...colorMapping,
             ...bgMapping,
             ...borderMapping,
+        },
+        responsive: {},
+        hash,
+        others: {
+            colorMapping,
+            bgMapping,
+            borderMapping,
         }
     }
 }
 
 const regexStrings = [
-    `color-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
-    `bg-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
-    `border-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])\\b`,
+    `^color-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])$`,
+    `^bg-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])$`,
+    `^border-(((${REGEX_COLOR_BASE})-(${REGEX_STRENGTHS}))|(${REGEX_COLOR_OTHERS}))(?![.\\d])$`,
 ]
 
 export const regexList = regexStrings.map((str) => new RegExp(str, 'g'));

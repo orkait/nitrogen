@@ -1,3 +1,5 @@
+import { MEDIA_QUERIES } from "./constants";
+
 // Define a Color class to represent colors
 class Color {
     constructor(public readonly r: number, public readonly g: number, public readonly b: number) { }
@@ -52,5 +54,58 @@ export const djb2Hash = (str: string) => {
     }
     return `o-${(hash >>> 0)}`;
 }
+
+export const toEntries = obj => Object.entries(obj);
+
+export const fixValue = value =>
+    value
+        .toString()
+        .replace('.', '\\.')
+        .replace(':', '\\:')
+        .replace('/', '\\/');
+
+export const constructKeys = keys => {
+    const concatString = keys
+        .map(
+            key =>
+                `${key
+                    .replace('.', '\\.')
+                    .replace(':', '\\:')
+                    .replace('/', '\\/')}`
+        )
+        .join('|');
+    return concatString;
+};
+
+
+export const media = (breakpoint: 'sm' | 'md' | 'lg' | 'xl', callback: any) =>
+    callback(MEDIA_QUERIES[breakpoint]);
+
+
+export const generateNextBase62 = str => {
+    const base62 =
+        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let carry = 1;
+    let i = str.length;
+    let result = '';
+
+    while (i--) {
+        let index = base62.indexOf(str[i]);
+        index += carry;
+        if (index >= 62) {
+            carry = 1;
+            index -= 62;
+        } else {
+            carry = 0;
+        }
+        result = base62[index] + result;
+    }
+
+    if (carry) {
+        result = `1${result}`;
+    }
+
+    return result;
+};
 
 export default checkContrast;

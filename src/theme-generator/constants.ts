@@ -38,6 +38,13 @@ export const DIMENSIONS = {
     100: '100%',
 } as const;
 
+export const MEDIA_QUERIES = {
+    sm: 'screen and (min-width: 360px)',
+    md: 'screen and (min-width: 800px)',
+    lg: 'screen and (min-width: 960px)',
+    xl: 'screen and (min-width: 1008px)',
+};
+
 
 export const SPACES_REGEX_KEYS = constructKeys(Object.keys(SPACES));
 export const DIMENSIONS_REGEX_KEYS = constructKeys(Object.keys(DIMENSIONS));

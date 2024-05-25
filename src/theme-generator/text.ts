@@ -48,7 +48,7 @@ export const WHITE_SPACE = {
 }
 
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const letterSpacingMapping: Record<string, string> = {};
     const lineHeightMapping: Record<string, string> = {};
     const textAlignMapping: Record<string, string> = {};
@@ -87,14 +87,18 @@ const generate = () => {
     }
 
     return {
-        ...letterSpacingMapping,
-        ...lineHeightMapping,
-        ...textAlignMapping,
-        ...textTransformMapping,
-        ...textDecorationMapping,
-        ...textOverflowMapping,
-        ...whiteSpaceMapping,
-    };
+        base: {
+            ...letterSpacingMapping,
+            ...lineHeightMapping,
+            ...textAlignMapping,
+            ...textTransformMapping,
+            ...textDecorationMapping,
+            ...textOverflowMapping,
+            ...whiteSpaceMapping,
+        },
+        responsive: {},
+        hash
+    }
 }
 
 const REGEX_LETTER_SPACING = constructKeys(Object.keys(LETTER_SPACING));
@@ -107,13 +111,13 @@ const REGEX_WHITE_SPACE = constructKeys(Object.keys(WHITE_SPACE));
 
 
 const regexStrings = [
-    `letter-spacing-(${REGEX_LETTER_SPACING})$\\b`,
-    `line-height-(${REGEX_LINE_HEIGHT})$\\b`,
-    `text-align-(${REGEX_TEXT_ALIGNS})$\\b`,
-    `text-transform-(${REGEX_TEXT_TRANSFORM})$\\b`,
-    `text-decoration-(${REGEX_TEXT_DECORATION})$\\b`,
-    `text-overflow-(${REGEX_TEXT_OVERFLOW})$\\b`,
-    `white-space-(${REGEX_WHITE_SPACE})$\\b`,
+    `^letter-spacing-(${REGEX_LETTER_SPACING})$`,
+    `^line-height-(${REGEX_LINE_HEIGHT})$`,
+    `^text-align-(${REGEX_TEXT_ALIGNS})$`,
+    `^text-transform-(${REGEX_TEXT_TRANSFORM})$`,
+    `^text-decoration-(${REGEX_TEXT_DECORATION})$`,
+    `^text-overflow-(${REGEX_TEXT_OVERFLOW})$`,
+    `^white-space-(${REGEX_WHITE_SPACE})$`,
 ]
 
 export const regexList = regexStrings.map((regex) => new RegExp(regex, 'g'));

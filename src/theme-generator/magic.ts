@@ -1,6 +1,7 @@
 import { mainRegexList } from "./theme";
-import { djb2Hash } from "./utils"
+// import { djb2Hash } from "./utils"
 
+console.log(mainRegexList)
 
 const css = (classNames: string) => {
     const splitNames = classNames.split(' ').map((name) => name.trim());
@@ -15,7 +16,7 @@ const css = (classNames: string) => {
             const match = re.test(name);
 
             if (match) {
-                matchNames[djb2Hash(regex.toString())] = name;
+                matchNames[regex.toString()] = name;
             }
 
             found = found || match;
@@ -30,7 +31,7 @@ const css = (classNames: string) => {
 }
 
 console.log(
-    css('color-red-500 color-5 bg-blue-500 bg-red-500 border-green-500 border-t-2 border-l-2 border-r-2 border-b-2')
+    css('border-t-0 border-t-6 border-t-4 borss')
 )
 
 export default css;

@@ -2,7 +2,7 @@
 import { fixValue } from './types';
 import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 
-const generate = () => {
+const generate = (hash: string = "") => {
     const paddingMap: Record<string, string> = {};
     const marginMap: Record<string, string> = {};
 
@@ -40,38 +40,42 @@ const generate = () => {
     }
 
     return {
-        ...paddingMap,
-        ...paddingXMap,
-        ...paddingYMap,
-        ...paddingLMap,
-        ...paddingRMap,
-        ...paddingBMap,
-        ...paddingTMap,
+        base: {
+            ...paddingMap,
+            ...paddingXMap,
+            ...paddingYMap,
+            ...paddingLMap,
+            ...paddingRMap,
+            ...paddingBMap,
+            ...paddingTMap,
 
-        ...marginMap,
-        ...marginXMap,
-        ...marginYMap,
-        ...marginLMap,
-        ...marginRMap,
-        ...marginBMap,
-        ...marginTMap,
+            ...marginMap,
+            ...marginXMap,
+            ...marginYMap,
+            ...marginLMap,
+            ...marginRMap,
+            ...marginBMap,
+            ...marginTMap,
+        },
+        responsive: {},
+        hash,
     };
 }
 
 const regexStrings = [
-    `pt-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `pr-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `pb-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `pl-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `px-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `py-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `^pt-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^pr-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^pb-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^pl-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^px-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^py-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
 
-    `mt-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `mr-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `mb-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `ml-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `mx-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
-    `my-(${SPACES_REGEX_KEYS})$(?![.\\d])\\b`,
+    `^mt-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^mr-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^mb-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^ml-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^mx-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
+    `^my-(${SPACES_REGEX_KEYS})(?![.\\d])$`,
 ]
 
 export const regexList = regexStrings.map((str) => (new RegExp(str, 'g')));

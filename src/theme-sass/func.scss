@@ -1,0 +1,43 @@
+$base62: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+@function index-of-char($char) {
+    $length: str-length($base62);
+    @for $i from 1 through $length {
+        @if str-slice($base62, $i, $i) == $char {
+            @return $i - 1;
+        }
+    }
+    @return -1;
+}
+
+@function char-at($index) {
+    @return str-slice($base62, $index + 1, $index + 1);
+}
+
+@function generateNextBase62($str) {
+    $carry: 1;
+    $result: "";
+    $length: str-length($str);
+
+    @for $i from $length through 1 {
+        $index: index-of-char(str-slice($str, $i, $i));
+        $index: $index + $carry;
+
+        @if $index >= 62 {
+            $carry: 1;
+            $index: $index - 62;
+        } @else {
+            $carry: 0;
+        }
+
+        $result: char-at($index) + $result;
+    }
+
+    @if $carry == 1 {
+        $result: "1" + $result;
+    }
+
+    @return $result;
+}
+
+$output: generateNextBase62("9Zz");
