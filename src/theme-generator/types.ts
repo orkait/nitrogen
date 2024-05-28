@@ -17,3 +17,22 @@ export const constructKeys = (keys: string[]) => {
 }
 
 export type breakpointType = 'sm' | 'md' | 'lg' | 'xl';
+
+export type mainThemeType = {
+    theme: {
+        [key: string]: {
+            base: {
+                [key: string]: string;
+            };
+            responsive: {
+                [key: string]: {
+                    [key: string]: string;
+                };
+            };
+            hash: string;
+            others?: any;
+        };
+    },
+    transformer: (x: string) => string,
+    shouldHash: boolean,
+}
