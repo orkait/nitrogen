@@ -1,6 +1,6 @@
 import { DIMENSIONS, SPACES, DIMENSIONS_REGEX_KEYS, SPACES_REGEX_KEYS } from "./constants";
-import { toEntries, fixValue } from "./types";
-
+import { toEntries } from "./types";
+import { fixValue } from "./utils";
 
 const generate = (hash: string = "") => {
     const widthMapping: Record<string, string> = {};

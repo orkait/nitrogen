@@ -89,19 +89,15 @@ const generateBorderWidths = () => {
             if (dir === 'top') {
                 borderWidthTMap[`border-t-${key}`] = `border-top-width: ${value}px`;
             }
-
             if (dir === 'right') {
                 borderWidthRMap[`border-r-${key}`] = `border-right-width: ${value}px`;
             }
-
             if (dir === 'bottom') {
                 borderWidthBMap[`border-b-${key}`] = `border-bottom-width: ${value}px`;
             }
-
             if (dir === 'left') {
                 borderWidthLMap[`border-l-${key}`] = `border-left-width: ${value}px`;
             }
-
         })
     }
 
@@ -123,7 +119,6 @@ const generateBorderStyles = () => {
 
     for (const [key, value] of toEntries(BORDER_STYLES)) {
         borderStyleMap[`border-${key}`] = `border-style: ${value};`;
-
     }
 
     // generate individual border style

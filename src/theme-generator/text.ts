@@ -1,4 +1,5 @@
-import { constructKeys, fixValue } from "./types";
+import { constructKeys } from "./types";
+import { fixValue } from "./utils";
 
 export const TEXT_ALIGNS = {
     left: 'left',

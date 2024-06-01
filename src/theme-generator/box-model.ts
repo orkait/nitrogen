@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fixValue } from './types';
+import { fixValue } from './utils';
 import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 
 const generate = (hash: string = "") => {

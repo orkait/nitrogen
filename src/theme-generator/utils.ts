@@ -57,12 +57,17 @@ export const djb2Hash = (str: string) => {
 
 export const toEntries = obj => Object.entries(obj);
 
-export const fixValue = value =>
-    value
-        .toString()
-        .replace('.', '\\.')
+export const fixValue = value => {
+    let appliedText = value;
+    if (value[0] !== '.') {
+        appliedText = appliedText.replace('.', '\\.');
+    }
+    appliedText = appliedText
         .replace(':', '\\:')
         .replace('/', '\\/');
+
+    return appliedText;
+}
 
 export const constructKeys = keys => {
     const concatString = keys

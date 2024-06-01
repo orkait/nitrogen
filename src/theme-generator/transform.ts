@@ -1,4 +1,5 @@
-import { constructKeys, fixValue, toEntries } from "./types";
+import { constructKeys, toEntries } from "./types";
+import { fixValue } from "./utils";
 
 const TRANFORM_ROTATE = {
     'neg-rotate-90': 'rotate(-90deg)',

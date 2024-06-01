@@ -1,5 +1,6 @@
 import { SPACES, SPACES_REGEX_KEYS } from "./constants";
-import { fixValue, toEntries } from "./types";
+import { toEntries } from "./types";
+import { fixValue } from "./utils";
 
 const generate = (hash: string = "") => {
     const topMapping: Record<string, string> = {};

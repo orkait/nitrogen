@@ -1,5 +1,6 @@
-import { toEntries, fixValue, constructKeys } from './types';
+import { toEntries, constructKeys } from './types';
 import { SPACES } from './constants';
+import { fixValue } from './utils';
 
 export const FLEX_DIRECTIONS = {
     row: 'row',

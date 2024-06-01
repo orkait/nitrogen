@@ -5,7 +5,7 @@ const imageFit = {
     contain: 'contain',
     fill: 'fill',
     none: 'none',
-    scaleDown: 'scale-down',
+    'scale-down': 'scale-down',
 };
 
 const generateImageFit = (hash: string = "") => {

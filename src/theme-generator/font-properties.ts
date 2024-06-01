@@ -1,4 +1,5 @@
-import { toEntries, fixValue, constructKeys } from "./types";
+import { toEntries, constructKeys } from "./types";
+import { fixValue } from "./utils";
 
 export const FONT_SIZE = {
     0: 0,

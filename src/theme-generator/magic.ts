@@ -1,7 +1,4 @@
 import { mainRegexList } from "./theme";
-// import { djb2Hash } from "./utils"
-
-console.log(mainRegexList)
 
 const css = (classNames: string) => {
     const splitNames = classNames.split(' ').map((name) => name.trim());
