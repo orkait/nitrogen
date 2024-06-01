@@ -116,7 +116,7 @@ type mappingModifierType = (theme: themeMappingType) => themeMappingType;
 
 
 export const generateThemeMapping = (theme: themeMappingType, callback: mappingModifierType) => {
-    let computedMapping
+    let computedMapping;
 
     if (callback) {
         computedMapping = callback(clone(theme))
@@ -160,13 +160,16 @@ type themeConfig = {
     shouldHash?: boolean
 }
 
-export const getGeneratedTheme = (options: themeConfig = deafultOptions) => {
+export const getGeneratedTheme = (options: themeConfig) => {
     let css = '';
     const mapping: {
         [key: string]: string;
     } = {};
 
-    const { theme, transformer, shouldHash } = options;
+    const { theme, transformer, shouldHash } = {
+        ...deafultOptions,
+        ...options
+    };
 
     Object.keys(theme).forEach(key => {
         const property = theme[key];
