@@ -36,7 +36,7 @@ const REGEX_FONT_KEYS = constructKeys(Object.keys(FONT_SIZE));
 const REGEX_FONT_WEIGHT_KEYS = constructKeys(Object.keys(FONT_WEIGHT));
 
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const fontSizeMapping: Record<string, string> = {};
     const fontWeightMapping: Record<string, string> = {};
 
@@ -49,13 +49,9 @@ const generate = (hash: string = "") => {
     }
 
     return {
-        base: {
-            ...fontSizeMapping,
-            ...fontWeightMapping,
-        },
-        responsive: {},
-        hash
-    };
+        ...fontSizeMapping,
+        ...fontWeightMapping,
+    }
 }
 
 const regexStrings = [

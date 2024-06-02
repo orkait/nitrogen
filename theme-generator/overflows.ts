@@ -9,16 +9,12 @@ export const OVERFLOWS = {
 
 const REGEX_OVERFLOW_KEYS = constructKeys(Object.keys(OVERFLOWS));
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const overflowMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(OVERFLOWS)) {
         overflowMapping[`overflow-${key}`] = `overflow: ${value};`;
     }
-    return {
-        base: overflowMapping,
-        responsive: {},
-        hash
-    };
+    return overflowMapping;
 }
 
 const regexStrings = [

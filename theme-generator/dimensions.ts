@@ -2,7 +2,7 @@ import { DIMENSIONS, SPACES, DIMENSIONS_REGEX_KEYS, SPACES_REGEX_KEYS } from "./
 import { toEntries } from "./types";
 import { fixValue } from "./utils";
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const widthMapping: Record<string, string> = {};
     const heightMapping: Record<string, string> = {};
     const minHeightMapping: Record<string, string> = {};
@@ -31,16 +31,12 @@ const generate = (hash: string = "") => {
         maxHeightMapping[`max-h-${fixValue(key)}`] = `max-height: ${value};`
     }
     return {
-        base: {
-            ...widthMapping,
-            ...heightMapping,
-            ...minHeightMapping,
-            ...minWidthMapping,
-            ...maxWidthMapping,
-            ...maxHeightMapping,
-        },
-        responsive: {},
-        hash
+        ...widthMapping,
+        ...heightMapping,
+        ...minHeightMapping,
+        ...minWidthMapping,
+        ...maxWidthMapping,
+        ...maxHeightMapping,
     }
 }
 

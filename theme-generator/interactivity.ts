@@ -9,28 +9,24 @@ const INTERACTIVITY = {
     'tap-highlight-color-transparent': '-webkit-tap-highlight-color: rgba(0,0,0,0)',
 }
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const interactivityMapping: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(INTERACTIVITY)) {
         interactivityMapping[key] = value;
     }
 
-    return {
-        base: interactivityMapping,
-        responsive: {},
-        hash,
-    };
+    return interactivityMapping;
 }
 
 
 const regexStrings = [
-    `^appearance-none`,
+    `^appearance-none$`,
     `^cursor-(pointer|not-allowed|default)$`,
-    `^outline-none`,
-    `^pointer-events-none`,
-    `^user-select-none`,
-    `^tap-highlight-color-transparent`,
+    `^outline-none$`,
+    `^pointer-events-none$`,
+    `^user-select-none$`,
+    `^tap-highlight-color-transparent$`,
 ]
 
 export const regexList = regexStrings.map((str) => new RegExp(str, 'g'));

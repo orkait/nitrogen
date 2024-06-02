@@ -16,17 +16,13 @@ const OPACITIES = {
 
 const REGEX_OPACITIES = constructKeys(Object.keys(OPACITIES));
 
-const generateOpacity = (hash: string = "") => {
+const generateOpacity = () => {
     const opacityMapping: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(OPACITIES)) {
         opacityMapping[`opacity-${key}`] = `opacity: ${value};`;
     }
-    return {
-        base: opacityMapping,
-        responsive: {},
-        hash
-    };
+    return opacityMapping;
 }
 
 const regexStrings = [

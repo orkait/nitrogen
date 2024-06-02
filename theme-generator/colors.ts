@@ -322,7 +322,7 @@ const REGEX_COLOR_OTHERS = constructKeys(Object.keys(color_others));
 const REGEX_STRENGTHS = constructKeys(Object.keys(strengths));
 
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const colorMapping: Record<string, string> = {};
     const bgMapping: Record<string, string> = {};
     const borderMapping: Record<string, string> = {}
@@ -343,18 +343,9 @@ const generate = (hash: string = "") => {
     }
 
     return {
-        base: {
-            ...colorMapping,
-            ...bgMapping,
-            ...borderMapping,
-        },
-        responsive: {},
-        hash,
-        others: {
-            colorMapping,
-            bgMapping,
-            borderMapping,
-        }
+        ...colorMapping,
+        ...bgMapping,
+        ...borderMapping,
     }
 }
 

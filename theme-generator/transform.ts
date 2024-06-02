@@ -32,7 +32,7 @@ const TRANFORM_TRANSLATE = {
 
 const REGEX_TRANSFORM_TRANSLATE_KEYS = constructKeys(Object.keys(TRANFORM_TRANSLATE));
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const transformRotateMapping: Record<string, string> = {};
     const transformScaleMapping: Record<string, string> = {};
     const transformTranslateMapping: Record<string, string> = {};
@@ -50,13 +50,9 @@ const generate = (hash: string = "") => {
     }
 
     return {
-        base: {
-            ...transformRotateMapping,
-            ...transformScaleMapping,
-            ...transformTranslateMapping,
-        },
-        responsive: {},
-        hash,
+        ...transformRotateMapping,
+        ...transformScaleMapping,
+        ...transformTranslateMapping,
     };
 }
 

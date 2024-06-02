@@ -152,15 +152,11 @@ const generateBorderStyles = () => {
 
 }
 
-const generateBorderProperties = (hash: string = "") => {
+const generateBorderProperties = () => {
     return {
-        base: {
-            ...generateBorderRadii(),
-            ...generateBorderWidths(),
-            ...generateBorderStyles(),
-        },
-        responsive: {},
-        hash,
+        ...generateBorderRadii(),
+        ...generateBorderWidths(),
+        ...generateBorderStyles(),
     };
 }
 

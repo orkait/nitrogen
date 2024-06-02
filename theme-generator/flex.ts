@@ -71,7 +71,7 @@ export const VERTICAL_ALIGNS = {
     stretch: 'stretch',
 } as const;
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const flexDirectionMapping: Record<string, string> = {};
     const flexWrapMapping: Record<string, string> = {};
     const alignItemsMapping: Record<string, string> = {};
@@ -131,22 +131,18 @@ const generate = (hash: string = "") => {
 
 
     return {
-        base: {
-            ...flexDirectionMapping,
-            ...flexWrapMapping,
-            ...justifyContentMapping,
-            ...alignItemsMapping,
-            ...alignSelfMapping,
-            ...justifySelfMapping,
-            ...verticalAlignMapping,
-            ...flexGrowMapping,
-            ...flexShrinkMapping,
-            ...flexBasisMapping,
-            ...gapMapping,
-        },
-        responsive: {},
-        hash,
-    };
+        ...flexDirectionMapping,
+        ...flexWrapMapping,
+        ...justifyContentMapping,
+        ...alignItemsMapping,
+        ...alignSelfMapping,
+        ...justifySelfMapping,
+        ...verticalAlignMapping,
+        ...flexGrowMapping,
+        ...flexShrinkMapping,
+        ...flexBasisMapping,
+        ...gapMapping,
+    }
 }
 
 const REGEX_FLEX_DIRECTION_KEYS = constructKeys(Object.keys(FLEX_DIRECTIONS));

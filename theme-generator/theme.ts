@@ -20,27 +20,36 @@ import imageGenerator, { regexList as imageRegexList } from "./image";
 import { fixValue } from "./utils";
 import { breakpointType } from './types';
 
-export const themeMapping = {
-    border: borderGenerator(),
-    boxModel: boxModelGenerator(),
-    boxShadow: boxShadowGenerator(),
-    color: colorGenerator(),
-    coordinates: coordinatesGenerator(),
-    dimensions: dimensionsGenerator(),
-    display: displayGenerator(),
-    flex: flexGenerator(),
-    fontProperties: fontPropertiesGenerator(),
-    listStyle: listStyleGenerator(),
-    opacity: opacityGenerator(),
-    overflow: overflowGenerator(),
-    position: positionGenerator(),
-    text: textGenerator(),
-    visibility: visibilityGenerator(),
-    zIndex: zIndexGenerator(),
-    transform: transformGenerator(),
-    image: imageGenerator(),
-    interactivity: interactivityGenerator(),
+export const breakPoints = {
+    sm: "min-width: 640px",
+    md: "min-width: 768px",
+    lg: "min-width: 1024px",
+    xl: "min-width: 1280px",
 }
+
+export const themeMapping = {
+    ...borderGenerator(),
+    ...boxModelGenerator(),
+    ...boxShadowGenerator(),
+    ...colorGenerator(),
+    ...coordinatesGenerator(),
+    ...dimensionsGenerator(),
+    ...displayGenerator(),
+    ...flexGenerator(),
+    ...fontPropertiesGenerator(),
+    ...listStyleGenerator(),
+    ...opacityGenerator(),
+    ...overflowGenerator(),
+    ...positionGenerator(),
+    ...textGenerator(),
+    ...visibilityGenerator(),
+    ...zIndexGenerator(),
+    ...transformGenerator(),
+    ...imageGenerator(),
+    ...interactivityGenerator(),
+}
+
+export const themeObject = Object.values(themeMapping);
 
 const deafultOptions = {
     theme: themeMapping,
@@ -138,3 +147,11 @@ export const mainRegexList = [
     ...imageRegexList,
     ...interactivityRegexList
 ]
+
+export const regexList = mainRegexList.map((regex) => {
+    const breakPoint = Object.keys(breakPoints).join('|').trim();
+    const s = regex.source.split("");
+    const injectString = `(((${breakPoint})\\:)?)?`;
+    s.splice(1, 0, injectString);
+    return new RegExp(s.join(""), 'g');
+});

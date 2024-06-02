@@ -2,7 +2,7 @@ import React from "react";
 import { ButtonHTMLAttributes } from "react";
 import { Loader2Icon } from "lucide-react";
 import styles from "./Button.module.scss";
-import css from "../../theme-generator/magic";
+import css from "../../../theme-generator/magic";
 
 export type buttonThemeType = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link'
 export type buttonSizeType = 'xs' | 'sm' | 'md' | 'lg';
@@ -93,7 +93,7 @@ function Button({
 
     return (
         <button
-            className={`${getButtonClasses(theme)} md:bg-red-500 `}
+            className={`${getButtonClasses(theme)} sm:bg-red-500 `}
             onClick={onClick}
             disabled={disabled || loading}
             style={style}

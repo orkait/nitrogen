@@ -11,16 +11,12 @@ export const DISPLAYS = {
 
 const REGEX_DISPLAY_KEYS = constructKeys(Object.keys(DISPLAYS));
 
-const generate = (hash: string = "") => {
-    const groupMapping: { [key: string]: string } = {};
+const generate = () => {
+    const groupMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(DISPLAYS)) {
         groupMapping[`display-${key}`] = `display: ${value}`;
     }
-    return {
-        base: groupMapping,
-        responsive: {},
-        hash
-    }
+    return groupMapping
 }
 
 const regexStrings = [

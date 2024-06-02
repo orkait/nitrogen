@@ -9,16 +9,12 @@ export const POSITION = {
 
 const REGEX_POSITION_KEYS = constructKeys(Object.keys(POSITION));
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const positionMapping: Record<string, string> = {};
     for (const [key, value] of toEntries(POSITION)) {
         positionMapping[`position-${key}`] = `position: ${value};`;
     }
-    return {
-        base: positionMapping,
-        responsive: {},
-        hash
-    };
+    return positionMapping;
 }
 
 const regexStrings = [

@@ -1,7 +1,7 @@
 import { Button } from "./components"
 import { buttonSizeType } from "./components/Button/Button";
-import magicClasses from "./theme-generator/magic";
-import "./theme-generator/theme.css";
+import magicClasses from "../theme-generator/magic";
+import "../theme-jit/jit.css";
 
 function App() {
     return (

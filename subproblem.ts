@@ -14,7 +14,7 @@ export const OVERFLOWS = {
     scroll: 'scroll',
 } as const;
 
-const displayGenerator = (hash: string = "") => {
+const displayGenerator = () => {
     const groupMapping: { [key: string]: string } = {};
     for (const [key, value] of Object.entries(DISPLAYS)) {
         groupMapping[`display-${key}`] = `display: ${value}`;
@@ -26,7 +26,7 @@ const displayGenerator = (hash: string = "") => {
     };
 };
 
-const overflowGenerator = (hash: string = "") => {
+const overflowGenerator = () => {
     const groupMapping: { [key: string]: string } = {};
     for (const [key, value] of Object.entries(OVERFLOWS)) {
         groupMapping[`display-${key}`] = `display: ${value}`;

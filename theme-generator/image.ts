@@ -8,18 +8,14 @@ const imageFit = {
     'scale-down': 'scale-down',
 };
 
-const generateImageFit = (hash: string = "") => {
+const generateImageFit = () => {
     const objectFitMapping: Record<string, string> = {};
 
     for (const [key, value] of toEntries(imageFit)) {
         objectFitMapping[`object-${key}`] = `object-fit: ${value};`;
     }
 
-    return {
-        base: objectFitMapping,
-        responsive: {},
-        hash,
-    };
+    return objectFitMapping;
 }
 
 const regexStrings = Object.keys(imageFit).map((imageFit) => {

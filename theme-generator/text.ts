@@ -49,7 +49,7 @@ export const WHITE_SPACE = {
 }
 
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const letterSpacingMapping: Record<string, string> = {};
     const lineHeightMapping: Record<string, string> = {};
     const textAlignMapping: Record<string, string> = {};
@@ -88,17 +88,13 @@ const generate = (hash: string = "") => {
     }
 
     return {
-        base: {
-            ...letterSpacingMapping,
-            ...lineHeightMapping,
-            ...textAlignMapping,
-            ...textTransformMapping,
-            ...textDecorationMapping,
-            ...textOverflowMapping,
-            ...whiteSpaceMapping,
-        },
-        responsive: {},
-        hash
+        ...letterSpacingMapping,
+        ...lineHeightMapping,
+        ...textAlignMapping,
+        ...textTransformMapping,
+        ...textDecorationMapping,
+        ...textOverflowMapping,
+        ...whiteSpaceMapping,
     }
 }
 

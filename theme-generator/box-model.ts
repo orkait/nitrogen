@@ -2,7 +2,7 @@
 import { fixValue } from './utils';
 import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const paddingMap: Record<string, string> = {};
     const marginMap: Record<string, string> = {};
 
@@ -40,25 +40,21 @@ const generate = (hash: string = "") => {
     }
 
     return {
-        base: {
-            ...paddingMap,
-            ...paddingXMap,
-            ...paddingYMap,
-            ...paddingLMap,
-            ...paddingRMap,
-            ...paddingBMap,
-            ...paddingTMap,
+        ...paddingMap,
+        ...paddingXMap,
+        ...paddingYMap,
+        ...paddingLMap,
+        ...paddingRMap,
+        ...paddingBMap,
+        ...paddingTMap,
 
-            ...marginMap,
-            ...marginXMap,
-            ...marginYMap,
-            ...marginLMap,
-            ...marginRMap,
-            ...marginBMap,
-            ...marginTMap,
-        },
-        responsive: {},
-        hash,
+        ...marginMap,
+        ...marginXMap,
+        ...marginYMap,
+        ...marginLMap,
+        ...marginRMap,
+        ...marginBMap,
+        ...marginTMap,
     };
 }
 

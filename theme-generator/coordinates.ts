@@ -2,7 +2,7 @@ import { SPACES, SPACES_REGEX_KEYS } from "./constants";
 import { toEntries } from "./types";
 import { fixValue } from "./utils";
 
-const generate = (hash: string = "") => {
+const generate = () => {
     const topMapping: Record<string, string> = {};
     const leftMapping: Record<string, string> = {};
     const bottomMapping: Record<string, string> = {};
@@ -15,14 +15,10 @@ const generate = (hash: string = "") => {
         rightMapping[`right-${fixValue(key)}`] = `right: ${value}px;`;
     }
     return {
-        base: {
-            ...topMapping,
-            ...leftMapping,
-            ...bottomMapping,
-            ...rightMapping,
-        },
-        responsive: {},
-        hash
+        ...topMapping,
+        ...leftMapping,
+        ...bottomMapping,
+        ...rightMapping,
     }
 }
 
