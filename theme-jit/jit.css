@@ -48,11 +48,12 @@
 .border-none{border-style: none;}
 .rounded-0{border-radius: 0px;}
 .font-bold{font-weight: 700;}
+.pt-10{padding-top: 40px;}
 .shadow-md{box-shadow: 1px 1px 8px 0px #cbd5e0;}
 .pt-0{padding-top: 0px;}
 .border-transparent{border-color: transparent;}
 .rounded-6{border-radius: 6px;}
-@media (min-width: 768px){
-.md\:bg-red-500{background-color: #ef4444;}
+@media (min-width: 640px){
+.sm\:bg-red-500{background-color: #ef4444;}
 }
 

@@ -141,4 +141,4 @@ export function jitCSS() {
 }
 
 const css = jitCSS();
-fs.writeFileSync('./jit.css', css);
+fs.writeFileSync('jit.css', css);
