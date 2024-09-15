@@ -1,0 +1,5 @@
+{
+  "extends": "@repo/typescript-config/react-app.json",
+  "include": [".", "../../packages/ui/src/stories"],
+  "exclude": ["dist", "build", "node_modules"]
+}
