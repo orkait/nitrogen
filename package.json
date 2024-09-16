@@ -2,11 +2,11 @@
 	"private": true,
 	"scripts": {
 		"build": "turbo run build",
-		"dev": "turbo run dev",
+		"dev": "turbo run dev --parallel",
+		"ui:tailwind:watch": "cd packages/ui && npm run tailwind:watch",
 		"lint": "turbo run lint",
 		"clean": "turbo run clean && rm -rf node_modules",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "ui:tailwind:watch": "cd packages/ui && npm run tailwind:watch",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
 		"release": "turbo run build --filter=docs^... && changeset publish"

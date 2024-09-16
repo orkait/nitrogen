@@ -6,11 +6,16 @@
 	],
 	"license": "MIT",
 	"exports": {
-		"./styles": "./dist/output.css",
+		"./styles": "./css/output.css",
 		"./button": {
-			"types": "./src/button.tsx",
-			"import": "./dist/button.mjs",
-			"require": "./dist/button.js"
+			"types": "./dist/button",
+			"import": "./dist/button/button.mjs",
+			"require": "./dist/button/button.js"
+		},
+		"./input": {
+			"types": "./dist/input",
+			"import": "./dist/input/input.mjs",
+			"require": "./dist/input/input.js"
 		}
 	},
 	"scripts": {
@@ -18,8 +23,8 @@
 		"dev": "tsup --watch",
 		"lint": "eslint . --max-warnings 0",
 		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-		"tailwind:build": "tailwindcss -i ./src/styles.css -o ./dist/output.css",
-        "tailwind:watch": "tailwindcss -i ./src/styles.css -o ./dist/output.css --watch"
+		"tailwind:build": "tailwindcss -i ./src/styles.css -o ./css/output.css",
+		"tailwind:watch": "tailwindcss -i ./src/styles.css -o ./css/output.css --watch"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",
