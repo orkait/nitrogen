@@ -1,12 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Button from "@repo/ui/button"
+import Button from "@repo/ui/button"; // Adjust the import path based on your actual repo structure
+import { MapPin } from "lucide-react";
 
 const meta: Meta<typeof Button> = {
     component: Button,
     argTypes: {
-        type: {
-            control: { type: "radio" },
-            options: ["button", "submit", "reset"],
+        intent: {
+            control: { type: "select" },
+            options: ["primary", "secondary", "warning", "danger", "link"],
+        },
+        outline: {
+            control: { type: "boolean" },
+            options: [true, false],
+        },
+        size: {
+            control: { type: "select" },
+            options: ["sm", "md", "lg", "xl"],
+        },
+        paddingX: {
+            control: { type: "select" },
+            options: ["sm", "md", "lg", "xl"],
+        },
+        hasFullWidth: {
+            control: { type: "boolean" },
+        },
+        loading: {
+            control: { type: "boolean" },
+        },
+        disabled: {
+            control: { type: "boolean" },
+        },
+        iconPosition: {
+            control: { type: "select" },
+            options: ["left", "right"],
         },
     },
 };
@@ -15,32 +41,32 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/react/api/csf
- * to learn how to use render functions.
- */
-export const Primary: Story = {
+export const DefaultStory: Story = {
     render: (props) => (
         <Button
             {...props}
-            onClick={(): void => {
-                // eslint-disable-next-line no-alert -- alert for demo
-                alert("Hello from Turborepo!");
-            }}
         >
-            Hello
+            {props.children}
         </Button>
     ),
-    name: "Button",
     args: {
         children: "Hello",
-        type: "button",
-        style: {
-            color: "blue",
-            border: "1px solid gray",
-            padding: 10,
-            borderRadius: 10,
-        },
     },
 };
+
+export const ButtonWithIcon: Story = {
+    render: (props) => (
+        <Button
+            {...props}
+            icon={MapPin}
+        >
+            {props.children}
+        </Button>
+    ),
+    args: {
+        children: "Hello",
+    },
+    name: "Button with icon",
+};
+
+
