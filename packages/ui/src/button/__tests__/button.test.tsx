@@ -63,9 +63,6 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        console.log(screen.debug())
-
-
         const dtiString = `button-icon-left`;
         expect(screen.queryByTestId(dtiString)).toBeInTheDocument();
     })
