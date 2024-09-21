@@ -1,5 +1,10 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
-  "include": [".", "../../apps/docs/stories"],
-  "exclude": ["dist", "build", "node_modules"]
+	"extends": "@repo/typescript-config/react-library.json",
+	"include": [".", "../../apps/docs/stories"],
+	"exclude": ["dist", "build", "node_modules"],
+	"compilerOptions": {
+		"types": ["vitest", "jest"], // Add Vitest and Jest types
+		"skipLibCheck": true, // Optional: can help speed up the build process
+		"forceConsistentCasingInFileNames": true
+	}
 }

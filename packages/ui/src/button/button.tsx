@@ -1,45 +1,9 @@
 import React from "react";
-import type { ButtonHTMLAttributes } from "react";
 import buttonCVA from "./buttonCVA";
 import { twMerge } from "tailwind-merge";
-import { LoaderCircle, LucideIcon } from "lucide-react";
-
-
-const intentEnum = {
-    primary: "primary",
-    secondary: "secondary",
-    warning: "warning",
-    danger: "danger",
-    link: "link",
-} as const;
-
-const sizeEnum = {
-    sm: "sm",
-    md: "md",
-    lg: "lg",
-    xl: "xl",
-} as const;
-
-
-const paddingXEnum = {
-    sm: "sm",
-    md: "md",
-    lg: "lg",
-    xl: "xl",
-} as const;
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    intent?: typeof intentEnum[keyof typeof intentEnum];
-    size?: typeof sizeEnum[keyof typeof sizeEnum];
-    outline?: boolean;
-    link?: boolean;
-    paddingX?: typeof paddingXEnum[keyof typeof paddingXEnum];
-    hasFullWidth?: boolean;
-    icon?: LucideIcon;
-    iconPosition?: "left" | "right";
-    loading?: boolean;
-    disabled?: boolean;
-}
+import { LoaderCircle } from "lucide-react";
+import { ButtonProps } from "./button.types";
+import { makeDTI, concatString } from "../utils";
 
 const Button: React.FC<ButtonProps> = ({
     children,
@@ -52,7 +16,11 @@ const Button: React.FC<ButtonProps> = ({
     disabled = false,
     icon = React.Fragment,
     iconPosition = "left",
+    dataTestId = '',
 }) => {
+
+    const dti = makeDTI("button", dataTestId);
+
     const classes = twMerge(
         buttonCVA({
             intent,
@@ -68,21 +36,20 @@ const Button: React.FC<ButtonProps> = ({
 
     const Icon = icon;
 
-
     return (
-        <button className={classes} disabled={loading || disabled}>
+        <button className={classes} disabled={loading || disabled} data-test-id={dti()}>
             {
-                iconPosition === "left" && <Icon className="mr-[4px]" size={20} />
+                icon !== React.Fragment && iconPosition === "left" && <Icon data-test-id={dti("icon-left")} className="mr-[4px]" size={20} />
             }
             {
-                loading && iconPosition === "left" && <LoaderCircle className="animate-spin mr-[4px]" size={20} />
+                loading && iconPosition === "left" && <LoaderCircle data-test-id={dti("icon-loader")} className="animate-spin mr-[4px]" size={20} />
             }
             {children}
             {
-                iconPosition === "right" && <Icon className="ml-[4px]" size={20} />
+                icon !== React.Fragment && iconPosition === "right" && <Icon data-test-id={dti("icon-right")} className="ml-[4px]" size={20} />
             }
             {
-                loading && iconPosition === "right" && <LoaderCircle className="animate-spin mr-[4px]" size={20} />
+                loading && iconPosition === "right" && <LoaderCircle data-test-id={dti("icon-loader")} className="animate-spin mr-[4px]" size={20} />
             }
         </button>
     );
