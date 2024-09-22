@@ -5,7 +5,7 @@ import Button from '../button';
 import '@testing-library/jest-dom'
 import { intentEnum, sizeEnum, paddingXEnum, IconPositionEnum } from '../button.types';
 import { BrushIcon } from 'lucide-react';
-import buttonCVA from '../buttonCVA';
+import buttonCVA from '../button.cva';
 import { twMerge } from 'tailwind-merge';
 
 const allProps = {
@@ -74,7 +74,6 @@ describe("Button Props Tests", () => {
                 Button Text
             </Button>
         ));
-
         const dtiString = `button-icon-right`;
         expect(screen.queryByTestId(dtiString)).toBeInTheDocument();
     })
@@ -169,7 +168,7 @@ describe("Button Props Tests", () => {
         const cvaClasses = cva.split(' ').sort();
         expect(buttonClasses).toEqual(cvaClasses);
     })
-   
+
     // check if the component renders with intent
     test("renders with intent", () => {
         render((

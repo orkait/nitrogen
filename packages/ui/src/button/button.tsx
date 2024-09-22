@@ -1,9 +1,9 @@
 import React from "react";
-import buttonCVA from "./buttonCVA";
+import buttonCVA from "./button.cva";
 import { twMerge } from "tailwind-merge";
 import { LoaderCircle } from "lucide-react";
 import { ButtonProps } from "./button.types";
-import { makeDTI, concatString } from "../utils";
+import { makeDTI } from "../utils";
 
 const Button: React.FC<ButtonProps> = ({
     children,
