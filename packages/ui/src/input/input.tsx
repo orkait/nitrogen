@@ -1,10 +1,11 @@
 
-import React from "react";
-import inputCVA from "./input.cva";
+import React, { useState } from "react";
+import inputCVA, { iconCVA } from "./input.cva";
 import { twMerge } from "tailwind-merge";
 import { InputProps } from "./input.types";
 import { makeDTI } from "../utils";
 import { SearchIcon } from "lucide-react";
+
 
 const labelLegendWind = [
     "transform",
@@ -25,11 +26,10 @@ const labelLegendWind = [
     "peer-valid:-translate-y-full",
     "group-focus-within:pl-0",
     "peer-valid:pl-0"
-
 ]
 
 const inputLegendWind = [
-    "peer"
+    "peer",
 ]
 
 const Input: React.FC<InputProps> = ({
@@ -44,24 +44,49 @@ const Input: React.FC<InputProps> = ({
     rounded = "md",
     iconPosition = "left",
     icon = SearchIcon,
+    hasFullWidth = false,
     value,
+    onFocus = () => { },
+    onBlur = () => { },
+    onEnter = () => { },
     ...otherProps
 }) => {
-    const [isFocused, setIsFocused] = React.useState(false);
-    const [isValid, setIsValid] = React.useState(false);
-    const [isTouched, setIsTouched] = React.useState(false);
-    
+    const [isFocused, setIsFocused] = useState(false);
     const dti = makeDTI("input", dataTestId);
     const Icon = icon;
 
+    const iconWind = twMerge(
+        iconCVA({
+            intent,
+            disabled,
+            isFocused
+        })
+    )
+
+    const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") onEnter && onEnter();
+    }
+
+    const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+        setIsFocused(false);
+        onBlur && onBlur(event);
+    }
+
+    const onFocusHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+        setIsFocused(true);
+        onFocus && onFocus(event);
+    }
+
+
     return (
-        <div className="relative border-2 border-solid">
+        <div className={`relative flex`}>
             {
                 icon !== React.Fragment && iconPosition === "left" && (
                     <Icon
                         data-test-id={dti("icon-left")}
-                        className="mr-[4px] absolute translate-y-[50%] translate-x-[50%]"
+                        className={`ml-[12px] h-full absolute ${iconWind}`}
                         size={20}
+                        strokeWidth={2}
                     />
                 )
             }
@@ -77,7 +102,8 @@ const Input: React.FC<InputProps> = ({
                             paddingX,
                             size,
                             disabled,
-                            rounded
+                            rounded,
+                            hasFullWidth
                         }),
                         hasLegend ? inputLegendWind : [],
                         iconPosition === "left" ? "pl-10" : "pr-10"
@@ -85,6 +111,9 @@ const Input: React.FC<InputProps> = ({
                 }
                 data-test-id={dti()}
                 {...otherProps}
+                onFocus={onFocusHandler}
+                onBlur={onBlurHandler}
+                onKeyDown={onKeyPress}
             />
 
             {

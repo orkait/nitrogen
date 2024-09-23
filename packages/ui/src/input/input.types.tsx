@@ -20,7 +20,6 @@ export const intentEnum = {
     secondary: "secondary",
     warning: "warning",
     danger: "danger",
-    disabled: "disabled",
 } as const;
 
 export const inputTypeEnum = {
@@ -59,4 +58,9 @@ export interface InputProps
     rounded?: typeof sizeEnum[keyof typeof sizeEnum];
     icon?: LucideIcon;
     iconPosition?: typeof iconPositionEnum[keyof typeof iconPositionEnum];
+    hasFullWidth?: boolean;
+
+    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    onEnter?: () => void;
 }

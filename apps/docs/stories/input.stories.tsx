@@ -1,14 +1,13 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import Input from "@repo/ui/input"; // Adjust the import path based on your actual repo structure
-import { BrushIcon } from "lucide-react";
-import React from "react";
 
 const meta: Meta<typeof Input> = {
     component: Input,
     argTypes: {
         intent: {
             control: { type: "select" },
-            options: ["primary", "secondary", "warning", "danger", "link"],
+            options: ["primary", "secondary", "warning", "danger"],
         },
         paddingX: {
             control: { type: "select" },
@@ -38,6 +37,9 @@ const meta: Meta<typeof Input> = {
         iconPosition: {
             control: { type: "select" },
             options: ["left", "right"],
+        },
+        hasFullWidth: {
+            control: { type: "boolean" },
         }
     },
 };
@@ -47,7 +49,7 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 const DefaultStoryExample = (props: any) => {
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState("");
     return (
         <Input
             onChange={(e) => setValue(e.target.value)}
