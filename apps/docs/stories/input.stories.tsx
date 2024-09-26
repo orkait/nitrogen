@@ -9,6 +9,9 @@ const meta: Meta<typeof Input> = {
             control: { type: "select" },
             options: ["primary", "secondary", "warning", "danger"],
         },
+        placeholder: {
+            control: { type: "text" },
+        },
         paddingX: {
             control: { type: "select" },
             options: ["sm", "md", "lg", "xl"],

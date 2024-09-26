@@ -49,6 +49,7 @@ const Input: React.FC<InputProps> = ({
     onFocus = () => { },
     onBlur = () => { },
     onEnter = () => { },
+    placeholder = "",
     ...otherProps
 }) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -92,6 +93,7 @@ const Input: React.FC<InputProps> = ({
             }
 
             <input
+                placeholder={placeholder}
                 type={type}
                 value={value || defaultValue}
                 disabled={disabled}

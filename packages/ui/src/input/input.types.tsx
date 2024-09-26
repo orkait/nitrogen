@@ -59,7 +59,7 @@ export interface InputProps
     icon?: LucideIcon;
     iconPosition?: typeof iconPositionEnum[keyof typeof iconPositionEnum];
     hasFullWidth?: boolean;
-
+    placeholder?: string;
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onEnter?: () => void;

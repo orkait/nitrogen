@@ -16,8 +16,6 @@ const inputCVA = cva([
     "focus:invalid:ring-pink-500",
     "focus:outline-none",
     "vertical-align-middle",
-
-
 ], {
     variants: {
         intent: {
