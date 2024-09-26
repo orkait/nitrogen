@@ -16,6 +16,11 @@
 			"types": "./dist/input",
 			"import": "./dist/input/input.mjs",
 			"require": "./dist/input/input.js"
+		},
+		"./accordion": {
+			"types": "./dist/accordion",
+			"import": "./dist/accordion/accordion.mjs",
+			"require": "./dist/accordion/accordion.js"
 		}
 	},
 	"scripts": {
@@ -41,6 +46,7 @@
 		"vitest": "^2.1.1"
 	},
 	"dependencies": {
+		"@radix-ui/react-accordion": "^1.2.0",
 		"class-variance-authority": "^0.7.0",
 		"classnames": "^2.5.1",
 		"lucide-react": "^0.441.0",
