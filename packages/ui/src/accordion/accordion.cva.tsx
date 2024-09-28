@@ -16,7 +16,7 @@ export const accordionVariants = cva(
 )
 
 export const accordionContentVariants = cva(
-    "overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+    "overflow-hidden text-sm transition-all  data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down ",
     {
         variants: {
             variant: {
@@ -30,15 +30,20 @@ export const accordionContentVariants = cva(
     }
 )
 
-export const accordionItemVariants = cva("border-b", {
+export const accordionItemVariants = cva([], {
     variants: {
         variant: {
             default: "",
             compact: "py-2",
         },
+        hasBorder: {
+            true: "border-b",
+            false: ""
+        }
     },
     defaultVariants: {
         variant: "default",
+        hasBorder: true
     },
 });
 
