@@ -14,29 +14,52 @@ import {
 const Accordion = forwardRef<
     ElementRef<typeof AccordionPrimitive.Root>,
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
-        variant?: "default" | "compact"
+        variant?: "default" | "compact",
+        openIcon?: LucideIcon,
+        closeIcon?: LucideIcon,
+        hasIcon?: boolean,
     }
->(({ className, variant, ...props }, ref) => (
+>(({
+    variant,
+    openIcon = ChevronUp,
+    closeIcon = ChevronDown,
+    className,
+    ...props
+}, ref) => (
+
     <AccordionPrimitive.Root
         ref={ref}
         className={accordionVariants({ variant, className })}
         {...props}
-    />
+    >
+        {props.children}
+    </AccordionPrimitive.Root>
 ))
 
 // Accordion Item
 const AccordionItem = forwardRef<
     ElementRef<typeof AccordionPrimitive.Item>,
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
-        variant?: "default" | "compact"
+        variant?: "default" | "compact",
+        hasBorder?: boolean,
     }
->(({ className, variant, ...props }, ref) => (
-    <AccordionPrimitive.Item
-        ref={ref}
-        className={accordionItemVariants({ variant, className })}
-        {...props}
-    />
-))
+>(({
+    className,
+    variant,
+    hasBorder,
+    ...props
+}, ref) => {
+
+    return (
+        <AccordionPrimitive.Item
+            ref={ref}
+            className={accordionItemVariants({ variant, hasBorder, className })}
+            {...props}
+        >
+            {props.children}
+        </AccordionPrimitive.Item>
+    )
+})
 
 // Accordion Trigger
 const AccordionTrigger = forwardRef<
@@ -44,12 +67,13 @@ const AccordionTrigger = forwardRef<
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
         variant?: "default" | "compact",
         hasIcon?: boolean,
+        className?: string,
     }
 >(({
-    className,
-    children,
     variant,
     hasIcon = true,
+    className,
+    children,
     ...props
 }, ref) => {
 
