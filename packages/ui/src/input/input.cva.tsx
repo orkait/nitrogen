@@ -1,5 +1,15 @@
 import { cva } from "class-variance-authority";
 
+export const inputWidthCVA = cva([], {
+    variants: {
+        hasFullWidth: {
+            true: "w-full",
+            false: "max-w-[320px]",
+        },
+    }
+})
+
+
 const inputCVA = cva([
     "text-black",
     "w-full",
@@ -15,14 +25,15 @@ const inputCVA = cva([
     "focus:invalid:border-pink-500",
     "focus:invalid:ring-pink-500",
     "focus:outline-none",
-    "vertical-align-middle",
+    "align-bottom",
+    "focus:ring-1"
 ], {
     variants: {
         intent: {
-            primary: "border-blue-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
-            secondary: "border-gray-300 focus:border-gray-500 focus:ring-1 focus:ring-gray-500",
-            warning: "border-yellow-300 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500",
-            danger: "border-red-300 focus:border-red-500 focus:ring-1 focus:ring-red-500",
+            primary: "border-blue-300 focus:border-blue-500 focus:ring-blue-500",
+            secondary: "border-gray-300 focus:border-gray-500 focus:ring-gray-500",
+            warning: "border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500",
+            danger: "border-red-300 focus:border-red-500 focus:ring-red-500",
         },
         size: {
             sm: "p-1",
@@ -30,15 +41,7 @@ const inputCVA = cva([
             lg: "p-3",
             xl: "p-4",
         },
-        paddingX: {
-            sm: "px-1",
-            md: "px-2",
-            lg: "px-3",
-            xl: "px-4",
-        },
-        hasFullWidth: {
-            true: "w-full",
-        },
+
         disabled: {
             true: "border-gray-300 bg-gray-100 text-gray-100 cursor-not-allowed",
         },
@@ -60,8 +63,6 @@ const inputCVA = cva([
     defaultVariants: {
         intent: "primary",
         size: "md",
-        paddingX: "md",
-        hasFullWidth: false,
         disabled: false,
         rounded: "md",
     },

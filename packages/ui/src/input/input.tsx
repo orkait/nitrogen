@@ -1,46 +1,18 @@
 
 import React, { useState } from "react";
-import inputCVA, { iconCVA } from "./input.cva";
+import inputCVA, { iconCVA, inputWidthCVA } from "./input.cva";
 import { twMerge } from "tailwind-merge";
 import { InputProps } from "./input.types";
 import { makeDTI } from "../utils";
 import { SearchIcon } from "lucide-react";
 
-
-const labelLegendWind = [
-    "transform",
-    "transition-all",
-    "absolute",
-    "top-0",
-    "left-0",
-    "h-full",
-    "flex",
-    "items-center",
-    "pl-2",
-    "text-sm",
-    "group-focus-within:text-xs",
-    "peer-valid:text-xs",
-    "group-focus-within:h-1/2",
-    "peer-valid:h-1/2",
-    "group-focus-within:-translate-y-full",
-    "peer-valid:-translate-y-full",
-    "group-focus-within:pl-0",
-    "peer-valid:pl-0"
-]
-
-const inputLegendWind = [
-    "peer",
-]
-
 const Input: React.FC<InputProps> = ({
     dataTestId = '',
     disabled = false,
     intent = "primary",
-    paddingX = "md",
     size = "md",
     type = "text",
     defaultValue = "",
-    hasLegend = false,
     rounded = "md",
     iconPosition = "left",
     icon = SearchIcon,
@@ -50,6 +22,7 @@ const Input: React.FC<InputProps> = ({
     onBlur = () => { },
     onEnter = () => { },
     placeholder = "",
+    iconProps = {},
     ...otherProps
 }) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -78,16 +51,20 @@ const Input: React.FC<InputProps> = ({
         onFocus && onFocus(event);
     }
 
+    const inputWidthWind = inputWidthCVA({
+        hasFullWidth
+    });
+
 
     return (
-        <div className={`relative flex`}>
+        <div className={`relative flex ${inputWidthWind}`}>
             {
                 icon !== React.Fragment && iconPosition === "left" && (
                     <Icon
                         data-test-id={dti("icon-left")}
-                        className={`ml-[12px] h-full absolute ${iconWind}`}
+                        className={`ml-[12px] absolute top-[50%] -translate-y-[50%]  ${iconWind}`}
                         size={20}
-                        strokeWidth={2}
+                        {...iconProps}
                     />
                 )
             }
@@ -98,18 +75,15 @@ const Input: React.FC<InputProps> = ({
                 value={value || defaultValue}
                 disabled={disabled}
                 className={
-                    twMerge(
+                    `${twMerge(
                         inputCVA({
                             intent,
-                            paddingX,
                             size,
                             disabled,
                             rounded,
-                            hasFullWidth
+                            iconPosition,
                         }),
-                        hasLegend ? inputLegendWind : [],
-                        iconPosition === "left" ? "pl-10" : "pr-10"
-                    )
+                    )} `
                 }
                 data-test-id={dti()}
                 {...otherProps}
@@ -119,19 +93,12 @@ const Input: React.FC<InputProps> = ({
             />
 
             {
-                hasLegend && (
-                    <label htmlFor="username" className={labelLegendWind.join(' ')}>
-                        Username
-                    </label>
-                )
-            }
-
-            {
                 icon !== React.Fragment && iconPosition === "right" && (
                     <Icon
                         data-test-id={dti("icon-right")}
-                        className="ml-[4px] absolute top-1/2 right-0 transform -translate-y-1/2"
+                        className={`absolute right-[12px] top-[50%] -translate-y-[50%] ${iconWind}`}
                         size={20}
+                        {...iconProps}
                     />
                 )
             }
@@ -139,4 +106,6 @@ const Input: React.FC<InputProps> = ({
     )
 }
 
+
+export * from "./input.types";
 export default Input
