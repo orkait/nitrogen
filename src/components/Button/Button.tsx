@@ -93,7 +93,7 @@ function Button({
 
     return (
         <button
-            className={`${getButtonClasses(theme)} sm:bg-red-500 `}
+            className={`${getButtonClasses(theme)} pt-5 `}
             onClick={onClick}
             disabled={disabled || loading}
             style={style}

@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 
 const generateCSS = () => {
     try {
-        execSync("./theme-jit/jit.ts");
+        execSync("jit.ts");
         console.log('CSS generated successfully.');
     } catch (error) {
         console.error('Error generating CSS:', error);
