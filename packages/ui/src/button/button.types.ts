@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 export const intentEnum = {
     primary: "primary",
     secondary: "secondary",
+    success: "success",
     warning: "warning",
     danger: "danger",
     link: "link",
@@ -24,9 +25,18 @@ export const paddingXEnum = {
     xl: "xl",
 } as const;
 
-export const IconPositionEnum = {
+export const iconPositionEnum = {
     "left": "left",
     "right": "right",
+} as const;
+
+export const roundedEnum = {
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+    full: "full",
+    none: "none",
 } as const;
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -34,10 +44,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     size?: typeof sizeEnum[keyof typeof sizeEnum];
     outline?: boolean;
     link?: boolean;
-    paddingX?: typeof paddingXEnum[keyof typeof paddingXEnum];
+    rounded?: typeof roundedEnum[keyof typeof roundedEnum];
     hasFullWidth?: boolean;
     icon?: LucideIcon;
-    iconPosition?: typeof IconPositionEnum[keyof typeof IconPositionEnum];
+    iconPosition?: typeof iconPositionEnum[keyof typeof iconPositionEnum];
     loading?: boolean;
     disabled?: boolean;
     dataTestId?: string;

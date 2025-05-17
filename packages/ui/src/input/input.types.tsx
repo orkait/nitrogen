@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon, LucideProps } from "lucide-react";
 import type { InputHTMLAttributes } from "react";
 
 export const sizeEnum = {
@@ -48,19 +48,20 @@ export const iconPositionEnum = {
 export interface InputProps
     extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
     size?: typeof sizeEnum[keyof typeof sizeEnum]; // Overrides size prop
-    paddingX?: typeof paddingXEnum[keyof typeof paddingXEnum];
     intent?: typeof intentEnum[keyof typeof intentEnum];
     disabled?: boolean;
+    hasIcon?: boolean;
     dataTestId?: string;
     type?: typeof inputTypeEnum[keyof typeof inputTypeEnum];
     defaultValue?: string;
-    hasLegend?: boolean;
     rounded?: typeof sizeEnum[keyof typeof sizeEnum];
     icon?: LucideIcon;
     iconPosition?: typeof iconPositionEnum[keyof typeof iconPositionEnum];
     hasFullWidth?: boolean;
     placeholder?: string;
+    iconProps?: LucideProps;
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onEnter?: () => void;
+    onIconClick?: () => void;
 }

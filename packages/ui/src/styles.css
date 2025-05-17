@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+	box-sizing: border-box;
+}
+
+.test {
+	border: 1px solid red;
+}
+
+.test2 {
+	border: 1px solid cyan;
+}

@@ -1,25 +1,49 @@
-import { cva } from "class-variance-authority";
+import cva from "@repo/cva";
 
-const buttonCVA = cva(["flex", "items-center", "justify-center",  "font-semibold", "border", "rounded", "focus:outline-none", "transition"], {
-    variants: {
+const intentColorMapping = {
+    outline: {
+        primary: "text-primary bg-transparent border-primary hover:text-primary-content hover:bg-primary",
+        secondary: "text-secondary bg-transparent border-secondary hover:text-secondary-content hover:bg-secondary",
+        warning: "text-warning bg-transparent border-yellow-500 hover:text-warning-content hover:bg-warning",
+        danger: "text-danger bg-transparent border-danger hover:text-danger-content hover:bg-danger",
+        success: "text-success bg-transparent border-sucess hover:text-success-content hover:bg-success",
+    },
+    filled: {
+        primary: "bg-primary text-white hover:bg-primary-action text-primary-content",
+        secondary: "bg-secondary text-white hover:bg-secondary-action text-secondary-content",
+        warning: "bg-warning text-white hover:bg-warning-action text-warning-content",
+        danger: "bg-danger text-white hover:bg-danger-action text-danger-content",
+        success: "bg-success text-white hover:bg-success-action text-success-content",
+    },
+}
+
+
+const buttonCVA = cva({
+    default: [
+        "flex",
+        "items-center",
+        "justify-center",
+        "font-semibold",
+        "border",
+        "border-transparent",
+        "rounded",
+        "focus:outline-none",
+
+    ],
+    simple: () => ({
         intent: {
-            primary: ["bg-blue-600", "text-white", "hover:bg-blue-700"],
-            secondary: ["bg-gray-600", "text-white", "hover:bg-gray-700"],
-            warning: ["bg-yellow-600", "text-white", "hover:bg-yellow-700"],
-            danger: ["bg-red-600", "text-white", "hover:bg-red-700"],
+            primary: intentColorMapping.filled.primary,
+            secondary: intentColorMapping.filled.secondary,
+            warning: intentColorMapping.filled.warning,
+            danger: intentColorMapping.filled.danger,
+            success: intentColorMapping.filled.success,
             link: [],
         },
         size: {
             sm: ["px-2", "py-1", "text-sm"],
-            md: ["px-4", "py-2", "text-md"],
-            lg: ["px-6", "py-3", "text-lg"],
-            xl: ["px-8", "py-4", "text-xl"],
-        },
-        paddingX: {
-            sm: ["px-2"],
-            md: ["px-4"],
-            lg: ["px-6"],
-            xl: ["px-8"],
+            md: ["px-4", "py-1", "text-md"],
+            lg: ["px-6", "py-2", "text-lg"],
+            xl: ["px-8", "py-2", "text-xl"],
         },
         outline: {
             true: ["border-[1px]", "border-solid"],
@@ -30,61 +54,66 @@ const buttonCVA = cva(["flex", "items-center", "justify-center",  "font-semibold
             false: [],
         },
         loading: {
-            true: ["cursor-wait"],
+            true: ["cursor-wait", "bg-transparent"],
             false: [],
+        },
+        rounded: {
+            sm: ["rounded-[4px]"],
+            md: ["rounded-[6px]"],
+            lg: ["rounded-[8px]"],
+            xl: ["rounded-[12px]"],
+            full: ["rounded-full"],
+            none: ["rounded-0"],
         },
         disabled: {
             true: ["cursor-not-allowed", "opacity-50"],
-            false: [],
+            false: ["transition", "active:scale-90", "duration-200", "ease-in-out"],
         },
         iconPosition: {
             left: [],
             right: [],
         }
-    },
-    compoundVariants: [
+    }),
+    complex: () => ([
         {
             intent: "primary",
             outline: true,
-            class: ["bg-transparent", "border-[1px]", "text-blue-600", "border-blue-600", "hover:text-blue-800", "hover:bg-blue-100"],
+            className: intentColorMapping.outline.primary,
         },
         {
             intent: "secondary",
             outline: true,
-            class: ["bg-transparent", "border-[1px]", "text-gray-600", "border-gray-600", "hover:text-gray-800", "hover:bg-gray-100"],
+            className: intentColorMapping.outline.secondary,
         },
         {
             intent: "warning",
             outline: true,
-            class: ["bg-transparent", "border-[1px]", "text-yellow-600", "border-yellow-600", "hover:text-yellow-800", "hover:bg-yellow-100"],
+            className: intentColorMapping.outline.warning,
         },
         {
             intent: "danger",
             outline: true,
-            class: ["bg-transparent", "border-[1px]", "text-red-600", "border-red-600", "hover:text-red-800", "hover:bg-red-100"],
+            className: intentColorMapping.outline.danger,
         },
         {
-            intent: "link",
-            outline: false,
-            class: ["bg-transparent", "underline", "border-none", "text-blue-600", "hover:text-blue-800"],
-        },
-        {
-            intent: "link",
+            intent: "success",
             outline: true,
-            class: ["bg-transparent", "border-[1px]", "border-blue-800", "underline", "text-blue-600", "hover:text-blue-800"],
+            className: intentColorMapping.outline.success,
         },
         {
             loading: true,
-            // intent: "primary",
-            class: ["opacity-50", "cursor-not-allowed", "hover:bg-blue-600"],
-        }
-    ],
-    defaultVariants: {
+            className: "opacity-50 cursor-not-allowed",
+        },
+    ]),
+    defaultProps: {
         intent: "primary",
-        size: "md",
-        paddingX: "md",
-        outline: false,
-        fullWidth: false,
+        outline: true,
+        size: undefined,
+        fullWidth: undefined,
+        loading: undefined,
+        rounded: undefined,
+        disabled: undefined,
+        iconPosition: undefined,
     },
 });
 

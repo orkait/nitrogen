@@ -1,13 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Button from "@repo/ui/button"; // Adjust the import path based on your actual repo structure
+import Button, {
+    intentEnum,
+    sizeEnum,
+    roundedEnum,
+    iconPositionEnum
+} from "@repo/ui/button";
 import { MapPin } from "lucide-react";
 
 const meta: Meta<typeof Button> = {
     component: Button,
+    tags: ['autodocs'],
+    args: {
+        children: "",
+        intent: "primary",
+        outline: false,
+        size: "md",
+        hasFullWidth: false,
+        loading: false,
+        disabled: false,
+        iconPosition: "left",
+        rounded: "md",
+    },
     argTypes: {
         intent: {
             control: { type: "select" },
-            options: ["primary", "secondary", "warning", "danger", "link"],
+            options: Object.values(intentEnum),
         },
         outline: {
             control: { type: "boolean" },
@@ -15,11 +32,11 @@ const meta: Meta<typeof Button> = {
         },
         size: {
             control: { type: "select" },
-            options: ["sm", "md", "lg", "xl"],
+            options: Object.values(sizeEnum),
         },
-        paddingX: {
+        rounded: {
             control: { type: "select" },
-            options: ["sm", "md", "lg", "xl"],
+            options: Object.values(roundedEnum),
         },
         hasFullWidth: {
             control: { type: "boolean" },
@@ -32,7 +49,7 @@ const meta: Meta<typeof Button> = {
         },
         iconPosition: {
             control: { type: "select" },
-            options: ["left", "right"],
+            options: Object.values(iconPositionEnum),
         },
     },
 };
@@ -53,20 +70,3 @@ export const DefaultStory: Story = {
         children: "Hello",
     },
 };
-
-export const ButtonWithIcon: Story = {
-    render: (props) => (
-        <Button
-            {...props}
-            icon={MapPin}
-        >
-            {props.children}
-        </Button>
-    ),
-    args: {
-        children: "Hello",
-    },
-    name: "Button with icon",
-};
-
-

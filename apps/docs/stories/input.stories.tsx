@@ -1,28 +1,41 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import Input from "@repo/ui/input"; // Adjust the import path based on your actual repo structure
+import Input, {
+    intentEnum,
+    iconPositionEnum,
+    roundedEnum,
+    sizeEnum,
+    inputTypeEnum,
+} from "@repo/ui/input"; // Adjust the import path based on your actual repo structure
 
 const meta: Meta<typeof Input> = {
     component: Input,
+    args: {
+        intent: "primary",
+        size: "md",
+        type: "text",
+        defaultValue: "",
+        disabled: false,
+        rounded: "md",
+        iconPosition: "left",
+        hasFullWidth: false,
+        hasIcon: true,
+    },
     argTypes: {
         intent: {
             control: { type: "select" },
-            options: ["primary", "secondary", "warning", "danger"],
+            options: Object.values(intentEnum),
         },
         placeholder: {
             control: { type: "text" },
         },
-        paddingX: {
-            control: { type: "select" },
-            options: ["sm", "md", "lg", "xl"],
-        },
         size: {
             control: { type: "select" },
-            options: ["sm", "md", "lg", "xl"],
+            options: Object.values(sizeEnum),
         },
         type: {
             control: { type: "select" },
-            options: ["text", "password", "email", "number"],
+            options: Object.values(inputTypeEnum),
         },
         defaultValue: {
             control: { type: "text" },
@@ -30,18 +43,18 @@ const meta: Meta<typeof Input> = {
         disabled: {
             control: { type: "boolean" },
         },
-        hasLegend: {
-            control: { type: "boolean" },
-        },
         rounded: {
             control: { type: "select" },
-            options: ["sm", "md", "lg", "xl", "full"],
+            options: Object.values(roundedEnum),
         },
         iconPosition: {
             control: { type: "select" },
-            options: ["left", "right"],
+            options: Object.values(iconPositionEnum),
         },
         hasFullWidth: {
+            control: { type: "boolean" },
+        },
+        hasIcon: {
             control: { type: "boolean" },
         }
     },
@@ -57,6 +70,12 @@ const DefaultStoryExample = (props: any) => {
         <Input
             onChange={(e) => setValue(e.target.value)}
             value={value}
+            iconProps={{
+                onClick: () => {
+                    console.log("clicked");
+                },
+                className: "cursor-pointer"
+            }}
             {...props}
         />
     );

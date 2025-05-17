@@ -1,25 +1,18 @@
 // ExampleComponent.test.js
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import Button from '../button';
+import Button, { defaultValues } from '../button';
 import '@testing-library/jest-dom'
-import { intentEnum, sizeEnum, paddingXEnum, IconPositionEnum } from '../button.types';
+import { intentEnum, sizeEnum, paddingXEnum, iconPositionEnum, ButtonProps } from '../button.types';
 import { BrushIcon } from 'lucide-react';
 import buttonCVA from '../button.cva';
 import { twMerge } from 'tailwind-merge';
 
-const allProps = {
-    intent: intentEnum.primary,
-    size: sizeEnum.md,
-    loading: false,
-    outline: false,
-    hasFullWidth: false,
-    paddingX: paddingXEnum.md,
-    disabled: false,
-    icon: React.Fragment,
-    iconPosition: IconPositionEnum.left,
-    dataTestId: 'test'
+const allProps: ButtonProps = {
+    ...defaultValues,
+    dataTestId: 'test',
 }
+
 
 describe("Button UI Tests", () => {
     // check if the component renders without crashing
@@ -70,7 +63,7 @@ describe("Button Props Tests", () => {
     // check if the component renders with iconPosition
     test("renders with iconPosition", () => {
         render((
-            <Button icon={BrushIcon} iconPosition={IconPositionEnum.right}>
+            <Button icon={BrushIcon} iconPosition={iconPositionEnum.right}>
                 Button Text
             </Button>
         ));
@@ -109,9 +102,9 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        const cva = twMerge(buttonCVA({
+        const cva = twMerge(buttonCVA.check({
             ...allProps,
-            outline: true
+            outline: true,
         }))
 
         const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
@@ -127,28 +120,8 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-
         const buttonClasses = screen.getByTestId('button-test').className.includes('w-full');
         expect(buttonClasses).toBeTruthy();
-    })
-
-
-    // check if the component renders with paddingX
-    test("renders with paddingX", () => {
-        render((
-            <Button {...allProps} paddingX={paddingXEnum.lg}>
-                Button Text
-            </Button>
-        ));
-
-        const cva = twMerge(buttonCVA({
-            ...allProps,
-            paddingX: paddingXEnum.lg
-        }))
-
-        const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
-        const cvaClasses = cva.split(' ').sort();
-        expect(buttonClasses).toEqual(cvaClasses);
     })
 
     // check if the component renders with size
@@ -159,9 +132,9 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        const cva = twMerge(buttonCVA({
+        const cva = twMerge(buttonCVA.check({
             ...allProps,
-            size: sizeEnum.lg
+            size: sizeEnum.lg,
         }))
 
         const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
@@ -177,9 +150,9 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        const cva = twMerge(buttonCVA({
+        const cva = twMerge(buttonCVA.check({
             ...allProps,
-            intent: intentEnum.secondary
+            intent: intentEnum.secondary,
         }))
 
         const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
