@@ -26,15 +26,16 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
-        "test": "vitest",
+		"test": "vitest",
 		"lint": "eslint . --max-warnings 0",
 		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-		"tailwind:build": "tailwindcss -i ./src/styles.css -o ./css/output.css",
-		"tailwind:watch": "tailwindcss -i ./src/styles.css -o ./css/output.css --watch"
+		"tw:build": "tailwindcss -i ./src/styles.css -o ./css/output.css",
+		"tw:watch": "tailwindcss -i ./src/styles.css -o ./css/output.css --watch"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",
 		"@repo/tailwind-config": "workspace:*",
+		"@repo/cva": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.5.0",
@@ -60,6 +61,7 @@
 		"@tailwindcss/line-clamp": "^0.4.4",
 		"class-variance-authority": "^0.7.0",
 		"classnames": "^2.5.1",
+		"clsx": "^2.1.1",
 		"lucide-react": "^0.441.0",
 		"react": "^18.2.0",
 		"tailwind-merge": "^2.5.2"

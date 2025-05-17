@@ -102,10 +102,9 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        const cva = twMerge(buttonCVA({
+        const cva = twMerge(buttonCVA.check({
             ...allProps,
             outline: true,
-            className: ''
         }))
 
         const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
@@ -133,10 +132,9 @@ describe("Button Props Tests", () => {
             </Button>
         ));
 
-        const cva = twMerge(buttonCVA({
+        const cva = twMerge(buttonCVA.check({
             ...allProps,
             size: sizeEnum.lg,
-            className: ''
         }))
 
         const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
@@ -144,22 +142,21 @@ describe("Button Props Tests", () => {
         expect(buttonClasses).toEqual(cvaClasses);
     })
 
-        // check if the component renders with intent
-        test("renders with intent", () => {
-            render((
-                <Button {...allProps} intent={intentEnum.secondary}>
-                    Button Text
-                </Button>
-            ));
+    // check if the component renders with intent
+    test("renders with intent", () => {
+        render((
+            <Button {...allProps} intent={intentEnum.secondary}>
+                Button Text
+            </Button>
+        ));
 
-            const cva = twMerge(buttonCVA({
-                ...allProps,
-                intent: intentEnum.secondary,
-                className: ''
-            }))
+        const cva = twMerge(buttonCVA.check({
+            ...allProps,
+            intent: intentEnum.secondary,
+        }))
 
-            const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
-            const cvaClasses = cva.split(' ').sort();
-            expect(buttonClasses).toEqual(cvaClasses);
-        })
+        const buttonClasses = screen.getByTestId('button-test').className.split(' ').sort();
+        const cvaClasses = cva.split(' ').sort();
+        expect(buttonClasses).toEqual(cvaClasses);
+    })
 });

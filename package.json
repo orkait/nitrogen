@@ -3,7 +3,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev --parallel",
-		"ui:tailwind:watch": "cd packages/ui && npm run tailwind:watch",
+		"ui:tw:watch": "cd packages/ui && npm run tw:watch",
+		"ui:tw:build": "cd packages/ui && npm run tw:build",
 		"lint": "turbo run lint",
 		"clean": "turbo run clean && rm -rf node_modules",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",

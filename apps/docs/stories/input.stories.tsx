@@ -19,6 +19,7 @@ const meta: Meta<typeof Input> = {
         rounded: "md",
         iconPosition: "left",
         hasFullWidth: false,
+        hasIcon: true,
     },
     argTypes: {
         intent: {
@@ -52,6 +53,9 @@ const meta: Meta<typeof Input> = {
         },
         hasFullWidth: {
             control: { type: "boolean" },
+        },
+        hasIcon: {
+            control: { type: "boolean" },
         }
     },
 };
@@ -66,6 +70,12 @@ const DefaultStoryExample = (props: any) => {
         <Input
             onChange={(e) => setValue(e.target.value)}
             value={value}
+            iconProps={{
+                onClick: () => {
+                    console.log("clicked");
+                },
+                className: "cursor-pointer"
+            }}
             {...props}
         />
     );

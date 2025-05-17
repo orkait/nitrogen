@@ -50,6 +50,7 @@ export interface InputProps
     size?: typeof sizeEnum[keyof typeof sizeEnum]; // Overrides size prop
     intent?: typeof intentEnum[keyof typeof intentEnum];
     disabled?: boolean;
+    hasIcon?: boolean;
     dataTestId?: string;
     type?: typeof inputTypeEnum[keyof typeof inputTypeEnum];
     defaultValue?: string;
@@ -62,4 +63,5 @@ export interface InputProps
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onEnter?: () => void;
+    onIconClick?: () => void;
 }

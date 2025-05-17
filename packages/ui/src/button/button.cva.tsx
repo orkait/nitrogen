@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority";
+import cva from "@repo/cva";
 
 const intentColorMapping = {
     outline: {
@@ -18,18 +18,19 @@ const intentColorMapping = {
 }
 
 
-const buttonCVA = cva([
-    "flex",
-    "items-center",
-    "justify-center",
-    "font-semibold",
-    "border",
-    "border-transparent",
-    "rounded",
-    "focus:outline-none",
+const buttonCVA = cva({
+    default: [
+        "flex",
+        "items-center",
+        "justify-center",
+        "font-semibold",
+        "border",
+        "border-transparent",
+        "rounded",
+        "focus:outline-none",
 
-], {
-    variants: {
+    ],
+    simple: () => ({
         intent: {
             primary: intentColorMapping.filled.primary,
             secondary: intentColorMapping.filled.secondary,
@@ -62,7 +63,7 @@ const buttonCVA = cva([
             lg: ["rounded-[8px]"],
             xl: ["rounded-[12px]"],
             full: ["rounded-full"],
-            none: [],
+            none: ["rounded-0"],
         },
         disabled: {
             true: ["cursor-not-allowed", "opacity-50"],
@@ -72,8 +73,8 @@ const buttonCVA = cva([
             left: [],
             right: [],
         }
-    },
-    compoundVariants: [
+    }),
+    complex: () => ([
         {
             intent: "primary",
             outline: true,
@@ -101,14 +102,18 @@ const buttonCVA = cva([
         },
         {
             loading: true,
-            class: ["opacity-50", "cursor-not-allowed"],
+            className: "opacity-50 cursor-not-allowed",
         },
-    ],
-    defaultVariants: {
+    ]),
+    defaultProps: {
         intent: "primary",
-        size: "md",
-        outline: false,
-        fullWidth: false,
+        outline: true,
+        size: undefined,
+        fullWidth: undefined,
+        loading: undefined,
+        rounded: undefined,
+        disabled: undefined,
+        iconPosition: undefined,
     },
 });
 

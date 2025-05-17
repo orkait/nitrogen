@@ -36,18 +36,16 @@ const Button: React.FC<ButtonProps> = ({
 
     const dti = makeDTI("button", dataTestId || '');
 
-    const classes = twMerge(
-        buttonCVA({
-            intent,
-            outline,
-            size,
-            rounded,
-            fullWidth: hasFullWidth,
-            loading,
-            disabled,
-            iconPosition,
-        })
-    );
+    const classes = buttonCVA.check({
+        size,
+        intent,
+        outline,
+        fullWidth: hasFullWidth,
+        loading,
+        rounded,
+        disabled,
+        iconPosition
+    })
 
     const Icon = icon || React.Fragment;
 
