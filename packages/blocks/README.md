@@ -19,4 +19,4 @@ When adding custom primitives:
 1. Update `package.json` exports
 2. Update `tsup.config.ts` entry points
 3. Add the component to `src/`
-4. Run `pnpm build` to verify
+4. Run `bun build` to verify

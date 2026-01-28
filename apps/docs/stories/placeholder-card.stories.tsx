@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { PlaceholderCard } from "@repo/blocks/placeholder-card";
 
 const meta: Meta<typeof PlaceholderCard> = {
@@ -27,35 +27,19 @@ const meta: Meta<typeof PlaceholderCard> = {
         },
     },
     decorators: [
-        (Story) => (
+        (Story: StoryFn<typeof PlaceholderCard>) => (
             <div style={{ width: "350px" }}>
                 <Story />
             </div>
-        ),
+        )
     ],
 };
 
+
 export default meta;
-type Story = StoryObj<typeof PlaceholderCard>;
 
-export const Default: Story = {
-    args: {
-        title: "Card Title",
-        description: "Card description goes here",
-        imageHeight: 200,
-        showImage: true,
-    },
-};
 
-export const WithoutImage: Story = {
-    args: {
-        title: "Text Only Card",
-        description: "This card has no image placeholder",
-        showImage: false,
-    },
-};
-
-export const TallImage: Story = {
+export const TallImage: StoryObj<typeof PlaceholderCard> = {
     args: {
         title: "Tall Image Card",
         description: "This card has a taller image",
@@ -64,7 +48,7 @@ export const TallImage: Story = {
     },
 };
 
-export const ShortImage: Story = {
+export const ShortImage: StoryObj<typeof PlaceholderCard> = {
     args: {
         title: "Short Image Card",
         description: "This card has a shorter image",
@@ -73,11 +57,11 @@ export const ShortImage: Story = {
     },
 };
 
-export const LongContent: Story = {
+export const LongContent: StoryObj<typeof PlaceholderCard> = {
     args: {
         title: "Card with Long Title That Wraps",
         description: "This is a much longer description that demonstrates how the card handles more text content. It should wrap nicely within the card boundaries.",
-        imageHeight: 200,
+        imageHeight: "200px",
         showImage: true,
     },
 };

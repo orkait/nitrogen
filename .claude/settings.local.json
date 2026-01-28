@@ -1,22 +1,29 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm build:*)",
+      "Bash(bun build:*)",
       "Bash(pkill:*)",
-      "Bash(pnpm dev)",
+      "Bash(bun dev)",
       "Bash(netstat:*)",
       "Bash(xargs:*)",
       "Bash(powershell -Command \"Remove-Item -Path ''packages\\\\ui'' -Recurse -Force\")",
       "Bash(lsof:*)",
       "Bash(tasklist:*)",
-      "Bash(pnpm remove:*)",
-      "Bash(pnpm install:*)",
-      "Bash(pnpm list:*)",
+      "Bash(bun remove:*)",
+      "Bash(bun install:*)",
+      "Bash(bun list:*)",
       "Bash(npx tsc --noEmit)",
       "Bash(tree:*)",
-      "Bash(pnpm run dev)",
-      "Bash(pnpm run build)",
-      "Bash(curl:*)"
+      "Bash(bun run dev)",
+      "Bash(bun run build)",
+      "Bash(curl:*)",
+      "Bash(bun up:*)",
+      "Bash(bun pm:*)",
+      "Bash(bun add:*)",
+      "Bash(npm view:*)",
+      "Bash(npm install:*)",
+      "Bash(test:*)",
+      "Bash(bun update:*)"
     ]
   }
 }

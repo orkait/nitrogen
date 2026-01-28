@@ -1,23 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { PlaceholderGallery } from "@repo/composites/placeholder-gallery";
 
 const meta: Meta<typeof PlaceholderGallery> = {
-    title: "Composites/PlaceholderGallery",
+    title: "Blocks/PlaceholderGallery",
     component: PlaceholderGallery,
-    parameters: {
-        layout: "padded",
-    },
     tags: ["autodocs"],
     argTypes: {
-        columns: {
-            control: "select",
-            options: [1, 2, 3, 4],
-            description: "Number of columns in the gallery",
-        },
-        count: {
-            control: "number",
-            description: "Number of cards to display",
-        },
         cardTitles: {
             control: "object",
             description: "Array of custom card titles",

@@ -136,7 +136,7 @@ export const Default: Story = { args: { variant: "default" } };
 ### 6. View in Storybook
 
 ```bash
-pnpm run dev
+bun run dev
 ```
 
 Visit <http://localhost:6006/>
@@ -144,10 +144,10 @@ Visit <http://localhost:6006/>
 ## Commands
 
 ```bash
-pnpm install        # Install dependencies
-pnpm run dev        # Start Storybook dev server
-pnpm run build      # Build all packages
-pnpm run clean      # Clean all packages
+bun install        # Install dependencies
+bun run dev        # Start Storybook dev server
+bun run build      # Build all packages
+bun run clean      # Clean all packages
 ```
 
 ## Key Conventions

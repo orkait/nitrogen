@@ -38,7 +38,7 @@ Use the shadcn CLI to add new components:
 
 ```bash
 cd packages/ui
-pnpm add:component
+bun add:component
 ```
 
 This will:
@@ -49,7 +49,7 @@ This will:
 ## Building
 
 ```bash
-pnpm build
+bun build
 ```
 
 ## Architecture

@@ -1,31 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { Placeholder } from "@repo/ui/placeholder";
 
 const meta: Meta<typeof Placeholder> = {
     title: "UI/Placeholder",
     component: Placeholder,
-    parameters: {
-        layout: "centered",
-    },
     tags: ["autodocs"],
     argTypes: {
-        width: {
-            control: "text",
-            description: "Width of the placeholder",
-        },
-        height: {
-            control: "text",
-            description: "Height of the placeholder",
-        },
-        text: {
-            control: "text",
-            description: "Text to display in the placeholder",
-        },
-        variant: {
-            control: "select",
-            options: ["default", "shimmer"],
-            description: "Visual variant of the placeholder",
-        },
+        
     },
 };
 

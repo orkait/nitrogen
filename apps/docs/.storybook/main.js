@@ -1,3 +1,4 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -13,7 +14,6 @@ function getAbsolutePath(value) {
 const config = {
 	stories: ["../stories/**/*.stories.tsx", "!../stories/_archive/**"],
 	addons: [
-		getAbsolutePath("@storybook/addon-links"),
 		getAbsolutePath("@storybook/addon-essentials"),
 		resolve(__dirname, "./scope-filter/register.js"),
 	],
