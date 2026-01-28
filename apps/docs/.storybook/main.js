@@ -1,14 +1,21 @@
 import { dirname, join, resolve } from "path";
+import { fileURLToPath } from "url";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 function getAbsolutePath(value) {
 	return dirname(require.resolve(join(value, "package.json")));
 }
 
 const config = {
-	stories: ["../stories/*.stories.tsx", "../stories/**/*.stories.tsx"],
+	stories: ["../stories/**/*.stories.tsx", "!../stories/_archive/**"],
 	addons: [
 		getAbsolutePath("@storybook/addon-links"),
 		getAbsolutePath("@storybook/addon-essentials"),
+		resolve(__dirname, "./scope-filter/register.js"),
 	],
 	framework: {
 		name: getAbsolutePath("@storybook/react-vite"),
@@ -18,18 +25,9 @@ const config = {
 	core: {},
 
 	async viteFinal(config, { configType }) {
-		// customize the Vite config here
 		return {
 			...config,
 			define: { "process.env": {} },
-			resolve: {
-				alias: [
-					{
-						find: "ui",
-						replacement: resolve(__dirname, "../../../packages/ui/"),
-					},
-				],
-			},
 		};
 	},
 

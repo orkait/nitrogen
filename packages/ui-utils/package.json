@@ -1,0 +1,38 @@
+{
+	"name": "@repo/ui-utils",
+	"version": "0.0.0",
+	"license": "MIT",
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./cn": {
+			"types": "./dist/cn.d.ts",
+			"import": "./dist/cn.js",
+			"require": "./dist/cn.cjs"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+		"lint": "eslint . --max-warnings 0"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/typescript-config": "workspace:*",
+		"tsup": "^8.0.2",
+		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"clsx": "^2.1.1",
+		"tailwind-merge": "^2.5.2"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

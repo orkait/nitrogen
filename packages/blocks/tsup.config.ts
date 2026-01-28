@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
     entry: {
-        placeholder: "src/placeholder.tsx",
+        "placeholder-card": "src/placeholder-card.tsx",
     },
     format: ["cjs", "esm"],
     dts: true,

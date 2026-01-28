@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm build:*)",
+      "Bash(pkill:*)",
+      "Bash(pnpm dev)",
+      "Bash(netstat:*)",
+      "Bash(xargs:*)",
+      "Bash(powershell -Command \"Remove-Item -Path ''packages\\\\ui'' -Recurse -Force\")",
+      "Bash(lsof:*)",
+      "Bash(tasklist:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm list:*)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(tree:*)",
+      "Bash(pnpm run dev)",
+      "Bash(pnpm run build)",
+      "Bash(curl:*)"
+    ]
+  }
+}

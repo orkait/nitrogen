@@ -1,60 +1,159 @@
-# Orka Design System
+# Orka UI - Design System
 
-Tailwind CSS based design system for React applications.
-Orka Design sytem uses Turborepo to manage a monorepo with multiple packages and applications. It includes a core React component library, a shared utilities package, and a Storybook documentation site.
+Three-tier component architecture for building scalable React design systems.
 
-## Technologies
+## Architecture Hierarchy
 
--   🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
--   🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
--   🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
--   📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
--   📦 [pnpm](https://pnpm.io/) — Fast, disk space efficient package manager
--   💅 [tailwindCSS] - utility-first CSS framework
+```
+@repo/ui (Base Components)
+    ↓
+@repo/blocks (Composite Components)
+    ↓
+@repo/composites (Complex Layouts)
+    ↓
+@repo/docs (Storybook)
+```
 
-## Features
+### Layer Breakdown
 
--   [TypeScript](https://www.typescriptlang.org/) for static type checking
--   [ESLint](https://eslint.org/) for code linting
--   [Prettier](https://prettier.io) for code formatting
--   [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
--   [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
+| Layer | Package | Purpose | Dependencies |
+|-------|---------|---------|--------------|
+| **UI** | `@repo/ui` | Atomic base components | `@repo/ui-utils` |
+| **Blocks** | `@repo/blocks` | Components combining multiple UI components | `@repo/ui`, `@repo/ui-utils` |
+| **Composites** | `@repo/composites` | Full layouts using multiple blocks | `@repo/blocks`, `@repo/ui` |
+| **Utils** | `@repo/ui-utils` | Shared utilities | - |
+| **Docs** | `apps/docs` | Storybook documentation | All packages |
 
-## Versioning & Publishing Packages
+## Adding a New Component
 
-This example uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
+### 1. Create Base Component in `@repo/ui`
 
-You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHub repository settings to enable access to npm. It's also worth installing the [Changesets bot](https://github.com/apps/changeset-bot) on your repository.
+Create `packages/ui/src/my-component.tsx`:
 
-### Generating the Changelog
+```tsx
+import * as React from "react";
+import { cn } from "@repo/ui-utils";
 
-To generate your changelog, run `pnpm changeset` locally:
+export interface MyComponentProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "default" | "alt";
+}
 
-1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
-1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
-1. If doing the first major version, confirm you want to release.
-1. Write a summary for the changes.
-1. Confirm the changeset looks as expected.
-1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
+  ({ className, variant = "default", ...props }, ref) => (
+    <div ref={ref} className={cn("base-styles", className)} {...props} />
+  )
+);
 
-### Releasing
+MyComponent.displayName = "MyComponent";
+export { MyComponent };
+```
 
-When you push your code to GitHub, the [GitHub Action](https://github.com/changesets/action) will run the `release` script defined in the root `package.json`:
+### 2. Update `@repo/ui` Build Config
+
+Edit `packages/ui/tsup.config.ts`:
+
+```ts
+entry: {
+  "my-component": "src/my-component.tsx",
+}
+```
+
+Edit `packages/ui/package.json`:
+
+```json
+"exports": {
+  "./my-component": {
+    "types": "./dist/my-component.d.ts",
+    "import": "./dist/my-component.js",
+    "require": "./dist/my-component.cjs"
+  }
+}
+```
+
+### 3. Create Block (Optional)
+
+Create `packages/blocks/src/my-block.tsx`:
+
+```tsx
+import { MyComponent } from "@repo/ui/my-component";
+
+export interface MyBlockProps {
+  title?: string;
+}
+
+export function MyBlock({ title, ...props }: MyBlockProps) {
+  return (
+    <div>
+      <MyComponent {...props} />
+      {title && <h3>{title}</h3>}
+    </div>
+  );
+}
+```
+
+Update `packages/blocks/tsup.config.ts` and `package.json` (same pattern as UI).
+
+### 4. Create Composite (Optional)
+
+Create `packages/composites/src/my-composite.tsx`:
+
+```tsx
+import { MyBlock } from "@repo/blocks/my-block";
+
+export function MyComposite({ count = 3 }) {
+  return (
+    <div className="grid gap-4">
+      {Array.from({ length: count }).map((_, i) => (
+        <MyBlock key={i} title={`Item ${i + 1}`} />
+      ))}
+    </div>
+  );
+}
+```
+
+Update `packages/composites/tsup.config.ts` and `package.json` (same pattern).
+
+### 5. Add Storybook Story
+
+Create `apps/docs/stories/my-component.stories.tsx`:
+
+```tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import { MyComponent } from "@repo/ui/my-component";
+
+const meta: Meta<typeof MyComponent> = {
+  title: "UI/MyComponent",
+  component: MyComponent,
+  tags: ["autodocs"],
+};
+
+export default meta;
+type Story = StoryObj<typeof MyComponent>;
+
+export const Default: Story = { args: { variant: "default" } };
+```
+
+### 6. View in Storybook
 
 ```bash
-turbo run build --filter=docs^... && changeset publish
+pnpm run dev
 ```
 
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `repo` as the npm organization. To change this, do the following:
+Visit <http://localhost:6006/>
 
--   Rename folders in `packages/*` to replace `repo` with your desired scope
--   Search and replace `repo` with your desired scope
--   Re-run `pnpm install`
+## Commands
 
-To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
-
-```diff
-- "publishConfig": {
--  "access": "public"
-- },
+```bash
+pnpm install        # Install dependencies
+pnpm run dev        # Start Storybook dev server
+pnpm run build      # Build all packages
+pnpm run clean      # Clean all packages
 ```
+
+## Key Conventions
+
+- Use `React.forwardRef` for base components
+- Always export component prop types (`MyComponentProps`)
+- Use `cn()` utility for className merging
+- Add `displayName` to forwardRef components
+- Update both `tsup.config.ts` and `package.json` when exporting components

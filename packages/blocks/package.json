@@ -1,5 +1,5 @@
 {
-	"name": "@repo/ui",
+	"name": "@repo/blocks",
 	"version": "0.0.0",
 	"license": "MIT",
 	"sideEffects": [
@@ -7,19 +7,17 @@
 	],
 	"type": "module",
 	"exports": {
-		"./styles": "./src/styles.css",
-		"./placeholder": {
-			"types": "./dist/placeholder.d.ts",
-			"import": "./dist/placeholder.js",
-			"require": "./dist/placeholder.cjs"
+		"./placeholder-card": {
+			"types": "./dist/placeholder-card.d.ts",
+			"import": "./dist/placeholder-card.js",
+			"require": "./dist/placeholder-card.cjs"
 		}
 	},
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-		"lint": "eslint . --max-warnings 0",
-		"add:component": "pnpm dlx shadcn@latest add --yes --cwd ."
+		"lint": "eslint . --max-warnings 0"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",
@@ -30,12 +28,8 @@
 		"typescript": "^5.3.3"
 	},
 	"dependencies": {
-		"@radix-ui/react-dialog": "^1.1.15",
-		"@radix-ui/react-label": "^2.1.8",
-		"@radix-ui/react-slot": "^1.2.4",
+		"@repo/ui": "workspace:*",
 		"@repo/ui-utils": "workspace:*",
-		"class-variance-authority": "^0.7.0",
-		"lucide-react": "^0.441.0",
 		"react": "^18.2.0"
 	},
 	"peerDependencies": {
