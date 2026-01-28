@@ -1,4 +1,4 @@
-# Orka UI - Design System
+# Nitro - Design System
 
 Three-tier component architecture for building scalable React design systems.
 

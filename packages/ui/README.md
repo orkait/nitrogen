@@ -1,6 +1,6 @@
 # @repo/ui
 
-Standard shadcn UI components for the Orka UI component library.
+Standard shadcn UI components for the Nitro component library.
 
 ## Purpose
 
