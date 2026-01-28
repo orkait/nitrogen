@@ -1,6 +1,6 @@
 # @repo/ui
 
-Standard shadcn UI components for the nitrogengen component library.
+Standard shadcn UI components for the nitrogen component library.
 
 ## Purpose
 
