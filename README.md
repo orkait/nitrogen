@@ -1,4 +1,4 @@
-# Nitro - Design System
+# nitrogengen - Design System
 
 Three-tier component architecture for building scalable React design systems.
 
