@@ -23,7 +23,8 @@
       "Bash(npm view:*)",
       "Bash(npm install:*)",
       "Bash(test:*)",
-      "Bash(bun update:*)"
+      "Bash(bun update:*)",
+      "Bash(git clean:*)"
     ]
   }
 }
