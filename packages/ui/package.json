@@ -12,6 +12,26 @@
 			"types": "./dist/placeholder.d.ts",
 			"import": "./dist/placeholder.js",
 			"require": "./dist/placeholder.cjs"
+		},
+		"./code-icon": {
+			"types": "./dist/code-icon.d.ts",
+			"import": "./dist/code-icon.js",
+			"require": "./dist/code-icon.cjs"
+		},
+		"./button": {
+			"types": "./dist/button.d.ts",
+			"import": "./dist/button.js",
+			"require": "./dist/button.cjs"
+		},
+		"./progress-bar": {
+			"types": "./dist/progress-bar.d.ts",
+			"import": "./dist/progress-bar.js",
+			"require": "./dist/progress-bar.cjs"
+		},
+		"./icon-box": {
+			"types": "./dist/icon-box.d.ts",
+			"import": "./dist/icon-box.js",
+			"require": "./dist/icon-box.cjs"
 		}
 	},
 	"scripts": {
