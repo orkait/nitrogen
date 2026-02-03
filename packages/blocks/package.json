@@ -11,6 +11,31 @@
 			"types": "./dist/placeholder-card.d.ts",
 			"import": "./dist/placeholder-card.js",
 			"require": "./dist/placeholder-card.cjs"
+		},
+		"./language-toggle": {
+			"types": "./dist/language-toggle.d.ts",
+			"import": "./dist/language-toggle.js",
+			"require": "./dist/language-toggle.cjs"
+		},
+		"./profile-card": {
+			"types": "./dist/profile-card.d.ts",
+			"import": "./dist/profile-card.js",
+			"require": "./dist/profile-card.cjs"
+		},
+		"./pricing-card": {
+			"types": "./dist/pricing-card.d.ts",
+			"import": "./dist/pricing-card.js",
+			"require": "./dist/pricing-card.cjs"
+		},
+		"./code-window": {
+			"types": "./dist/code-window.d.ts",
+			"import": "./dist/code-window.js",
+			"require": "./dist/code-window.cjs"
+		},
+		"./topic-card": {
+			"types": "./dist/topic-card.d.ts",
+			"import": "./dist/topic-card.js",
+			"require": "./dist/topic-card.cjs"
 		}
 	},
 	"scripts": {
