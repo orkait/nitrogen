@@ -14,7 +14,7 @@
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
-		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+		"clean": "rimraf .turbo && rimraf node_modules && rimraf dist",
 		"lint": "eslint . --max-warnings 0"
 	},
 	"devDependencies": {
@@ -33,7 +33,7 @@
 	},
 	"peerDependencies": {
 		"react": "^18.0.0",
-		"react-dom": "^19.2.4"
+		"react-dom": "^18.2.0"
 	},
 	"publishConfig": {
 		"access": "public"
