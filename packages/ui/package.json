@@ -12,6 +12,11 @@
 			"types": "./dist/placeholder.d.ts",
 			"import": "./dist/placeholder.js",
 			"require": "./dist/placeholder.cjs"
+		},
+		"./nodeviz": {
+			"types": "./dist/nodeviz.d.ts",
+			"import": "./dist/nodeviz.js",
+			"require": "./dist/nodeviz.cjs"
 		}
 	},
 	"scripts": {
