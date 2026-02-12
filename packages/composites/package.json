@@ -1,41 +1,41 @@
 {
-	"name": "@repo/composites",
-	"version": "0.0.0",
-	"license": "MIT",
-	"sideEffects": false,
-	"type": "module",
-	"exports": {
-		"./placeholder-gallery": {
-			"types": "./dist/placeholder-gallery.d.ts",
-			"import": "./dist/placeholder-gallery.js",
-			"require": "./dist/placeholder-gallery.cjs"
-		}
-	},
-	"scripts": {
-		"build": "tsup",
-		"dev": "tsup --watch",
-		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-		"lint": "eslint . --max-warnings 0"
-	},
-	"devDependencies": {
-		"@repo/eslint-config": "workspace:*",
-		"@repo/typescript-config": "workspace:*",
-		"@types/react": "^18.3.2",
-		"@types/react-dom": "^18.3.7",
-		"tsup": "^8.0.2",
-		"typescript": "^5.3.3"
-	},
-	"dependencies": {
-		"@repo/ui": "workspace:*",
-		"@repo/blocks": "workspace:*",
-		"@repo/ui-utils": "workspace:*",
-		"react": "^18.2.0"
-	},
-	"peerDependencies": {
-		"react": "^18.0.0",
-		"react-dom": "^19.2.4"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+    "name": "@repo/composites",
+    "version": "0.0.0",
+    "license": "MIT",
+    "sideEffects": false,
+    "type": "module",
+    "exports": {
+        "./placeholder-gallery": {
+            "types": "./dist/placeholder-gallery.d.ts",
+            "import": "./dist/placeholder-gallery.js",
+            "require": "./dist/placeholder-gallery.cjs"
+        }
+    },
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "clean": "rimraf .turbo node_modules dist",
+        "lint": "eslint . --max-warnings 0"
+    },
+    "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/react": "^18.3.2",
+        "@types/react-dom": "^18.3.7",
+        "tsup": "^8.0.2",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "@repo/ui": "workspace:*",
+        "@repo/blocks": "workspace:*",
+        "@repo/ui-utils": "workspace:*",
+        "react": "^18.2.0"
+    },
+    "peerDependencies": {
+        "react": "^18.0.0",
+        "react-dom": "^19.2.4"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }
