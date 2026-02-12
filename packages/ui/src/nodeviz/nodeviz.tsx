@@ -11,23 +11,28 @@ import {
 } from "./type";
 
 /* ---------- constants ---------- */
-const NODE_SIZES = {
+const NODE_SIZES: Record<NodeSize, number> = {
     sm: 40,
     md: 64,
     lg: 96,
-} as const;
+};
 
-const BORDER_RADIUS_RATIOS = {
+const BORDER_RADIUS_RATIOS: Record<NodeSize, number> = {
     sm: 0.6,
     md: 0.375,
     lg: 0.25,
-} as const;
+};
 
 /* ---------- components ---------- */
-const Dot = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
+type DotType = {
+    style?: React.CSSProperties;
+    className?: string;
+};
+
+const Dot = ({ style, className }: DotType) => (
     <span
         style={style}
-        className={`absolute w-1.5 h-1.5 bg-slate-300 border border-slate-400 rounded-full -translate-x-1/2 -translate-y-1/2 ${className}`}
+        className={`absolute w-1.5 h-1.5 bg-slate-300 border border-slate-400 rounded-full -translate-x-1/2 -translate-y-1/2 ${className ?? ""}`}
     />
 );
 
@@ -46,7 +51,7 @@ const getSizeClasses = (size: NodeSize) => {
 
 /* ---------- shape ---------- */
 const getShapeClasses = (shape: NodeShape, role?: NodeRole) => {
-    if (role === 'cutVertex') return "rotate-45 rounded-xl";
+    if (role === "cutVertex") return "rotate-45 rounded-xl";
 
     switch (shape) {
         case "diamond":
@@ -112,22 +117,20 @@ const renderValue = (value: NodeVizProps["value"]) => {
 
 /* ---------- connections helper ---------- */
 const calculateConnectionPoints = (
-    type: NodeConnectionType | undefined,
+    type?: NodeConnectionType,
     shape: NodeShape = "circle",
-    role: NodeRole | undefined,
+    role?: NodeRole,
     size: NodeSize = "md"
 ) => {
-    if (!type) return [];
-
+    const resolvedType = type ?? 0;
     const pixelSize = NODE_SIZES[size];
     const borderOffsetPct = (1 / pixelSize) * 100;
     const r = BORDER_RADIUS_RATIOS[size];
 
-    // Helper function to get position on border for a given angle
-    const getPositionOnBorder = (angleDeg: number): { left: number; top: number } => {
+    const getPositionOnBorder = (angleDeg: number) => {
         const angleRad = (angleDeg * Math.PI) / 180;
-
-        const isSquareLike = shape === "roundedRect" || shape === "diamond" || role === "cutVertex";
+        const isSquareLike =
+            shape === "roundedRect" || shape === "diamond" || role === "cutVertex";
 
         let left = 50;
         let top = 50;
@@ -137,7 +140,9 @@ const calculateConnectionPoints = (
             const dx = Math.cos(angleRad);
             const dy = Math.sin(angleRad);
 
-            let x, y;
+            let x: number;
+            let y: number;
+
             if (Math.abs(dx) > Math.abs(dy)) {
                 x = Math.sign(dx);
                 y = dy * (x / dx);
@@ -159,58 +164,48 @@ const calculateConnectionPoints = (
                 }
             }
 
-            left = borderOffsetPct + (x + 1) * (100 - 2 * borderOffsetPct) / 2;
-            top = borderOffsetPct + (y + 1) * (100 - 2 * borderOffsetPct) / 2;
+            left = borderOffsetPct + ((x + 1) * (100 - 2 * borderOffsetPct)) / 2;
+            top = borderOffsetPct + ((y + 1) * (100 - 2 * borderOffsetPct)) / 2;
         } else {
             const x = Math.cos(angleRad);
             const y = Math.sin(angleRad);
-            left = borderOffsetPct + (x + 1) * (100 - 2 * borderOffsetPct) / 2;
-            top = borderOffsetPct + (y + 1) * (100 - 2 * borderOffsetPct) / 2;
+            left = borderOffsetPct + ((x + 1) * (100 - 2 * borderOffsetPct)) / 2;
+            top = borderOffsetPct + ((y + 1) * (100 - 2 * borderOffsetPct)) / 2;
         }
 
         return { left, top };
     };
 
-    const points: { left: number; top: number }[] = [];
-
-    if (typeof type === "number") {
-        const count = type;
-        for (let i = 0; i < count; i++) {
-            const angleDeg = (i / count) * 360 - 90;
-            points.push(getPositionOnBorder(angleDeg));
-        }
-    } else {
-        switch (type) {
-            case "binaryTree":
-                points.push(getPositionOnBorder(-90));
-                points.push(getPositionOnBorder(135));
-                points.push(getPositionOnBorder(45));
-                break;
-            case "nAryTree":
-                points.push(getPositionOnBorder(-90));
-                points.push(getPositionOnBorder(90));
-                points.push(getPositionOnBorder(135));
-                points.push(getPositionOnBorder(45));
-                break;
-            case "linkedList":
-                points.push(getPositionOnBorder(180));
-                points.push(getPositionOnBorder(0));
-                break;
-            case "denseGraph":
-                return calculateConnectionPoints(8, shape, role, size);
-        }
+    if (typeof resolvedType === "number") {
+        return Array.from({ length: resolvedType }, (_, i) =>
+            getPositionOnBorder((i / resolvedType) * 360 - 90)
+        );
     }
 
-    return points;
+    if (resolvedType === "denseGraph") {
+        return calculateConnectionPoints(8, shape, role, size);
+    }
+
+    const presetAngles: Partial<Record<NodeConnectionType, number[]>> = {
+        binaryTree: [-90, 135, 45],
+        nAryTree: [-90, 90, 135, 45],
+        linkedList: [180, 0],
+    };
+
+    return (presetAngles[resolvedType] ?? []).map(getPositionOnBorder);
 };
 
 /* ---------- visual overlays (badges) ---------- */
-const renderOverlays = (role: NodeRole | undefined, state: NodeState, hasLevel?: boolean) => {
+const renderOverlays = (state: NodeState, role?: NodeRole, hasLevel?: boolean) => {
     const crownPos = hasLevel ? "-top-16" : "-top-7";
+
     return (
         <>
             {role === "root" && (
-                <Crown className={`absolute ${crownPos} left-1/2 -translate-x-1/2 text-amber-500 w-6 h-6 drop-shadow-sm z-30`} strokeWidth={2.5} />
+                <Crown
+                    className={`absolute ${crownPos} left-1/2 -translate-x-1/2 text-amber-500 w-6 h-6 drop-shadow-sm z-30`}
+                    strokeWidth={2.5}
+                />
             )}
 
             {role === "leaf" && (
@@ -224,6 +219,7 @@ const renderOverlays = (role: NodeRole | undefined, state: NodeState, hasLevel?:
                     S
                 </span>
             )}
+
             {role === "target" && (
                 <span className="absolute -top-3 -right-3 h-5 min-w-[1.25rem] px-1 bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center rounded-md shadow-sm z-30">
                     T
@@ -235,6 +231,7 @@ const renderOverlays = (role: NodeRole | undefined, state: NodeState, hasLevel?:
                     <Check className="w-3 h-3" strokeWidth={3} />
                 </div>
             )}
+
             {state === "error" && (
                 <div className="absolute -top-3 -right-3 bg-white text-rose-600 rounded-full border border-rose-500 p-0.5 shadow-sm z-30 w-6 h-6 flex items-center justify-center">
                     <X className="w-4 h-4" strokeWidth={3} />
@@ -255,35 +252,33 @@ export const NodeViz: React.FC<NodeVizProps> = ({
     metadata,
     motion = "none",
 }) => {
-    // Sentinel Stripes Pattern
-    const sentinelStyle = role === "sentinel" ? {
-        backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.05) 5px, rgba(0,0,0,0.05) 10px)"
-    } : {};
+    const sentinelStyle =
+        role === "sentinel"
+            ? {
+                backgroundImage:
+                    "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.05) 5px, rgba(0,0,0,0.05) 10px)",
+            }
+            : {};
 
-    const isRotatedHelper = shape === "diamond" || role === 'cutVertex';
-    // cancel rotation for children
+    const isRotatedHelper = shape === "diamond" || role === "cutVertex";
     const counterRotate = isRotatedHelper ? "-rotate-45" : "";
 
-    const connectionPoints = React.useMemo(() => {
-        return calculateConnectionPoints(connections, shape, role, size);
-    }, [connections, shape, role, size]);
+    const connectionPoints = React.useMemo(
+        () => calculateConnectionPoints(connections, shape, role, size),
+        [connections, shape, role, size]
+    );
 
     return (
         <div className="relative inline-flex flex-col items-center justify-center m-6">
-
-            {/* Top Metadata: Level */}
             {metadata?.level !== undefined && (
                 <span className="absolute -top-8 text-xs font-medium text-slate-400 font-mono tracking-tight whitespace-nowrap">
                     L:{metadata.level}
                 </span>
             )}
 
-            {/* MAIN NODE CONTAINER */}
             <div
                 style={sentinelStyle}
-                className={`
-                    relative flex items-center justify-center
-                    border-2 aspect-square p-2
+                className={`relative flex items-center justify-center border-2 aspect-square p-2
                     ${getSizeClasses(size)}
                     ${getShapeClasses(shape, role)}
                     ${getStateClasses(state)}
@@ -291,19 +286,15 @@ export const NodeViz: React.FC<NodeVizProps> = ({
                     ${getMotionClasses(motion)}
                 `}
             >
-                {/* Connection Points */}
-                <div className={`absolute inset-0 z-20 pointer-events-none ${isRotatedHelper ? "" : ""}`}>
-                    {connectionPoints.map((point, i) => (
-                        <Dot key={i} style={{ left: `${point.left}%`, top: `${point.top}%` }} />
+                <div className="absolute inset-0 z-20 pointer-events-none">
+                    {connectionPoints.map((p, i) => (
+                        <Dot key={i} style={{ left: `${p.left}%`, top: `${p.top}%` }} />
                     ))}
                 </div>
 
-                {/* Main Value */}
                 <span className={`font-semibold z-10 select-none text-center break-all ${counterRotate}`}>
                     {renderValue(value)}
                 </span>
-
-                {/* Metadata Badges */}
 
                 {/* DFS Time */}
                 {metadata?.dfsTime && (
@@ -338,14 +329,11 @@ export const NodeViz: React.FC<NodeVizProps> = ({
                     </div>
                 )}
 
-                {/* Overlays */}
                 <div className={`absolute w-full h-full top-0 left-0 pointer-events-none ${counterRotate}`}>
-                    {renderOverlays(role, state, metadata?.level !== undefined)}
+                    {renderOverlays(state, role, metadata?.level !== undefined)}
                 </div>
-
             </div>
 
-            {/* Bottom Metadata: Parent */}
             {metadata?.parent !== undefined && (
                 <span className="absolute -bottom-8 text-xs text-slate-400 font-mono tracking-tight whitespace-nowrap">
                     P:{metadata.parent}
