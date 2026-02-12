@@ -28,10 +28,8 @@ Three-tier component architecture for building scalable React design systems.
 
 ### 0. Installation (for monorepo workspaces)
 ```bash
-# install all dependencies (on windows)
-bun ./easy-resolve.ps1
-# install all dependencies (on linux)
-bun ./easy-resolve.bash
+# hard clear cache and install everything 
+npm run setup
 ```
 
 ### 1. Create Base Component in `@repo/ui`
