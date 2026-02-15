@@ -12,6 +12,11 @@
 			"types": "./dist/placeholder.d.ts",
 			"import": "./dist/placeholder.js",
 			"require": "./dist/placeholder.cjs"
+		},
+		"./edgeviz": {
+			"types": "./dist/edgeviz.d.ts",
+			"import": "./dist/edgeviz.js",
+			"require": "./dist/edgeviz.cjs"
 		}
 	},
 	"scripts": {
