@@ -1,118 +1,12 @@
 import React, { useMemo, useId } from "react";
 
-/**
- * Visual state of the edge, defining color and stroke style.
- */
-export type EdgeType =
-    | 'default'
-    | 'active'
-    | 'visited'
-    | 'result'
-    | 'error'
-    | 'candidate'
-    | 'backtracking'
-    | 'disabled'
-    | 'tree'
-    | 'back'
-    | 'forward'
-    | 'cross';
-
-/**
- * Structural variation of the edge.
- */
-export type EdgeVariation =
-    | 'undirected'
-    | 'directed'
-    | 'bidirectional'
-    | 'self-loop'
-    | 'parallel'
-    | 'tree-edge';
-
-/**
- * How to display the weight/data label.
- */
-export type EdgeWeightType =
-    | 'none'
-    | 'boxed-mid'
-    | 'inline'
-    | 'flow-cap'
-    | 'cost-top'
-    | 'distance-bottom';
-
-/**
- * Geometric routing capability.
- */
-export type EdgeRouting =
-    | 'straight'
-    | 'bezier'
-    | 'orthogonal'
-    | 'arc';
-
-export interface EdgeProps {
-    /**
-     * The horizontal (X) starting coordinate of the edge.
-     * @default 50
-     */
-    x1?: number;
-
-    /**
-     * The vertical (Y) starting coordinate of the edge.
-     * @default 50
-     */
-    y1?: number;
-
-    /**
-     * The horizontal (X) ending coordinate of the edge.
-     * @default 250
-     */
-    x2?: number;
-
-    /**
-     * The vertical (Y) ending coordinate of the edge.
-     * @default 50
-     */
-    y2?: number;
-
-    /**
-     * The semantic state that determines color and styling (e.g., 'active' is yellow/thick, 'error' is red).
-     */
-    type?: EdgeType;
-
-    /**
-     * The structural connection style (e.g., 'directed' has arrow at end, 'undirected' has no arrows).
-     */
-    variation?: EdgeVariation;
-
-    /**
-     * Geometric routing algorithm (e.g., 'straight', 'bezier', 'orthogonal').
-     */
-    routing?: EdgeRouting;
-
-    /**
-     * The content of the weight label (text or number).
-     */
-    weight?: string | number;
-
-    /**
-     * Visual style for the weight label.
-     */
-    weightType?: EdgeWeightType;
-
-    /**
-     * Optional text label (e.g., 'T', 'B') for graph theory edge types.
-     */
-    label?: string;
-
-    /**
-     * If true, adds an animated dash flow effect (useful for active paths).
-     */
-    animated?: boolean;
-
-    /**
-     * Additional CSS class names applied to the container div.
-     */
-    className?: string;
-}
+import {
+    EdgeType,
+    EdgeVariation,
+    EdgeWeightType,
+    EdgeRouting,
+    EdgeProps
+} from './type';
 
 const EDGE_STYLES: Record<EdgeType, {
     color: string;
@@ -164,7 +58,7 @@ const EdgeViz: React.FC<EdgeProps> = ({
     const style = EDGE_STYLES[type];
     const PADDING = 30;
 
-    const { pathD, labelX, labelY, viewBox, bounds } = useMemo(() => {
+    const { pathD, centerX, centerY, viewBox, bounds } = useMemo(() => {
         const minX = Math.min(x1, x2);
         const minY = Math.min(y1, y2);
         const maxX = Math.max(x1, x2);
@@ -230,8 +124,8 @@ const EdgeViz: React.FC<EdgeProps> = ({
 
         return {
             pathD: d,
-            labelX: lx,
-            labelY: ly,
+            centerX: lx,
+            centerY: ly,
             viewBox: `0 0 ${width} ${height}`,
             bounds: {
                 left: minX - PADDING,
@@ -258,12 +152,15 @@ const EdgeViz: React.FC<EdgeProps> = ({
     const markerStartId = `edge-marker-start-${uid}`;
     const markerEndId = `edge-marker-end-${uid}`;
 
-    const displayLabel = label ?? (
-        type === "tree" ? "T" :
-            type === "back" ? "B" :
-                type === "forward" ? "F" :
-                    type === "cross" ? "C" : ""
-    );
+    const displayLabel = label ?? (() => {
+        switch (type) {
+            case "tree": return "T";
+            case "back": return "B";
+            case "forward": return "F";
+            case "cross": return "C";
+            default: return "";
+        }
+    })();
 
     const hasWeight = weight !== undefined && weight !== null && weight !== "" && weightType !== "none";
 
@@ -336,14 +233,14 @@ const EdgeViz: React.FC<EdgeProps> = ({
                 )}
 
                 {type === "error" && (
-                    <g transform={`translate(${labelX}, ${labelY})`}>
+                    <g transform={`translate(${centerX}, ${centerY})`}>
                         <line x1={-6} y1={-6} x2={6} y2={6} stroke="#ef4444" strokeWidth={3} />
                         <line x1={-6} y1={6} x2={6} y2={-6} stroke="#ef4444" strokeWidth={3} />
                     </g>
                 )}
 
                 {(hasWeight || displayLabel) && (
-                    <g transform={`translate(${labelX}, ${labelY})`}>
+                    <g transform={`translate(${centerX}, ${centerY})`}>
                         {hasWeight ? (
                             <>
                                 {weightType === 'boxed-mid' && (
