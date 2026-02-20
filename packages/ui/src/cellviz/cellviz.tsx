@@ -72,15 +72,15 @@ function CellViz({
 
         let displayData: any = data;
 
-        if (valueType === 'string' && data) {
+        if (valueType === 'string' && data !== null && data !== undefined) {
             displayData = `"${data}"`;
-        } else if (valueType === 'char' && data) {
+        } else if (valueType === 'char' && data !== null && data !== undefined) {
             displayData = `'${data}'`;
         } else if (valueType === 'float' && !isNaN(Number(data)) && data !== '' && data !== null && data !== undefined) {
             displayData = Number(data).toFixed(2);
         } else if (valueType === 'negative' && !isNaN(Number(data)) && data !== '' && data !== null && data !== undefined) {
             const num = Number(data);
-            displayData = num > 0 ? -num : num;
+            displayData = num > 0 ? -num : -Math.abs(num);
         }
 
         return (

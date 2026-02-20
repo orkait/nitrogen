@@ -12,7 +12,6 @@ const meta: Meta<typeof Cell> = {
             description: "Controls the size of the cell component.",
             table: {
                 defaultValue: { summary: "medium" },
-                type: { summary: null as any },
             },
         },
         type: {
@@ -21,7 +20,6 @@ const meta: Meta<typeof Cell> = {
             description: "The visual state/variant of the cell.",
             table: {
                 defaultValue: { summary: "default" },
-                type: { summary: null as any },
             },
         },
         valueType: {
@@ -30,43 +28,29 @@ const meta: Meta<typeof Cell> = {
             description: "Style variant for the cell content.",
             table: {
                 defaultValue: { summary: "positive" },
-                type: { summary: null as any },
             },
         },
         data: {
             description: "The content to display inside the cell.",
             control: "text",
-            table: {
-                type: { summary: null as any },
-            },
         },
         label: {
             description: "Primary label text displayed below the cell.",
             control: "text",
-            table: {
-                type: { summary: null as any },
-            },
         },
         sublabel: {
             description: "Secondary label text (e.g., index) displayed below the primary label.",
             control: "text",
-            table: {
-                type: { summary: null as any },
-            },
         },
         badge: {
             description: "Small badge text displayed in the top-right corner.",
             control: "text",
-            table: {
-                type: { summary: null as any },
-            },
         },
         isLocked: {
             description: "Enhances the cell with a lock icon to indicate immutability.",
             control: "boolean",
             table: {
                 defaultValue: { summary: "false" },
-                type: { summary: null as any },
             },
         },
     },
