@@ -1,17 +1,13 @@
-const { dirname, join, resolve } = require("path");
-
-function getAbsolutePath(value) {
-    return dirname(require.resolve(join(value, "package.json")));
-}
+const { resolve } = require("path");
 
 const config = {
     stories: ["../stories/**/*.stories.tsx", "!../stories/_archive/**"],
     addons: [
-        getAbsolutePath("@storybook/addon-essentials"),
+        "@storybook/addon-essentials",
         resolve(__dirname, "./scope-filter/register.js"),
     ],
     framework: {
-        name: getAbsolutePath("@storybook/react-vite"),
+        name: "@storybook/react-vite",
         options: {},
     },
 

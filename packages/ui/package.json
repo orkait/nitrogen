@@ -12,7 +12,12 @@
 			"types": "./dist/placeholder.d.ts",
 			"import": "./dist/placeholder.js",
 			"require": "./dist/placeholder.cjs"
-		}
+		},
+        "./cellviz": {
+            "types": "./dist/cellviz.d.ts",
+            "import": "./dist/cellviz.js",
+            "require": "./dist/cellviz.cjs"
+        }
 	},
 	"scripts": {
 		"build": "tsup",
