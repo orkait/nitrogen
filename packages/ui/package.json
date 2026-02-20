@@ -12,6 +12,11 @@
 			"types": "./dist/placeholder.d.ts",
 			"import": "./dist/placeholder.js",
 			"require": "./dist/placeholder.cjs"
+		},
+		"./pointerviz": {
+			"types": "./dist/pointerviz.d.ts",
+			"import": "./dist/pointerviz.js",
+			"require": "./dist/pointerviz.cjs"
 		}
 	},
 	"scripts": {
