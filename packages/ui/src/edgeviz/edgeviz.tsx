@@ -5,15 +5,20 @@ import {
     EdgeVariation,
     EdgeWeightType,
     EdgeRouting,
-    EdgeProps
+    EdgeProps,
+    EdgeStyleConfig
 } from './type';
 
-const EDGE_STYLES: Record<EdgeType, {
-    color: string;
-    width: number;
-    dash?: string;
-    opacity: number;
-}> = {
+import {
+    EDGE_PADDING,
+    BOXED_MID_DIMENSIONS,
+    FLOW_CAP_DIMENSIONS,
+    INLINE_DIMENSIONS,
+    COST_TOP_OFFSET_Y,
+    DISTANCE_BOTTOM_OFFSET_Y
+} from './constants';
+
+const EDGE_STYLES: Record<EdgeType, EdgeStyleConfig> = {
     active: { color: "#eab308", width: 4, opacity: 1 },
     error: { color: "#ef4444", width: 4, opacity: 1 },
     result: { color: "#22c55e", width: 4, opacity: 1 },
@@ -32,6 +37,83 @@ function getCubicBezierPoint(t: number, p0: number, p1: number, p2: number, p3: 
     const k = 1 - t;
     return (k * k * k * p0) + (3 * k * k * t * p1) + (3 * k * t * t * p2) + (t * t * t * p3);
 }
+
+const calculateEdgePath = (
+    x1: number, y1: number, x2: number, y2: number,
+    type: EdgeType, variation: EdgeVariation, routing: EdgeRouting,
+    padding: number
+) => {
+    const isSelfLoop = variation === "self-loop" && type !== 'back' && type !== 'tree';
+
+    const minX = isSelfLoop ? x1 : Math.min(x1, x2);
+    const minY = isSelfLoop ? y1 - 40 : Math.min(y1, y2);
+    const maxX = isSelfLoop ? x1 : Math.max(x1, x2);
+    const maxY = isSelfLoop ? y1 : Math.max(y1, y2);
+
+    const width = maxX - minX + padding * 2;
+    const height = maxY - minY + padding * 2;
+
+    const lx1 = x1 - minX + padding;
+    const ly1 = y1 - minY + padding;
+    const lx2 = isSelfLoop ? lx1 : x2 - minX + padding;
+    const ly2 = isSelfLoop ? ly1 : y2 - minY + padding;
+
+    let pathD = "";
+    let centerX = (lx1 + lx2) / 2;
+    let centerY = (ly1 + ly2) / 2;
+
+    const dx = lx2 - lx1;
+    const dy = ly2 - ly1;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (type === 'back' || (type === 'tree' && variation === 'self-loop')) {
+        pathD = `M ${lx1} ${ly1} A ${dist} ${dist} 0 0 1 ${lx2} ${ly2}`;
+        centerY -= 24;
+    } else if (type === 'forward') {
+        pathD = `M ${lx1} ${ly1} A ${dist} ${dist} 0 0 0 ${lx2} ${ly2}`;
+        centerY += 24;
+    } else if (variation === "self-loop") {
+        const r = 26;
+        pathD = `M ${lx1} ${ly1} C ${lx1 - r} ${ly1 - r * 2}, ${lx1 + r} ${ly1 - r * 2}, ${lx1} ${ly1}`;
+        centerX = lx1;
+        centerY = ly1 - 40;
+    } else {
+        switch (routing) {
+            case "bezier": {
+                pathD = `M ${lx1} ${ly1} C ${centerX} ${ly1}, ${centerX} ${ly2}, ${lx2} ${ly2}`;
+                centerX = getCubicBezierPoint(0.5, lx1, centerX, centerX, lx2);
+                centerY = getCubicBezierPoint(0.5, ly1, ly1, ly2, ly2);
+                break;
+            }
+            case "orthogonal": {
+                pathD = `M ${lx1} ${ly1} L ${centerX} ${ly1} L ${centerX} ${ly2} L ${lx2} ${ly2}`;
+                centerY = (ly1 + ly2) / 2;
+                break;
+            }
+            case "arc": {
+                pathD = `M ${lx1} ${ly1} A ${dist * 0.8} ${dist * 0.8} 0 0 1 ${lx2} ${ly2}`;
+                centerY -= 24;
+                break;
+            }
+            default:
+                pathD = `M ${lx1} ${ly1} L ${lx2} ${ly2}`;
+                break;
+        }
+    }
+
+    return {
+        pathD,
+        centerX,
+        centerY,
+        viewBox: `0 0 ${width} ${height}`,
+        bounds: {
+            left: minX - padding,
+            top: minY - padding,
+            width,
+            height
+        }
+    };
+};
 
 /**
  * EdgeViz - A flexible edge/connection visualization component for graphs and data structures.
@@ -56,124 +138,30 @@ const EdgeViz: React.FC<EdgeProps> = ({
 }) => {
     const uid = useId();
     const style = EDGE_STYLES[type];
-    const PADDING = 30;
 
     const { pathD, centerX, centerY, viewBox, bounds } = useMemo(() => {
-        const minX = Math.min(x1, x2);
-        const minY = Math.min(y1, y2);
-        const maxX = Math.max(x1, x2);
-        const maxY = Math.max(y1, y2);
-
-        const lx1 = x1 - minX + PADDING;
-        const ly1 = y1 - minY + PADDING;
-        const lx2 = x2 - minX + PADDING;
-        const ly2 = y2 - minY + PADDING;
-
-        let d = "";
-        let lx = (lx1 + lx2) / 2;
-        let ly = (ly1 + ly2) / 2;
-
-        if (type === 'back' || (type === 'tree' && variation === 'self-loop')) {
-            const dx = lx2 - lx1;
-            const dy = ly2 - ly1;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            d = `M ${lx1} ${ly1} A ${dist} ${dist} 0 0 1 ${lx2} ${ly2}`;
-            ly -= 24;
-        } else if (type === 'forward') {
-            const dx = lx2 - lx1;
-            const dy = ly2 - ly1;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            d = `M ${lx1} ${ly1} A ${dist} ${dist} 0 0 0 ${lx2} ${ly2}`;
-            ly += 24;
-        } else if (variation === "self-loop") {
-            const r = 26;
-            d = `M ${lx1} ${ly1} C ${lx1 - r} ${ly1 - r * 2}, ${lx1 + r} ${ly1 - r * 2}, ${lx1} ${ly1}`;
-            ly = ly1 - 40;
-        } else {
-            switch (routing) {
-                case "bezier": {
-                    const cx = (lx1 + lx2) / 2;
-                    d = `M ${lx1} ${ly1} C ${cx} ${ly1}, ${cx} ${ly2}, ${lx2} ${ly2}`;
-                    lx = getCubicBezierPoint(0.5, lx1, cx, cx, lx2);
-                    ly = getCubicBezierPoint(0.5, ly1, ly1, ly2, ly2);
-                    break;
-                }
-                case "orthogonal": {
-                    const midX = (lx1 + lx2) / 2;
-                    d = `M ${lx1} ${ly1} L ${midX} ${ly1} L ${midX} ${ly2} L ${lx2} ${ly2}`;
-                    lx = midX;
-                    ly = (ly1 + ly2) / 2;
-                    break;
-                }
-                case "arc": {
-                    const dx = lx2 - lx1;
-                    const dy = ly2 - ly1;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    d = `M ${lx1} ${ly1} A ${dist * 0.8} ${dist * 0.8} 0 0 1 ${lx2} ${ly2}`;
-                    ly -= 24;
-                    break;
-                }
-                default:
-                    d = `M ${lx1} ${ly1} L ${lx2} ${ly2}`;
-                    break;
-            }
-        }
-
-        const width = (maxX - minX) + (PADDING * 2);
-        const height = (maxY - minY) + (PADDING * 2);
-
-        return {
-            pathD: d,
-            centerX: lx,
-            centerY: ly,
-            viewBox: `0 0 ${width} ${height}`,
-            bounds: {
-                left: minX - PADDING,
-                top: minY - PADDING,
-                width,
-                height
-            }
-        };
-
+        return calculateEdgePath(x1, y1, x2, y2, type, variation, routing, EDGE_PADDING);
     }, [x1, y1, x2, y2, routing, variation, type]);
 
     const isBacktracking = type === "backtracking";
     const showStartMarker = variation === "bidirectional" || isBacktracking;
     const showEndMarker = !isBacktracking && (
-        variation === "directed" ||
-        variation === "bidirectional" ||
-        variation === "self-loop" ||
-        variation === "tree-edge" ||
-        variation === "parallel" ||
-        type === "result" ||
-        type === "candidate"
+        ["directed", "bidirectional", "self-loop", "tree-edge", "parallel"].includes(variation) ||
+        ["result", "candidate"].includes(type)
     );
 
     const markerStartId = `edge-marker-start-${uid}`;
     const markerEndId = `edge-marker-end-${uid}`;
 
-    const displayLabel = label ?? (() => {
-        switch (type) {
-            case "tree": return "T";
-            case "back": return "B";
-            case "forward": return "F";
-            case "cross": return "C";
-            default: return "";
-        }
-    })();
+    const defaultLabels: Partial<Record<EdgeType, string>> = { tree: "T", back: "B", forward: "F", cross: "C" };
+    const displayLabel = label ?? (defaultLabels[type] || "");
 
     const hasWeight = weight !== undefined && weight !== null && weight !== "" && weightType !== "none";
 
     return (
         <div
-            className={`absolute pointer-events-none ${className}`}
-            style={{
-                left: bounds.left,
-                top: bounds.top,
-                width: bounds.width,
-                height: bounds.height,
-                zIndex: type === 'active' ? 10 : 1
-            }}
+            className={`absolute pointer-events-none ${type === 'active' ? 'z-10' : 'z-0'} ${className}`}
+            style={{ left: bounds.left, top: bounds.top, width: bounds.width, height: bounds.height }}
             aria-label={`Edge from (${x1},${y1}) to (${x2},${y2})`}
         >
             <svg
@@ -244,7 +232,7 @@ const EdgeViz: React.FC<EdgeProps> = ({
                         {hasWeight ? (
                             <>
                                 {weightType === 'boxed-mid' && (
-                                    <foreignObject x="-16" y="-12" width="32" height="24" className="overflow-visible">
+                                    <foreignObject x={BOXED_MID_DIMENSIONS.x} y={BOXED_MID_DIMENSIONS.y} width={BOXED_MID_DIMENSIONS.width} height={BOXED_MID_DIMENSIONS.height} className="overflow-visible">
                                         <div className="flex items-center justify-center w-8 h-6 bg-white border border-gray-300 rounded shadow-sm">
                                             <span className="text-xs font-medium text-gray-700 leading-none">{weight}</span>
                                         </div>
@@ -252,7 +240,7 @@ const EdgeViz: React.FC<EdgeProps> = ({
                                 )}
 
                                 {weightType === 'flow-cap' && (
-                                    <foreignObject x="-24" y="-12" width="48" height="24" className="overflow-visible">
+                                    <foreignObject x={FLOW_CAP_DIMENSIONS.x} y={FLOW_CAP_DIMENSIONS.y} width={FLOW_CAP_DIMENSIONS.width} height={FLOW_CAP_DIMENSIONS.height} className="overflow-visible">
                                         <div className="flex items-center justify-center px-2 h-6 bg-white border border-gray-300 rounded-full shadow-sm">
                                             <span className="text-xs font-bold text-gray-800 leading-none">{weight}</span>
                                         </div>
@@ -261,17 +249,17 @@ const EdgeViz: React.FC<EdgeProps> = ({
 
                                 {weightType === 'inline' && (
                                     <g>
-                                        <rect x="-12" y="-9" width="24" height="18" fill="white" rx="2" />
+                                        <rect x={INLINE_DIMENSIONS.x} y={INLINE_DIMENSIONS.y} width={INLINE_DIMENSIONS.width} height={INLINE_DIMENSIONS.height} fill="white" rx="2" />
                                         <text y="4" textAnchor="middle" className="text-xs font-bold fill-black" style={{ pointerEvents: 'none' }}>{weight}</text>
                                     </g>
                                 )}
 
                                 {weightType === 'cost-top' && (
-                                    <text y="-12" textAnchor="middle" className="text-xs font-semibold fill-slate-600">${weight}</text>
+                                    <text y={COST_TOP_OFFSET_Y} textAnchor="middle" className="text-xs font-semibold fill-slate-600">${weight}</text>
                                 )}
 
                                 {weightType === 'distance-bottom' && (
-                                    <text y="18" textAnchor="middle" className="text-xs text-gray-500 fill-gray-500">{weight}</text>
+                                    <text y={DISTANCE_BOTTOM_OFFSET_Y} textAnchor="middle" className="text-xs text-gray-500 fill-gray-500">{weight}</text>
                                 )}
                             </>
                         ) : (

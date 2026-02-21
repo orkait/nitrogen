@@ -13,26 +13,8 @@ const meta: Meta<typeof EdgeViz> = {
             },
         },
     },
-    // Default args ensure that decorators (which read context.args) stay in sync with component defaults
-    args: {
-        x1: 50,
-        y1: 50,
-        x2: 250,
-        y2: 50,
-        type: 'default',
-        variation: 'undirected',
-        routing: 'straight',
-        weight: '',
-        weightType: 'none',
-        label: '',
-        animated: false,
-        className: '',
-    },
-    // Add visual context to help users see the coordinates relative to the canvas
     decorators: [
         (Story, context) => {
-            // Layout context to simulate a graph canvas
-            // We safely access args that might not be inferred by TS in the decorator context
             const args = context.args as any;
             const x1 = args.x1 ?? 50;
             const y1 = args.y1 ?? 50;
@@ -41,27 +23,22 @@ const meta: Meta<typeof EdgeViz> = {
 
             return (
                 <div
-                    className="relative border border-dashed border-gray-200 rounded-lg bg-slate-50 shadow-sm"
-                    style={{ width: 500, height: 500 }}
+                    className="relative border border-dashed border-gray-200 rounded-lg bg-slate-50 shadow-sm w-[500px] h-[500px]"
                 >
                     {/* Grid Background */}
                     <div
-                        className="absolute inset-0 pointer-events-none opacity-20 rounded-lg overflow-hidden"
-                        style={{
-                            backgroundImage: 'radial-gradient(#64748b 1px, transparent 1px)',
-                            backgroundSize: '20px 20px'
-                        }}
+                        className="absolute inset-0 pointer-events-none opacity-20 rounded-lg overflow-hidden bg-[image:radial-gradient(#64748b_1px,transparent_1px)] bg-[length:20px_20px]"
                     />
 
                     {/* Visual Markers for Start/End Points (Debug helpers) */}
                     <div
                         className="absolute w-3 h-3 bg-blue-500 rounded-full ring-2 ring-white shadow-md -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
-                        style={{ left: x1, top: y1 }}
+                        style={{ top: y1, left: x1 }}
                         title={`Start (${x1}, ${y1})`}
                     />
                     <div
                         className="absolute w-3 h-3 bg-red-500 rounded-full ring-2 ring-white shadow-md -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
-                        style={{ left: x2, top: y2 }}
+                        style={{ top: y2, left: x2 }}
                         title={`End (${x2}, ${y2})`}
                     />
 
@@ -73,43 +50,43 @@ const meta: Meta<typeof EdgeViz> = {
     ],
     argTypes: {
         x1: {
-            control: { type: 'range', min: 20, max: 480, step: 10 },
+            control: { type: 'range', min: 0, max: 500, step: 10 },
             name: "Start X",
             description: "The horizontal (X) starting coordinate.",
             table: {
                 category: 'Coordinates',
                 defaultValue: { summary: '50' },
-                type: { summary: null as any }
+                type: { summary: 'number' }
             },
         },
         y1: {
-            control: { type: 'range', min: 20, max: 480, step: 10 },
+            control: { type: 'range', min: 0, max: 500, step: 10 },
             name: "Start Y",
             description: "The vertical (Y) starting coordinate.",
             table: {
                 category: 'Coordinates',
                 defaultValue: { summary: '50' },
-                type: { summary: null as any }
+                type: { summary: 'number' }
             },
         },
         x2: {
-            control: { type: 'range', min: 20, max: 480, step: 10 },
+            control: { type: 'range', min: 0, max: 500, step: 10 },
             name: "End X",
             description: "The horizontal (X) ending coordinate.",
             table: {
                 category: 'Coordinates',
                 defaultValue: { summary: '250' },
-                type: { summary: null as any }
+                type: { summary: 'number' }
             },
         },
         y2: {
-            control: { type: 'range', min: 20, max: 480, step: 10 },
+            control: { type: 'range', min: 0, max: 500, step: 10 },
             name: "End Y",
             description: "The vertical (Y) ending coordinate.",
             table: {
                 category: 'Coordinates',
                 defaultValue: { summary: '50' },
-                type: { summary: null as any }
+                type: { summary: 'number' }
             },
         },
         type: {
@@ -119,7 +96,7 @@ const meta: Meta<typeof EdgeViz> = {
             table: {
                 category: 'Styling',
                 defaultValue: { summary: 'default' },
-                type: { summary: null as any }
+                type: { summary: 'EdgeType' }
             }
         },
         variation: {
@@ -129,7 +106,7 @@ const meta: Meta<typeof EdgeViz> = {
             table: {
                 category: 'Structure',
                 defaultValue: { summary: 'undirected' },
-                type: { summary: null as any }
+                type: { summary: 'EdgeVariation' }
             }
         },
         routing: {
@@ -139,7 +116,7 @@ const meta: Meta<typeof EdgeViz> = {
             table: {
                 category: 'Geometry',
                 defaultValue: { summary: 'straight' },
-                type: { summary: null as any }
+                type: { summary: 'EdgeRouting' }
             }
         },
         weightType: {
@@ -149,7 +126,7 @@ const meta: Meta<typeof EdgeViz> = {
             table: {
                 category: 'Labels',
                 defaultValue: { summary: 'none' },
-                type: { summary: null as any }
+                type: { summary: 'EdgeWeightType' }
             }
         },
         weight: {
@@ -157,7 +134,7 @@ const meta: Meta<typeof EdgeViz> = {
             control: 'text',
             table: {
                 category: 'Labels',
-                type: { summary: null as any }
+                type: { summary: 'string | number' }
             }
         },
         label: {
@@ -165,7 +142,7 @@ const meta: Meta<typeof EdgeViz> = {
             control: 'text',
             table: {
                 category: 'Labels',
-                type: { summary: null as any }
+                type: { summary: 'string' }
             }
         },
         animated: {
@@ -174,7 +151,7 @@ const meta: Meta<typeof EdgeViz> = {
             table: {
                 category: 'Animation',
                 defaultValue: { summary: 'false' },
-                type: { summary: null as any }
+                type: { summary: 'boolean' }
             }
         },
         className: {
@@ -182,7 +159,7 @@ const meta: Meta<typeof EdgeViz> = {
             control: 'text',
             table: {
                 category: 'Styling',
-                type: { summary: null as any }
+                type: { summary: 'string' }
             }
         },
     },
@@ -191,15 +168,12 @@ const meta: Meta<typeof EdgeViz> = {
 export default meta;
 type Story = StoryObj<typeof EdgeViz>;
 
-/**
- * Main interactive playground. Adjust controls to see updates.
- */
 export const Playground: Story = {
     args: {
-        x1: 50,
-        y1: 50,
-        x2: 250,
-        y2: 50,
+        x1: 150,
+        y1: 250,
+        x2: 350,
+        y2: 250,
         type: 'active',
         variation: "directed",
         routing: "straight",
@@ -209,9 +183,6 @@ export const Playground: Story = {
     },
 };
 
-/**
- * Right-angled connections often used in Organization Charts or Circuit diagrams.
- */
 export const Orthogonal: Story = {
     args: {
         x1: 50,
@@ -224,10 +195,6 @@ export const Orthogonal: Story = {
     }
 };
 
-/**
- * Self-loops indicate a node connecting to itself.
- * Note: Coordinates for start/end are usually the same for self-loops.
- */
 export const SelfLoop: Story = {
     args: {
         x1: 200,
@@ -240,10 +207,6 @@ export const SelfLoop: Story = {
     }
 };
 
-/**
- * Arc routing is useful for showing "back edges" in DFS traversals or 
- * overlapping connections.
- */
 export const CurvedArc: Story = {
     args: {
         x1: 50,
@@ -257,9 +220,6 @@ export const CurvedArc: Story = {
     }
 };
 
-/**
- * Example of a "Flow Network" edge with capacity/weight labeling.
- */
 export const WeightedFlow: Story = {
     args: {
         x1: 50,
@@ -274,9 +234,6 @@ export const WeightedFlow: Story = {
     },
 };
 
-/**
- * Tree structuring using orthogonal lines (implicit structure visualization).
- */
 export const TreeStructure: Story = {
     args: {
         x1: 200,
@@ -289,9 +246,6 @@ export const TreeStructure: Story = {
     }
 };
 
-/**
- * Error state visualization, useful for debugging visualizers.
- */
 export const ErrorState: Story = {
     args: {
         x1: 50,
